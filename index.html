@@ -1,11 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <!-- Basic meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Title & description -->
+  <title>TechBlog — Minimal & Responsive</title>
+  <meta name="description" content="TechBlog — a minimal responsive blog built with HTML, CSS and vanilla JavaScript." />
+
+  <!-- SEO -->
+  <link rel="canonical" href="index.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TechBlog — Minimal & Responsive" />
+  <meta property="og:description" content="A lightweight tech blog demonstrating front-end skills with HTML, CSS, and JavaScript." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/og-image.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/theme.css" />
 </head>
 <body>
-    
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">TechBlog</a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <button id="mobile-nav-toggle">Menu</button>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" title="Theme Switch">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container">
+        <h1>Welcome to TechBlog</h1>
+        <p>A minimal responsive tech blog built with pure HTML, CSS, and JS.</p>
+      </div>
+    </section>
+
+    <section class="content container">
+      <h2>Featured</h2>
+      <div class="article-list placeholder">
+        <p>Featured articles will appear here later.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 TechBlog. Built with ❤️ for front-end learning.</p>
+      <p>
+        <a href="privacy.html">Privacy</a> ·
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
 </body>
 </html>
