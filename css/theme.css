@@ -1,0 +1,6 @@
+/* Dark theme variables — JS will toggle later */
+:root[data-theme="dark"] {
+  --bg: #0b0f14;
+  --text: #e6eef8;
+  --accent: #53a7ff;
+}
