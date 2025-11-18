@@ -83,7 +83,7 @@ No installation or setup is required.
 
 1. Clone the repository:
    ```
-   git clone https://github.com/lelisa21/TechBlog.git
+   git clone https://github.com/lelisa21/Blog-App.git
    ```
 2. Open `index.html` in any web browser.
 
