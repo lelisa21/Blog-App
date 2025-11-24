@@ -1,29 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Basic meta -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>TechBlog Ethiopia</title>
-  <meta name="description" content="TechBlog Ethiopia — A semantic, modern blog for Ethiopian developers built with HTML, CSS, and JavaScript." />
+  <title>TechBlog Ethiopia — Home</title>
+  <meta name="description" content="TechBlog Ethiopia — tutorials, news and resources for Ethiopian developers. Built with HTML, CSS and JavaScript." />
+  <meta name="keywords" content="Ethiopia, developers, tech blog, programming, web development, tutorials" />
+  <meta name="author" content="TechBlog Ethiopia" />
+  <meta name="robots" content="index, follow" />
 
-  <!-- SEO -->
-  <link rel="canonical" href="index.html" />
+  <!-- Canonical -->
+  <link rel="canonical" href="/index.html" />
 
-  <!-- Social -->
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="TechBlog Ethiopia" />
   <meta property="og:title" content="TechBlog Ethiopia" />
   <meta property="og:description" content="A modern, semantic tech blog for Ethiopian developers." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/images/og-image.png" />
+  <meta property="og:url" content="/index.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TechBlog Ethiopia" />
+  <meta name="twitter:description" content="A modern, semantic tech blog for Ethiopian developers." />
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/theme.css" />
+  <!-- CSS (corrected paths) -->
+  <link rel="stylesheet" href="assets/css/nav.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/theme.css" />
+
+  <!-- Structured data (Organization) -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"TechBlog Ethiopia","url":"/","logo":"/assets/icons/favicon-32.png","sameAs":[]}
+  </script>
 </head>
 
 <body>
