@@ -6,71 +6,188 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Title & description -->
-  <title>TechBlog — Minimal & Responsive</title>
-  <meta name="description" content="TechBlog — a minimal responsive blog built with HTML, CSS and vanilla JavaScript." />
+  <title>TechBlog Ethiopia</title>
+  <meta name="description" content="TechBlog Ethiopia — A semantic, modern blog for Ethiopian developers built with HTML, CSS, and JavaScript." />
 
   <!-- SEO -->
   <link rel="canonical" href="index.html" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="TechBlog — Minimal & Responsive" />
-  <meta property="og:description" content="A lightweight tech blog demonstrating front-end skills with HTML, CSS, and JavaScript." />
+  <!-- Social -->
+  <meta property="og:title" content="TechBlog Ethiopia" />
+  <meta property="og:description" content="A modern, semantic tech blog for Ethiopian developers." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/images/og-image.png" />
 
-  <!-- Favicon -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/theme.css" />
 </head>
+
 <body>
+  <!-- Accessibility -->
   <a class="skip-link" href="#main">Skip to main content</a>
 
+  <!-- Header -->
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="index.html">TechBlog</a>
+      <a class="brand" href="index.html">TechBlog <span>Ethiopia</span></a>
 
-      <nav class="site-nav" aria-label="Main Navigation">
-        <button id="mobile-nav-toggle">Menu</button>
-        <ul class="menu">
+      <!-- Navigation -->
+      <nav class="site-nav" aria-label="Main Menu">
+        <button id="mobile-nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+
+        <ul id="nav-menu" class="menu">
           <li><a href="index.html">Home</a></li>
           <li><a href="articles.html">Articles</a></li>
           <li><a href="categories.html">Categories</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="community.html">Community</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
 
+      <!-- Header Actions -->
       <div class="header-actions">
-        <button id="theme-toggle" title="Theme Switch">🌓</button>
+        <form class="lang-switch" aria-label="Language Switcher">
+          <label for="lang-select" class="visually-hidden">Choose language</label>
+          <select id="lang-select" name="lang">
+            <option value="en">EN</option>
+            <option value="am">አማ</option>
+          </select>
+        </form>
+
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">🌓</button>
       </div>
     </div>
   </header>
 
+  <!-- Main -->
   <main id="main">
+    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <h1>Welcome to TechBlog</h1>
-        <p>A minimal responsive tech blog built with pure HTML, CSS, and JS.</p>
+        <h1>Welcome to TechBlog Ethiopia</h1>
+        <p>Your home for Ethiopian developer tutorials, tech news, events, and coding resources.</p>
+
+        <form class="search-form" role="search" aria-label="Site Search">
+          <label for="search-input" class="visually-hidden">Search Articles</label>
+          <input id="search-input" type="search" placeholder="Search articles, tutorials, authors…" />
+          <button type="submit">Search</button>
+        </form>
       </div>
     </section>
 
-    <section class="content container">
-      <h2>Featured</h2>
+    <!-- FEATURED ARTICLES -->
+    <section class="featured container">
+      <header>
+        <h2>Featured Articles</h2>
+        <p>Handpicked articles from Ethiopian developers.</p>
+      </header>
+
       <div class="article-list placeholder">
-        <p>Featured articles will appear here later.</p>
+        <article>
+          <h3>Coming Soon</h3>
+          <p>Featured articles will appear here after content integration.</p>
+        </article>
       </div>
+    </section>
+
+    <!-- ETHIOPIAN DEV SPOTLIGHT -->
+    <section class="spotlight container">
+      <header>
+        <h2>Ethiopian Developer Spotlight</h2>
+        <p>Celebrating local innovators, software engineers, and tech leaders.</p>
+      </header>
+
+      <article class="profile-card">
+        <h3>Spotlight Coming Soon</h3>
+        <p>We will highlight developers, communities, and inspiring tech stories from Ethiopia.</p>
+      </article>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories container">
+      <header>
+        <h2>Popular Categories</h2>
+      </header>
+
+      <nav aria-label="Post Categories">
+        <ul class="category-grid">
+          <li><a href="categories.html#webdev">Web Development</a></li>
+          <li><a href="categories.html#mobile">Mobile Development</a></li>
+          <li><a href="categories.html#data">Data & AI</a></li>
+          <li><a href="categories.html#devops">DevOps & Cloud</a></li>
+          <li><a href="categories.html#ethiopian-tech">Ethiopian Tech Scene</a></li>
+          <li><a href="categories.html#career">Career & Opportunities</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <!-- RESOURCES -->
+    <section class="resources container">
+      <header>
+        <h2>Developer Resources</h2>
+        <p>Tools, documentation, and guides helpful for Ethiopian developers.</p>
+      </header>
+
+      <ul class="resource-list">
+        <li><a href="#">Ethiopian Tech Communities</a></li>
+        <li><a href="#">Open-Source Projects in Ethiopia</a></li>
+        <li><a href="#">Frontend, Backend & Mobile Roadmaps</a></li>
+      </ul>
+    </section>
+
+    <!-- EVENTS --> 
+    <section class="events container">
+      <header>
+        <h2>Upcoming Events in Ethiopia</h2>
+      </header>
+
+      <p>Meetups, hackathons, workshops — coming soon.</p>
+    </section>
+
+    <!-- NEWS -->
+    <section class="news container">
+      <header>
+        <h2>Latest Tech News</h2>
+      </header>
+
+      <article>
+        <h3>News Section Under Construction</h3>
+        <p>Local and global tech news will appear here.</p>
+      </article>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
-      <p>© 2025 TechBlog. Built with ❤️ for front-end learning.</p>
-      <p>
-        <a href="privacy.html">Privacy</a> ·
-        <a href="contact.html">Contact</a>
+      <section>
+        <h3>About TechBlog Ethiopia</h3>
+        <p>A community-focused platform for Ethiopian developers to learn, share, and grow.</p>
+      </section>
+
+      <section>
+        <h3>Quick Links</h3>
+        <nav>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </section>
+
+      <section>
+        <h3>Connect</h3>
+        <p>Social links coming soon.</p>
+      </section>
+
+      <p class="copyright">
+        © 2025 TechBlog Ethiopia — Built with ❤️ by Ethiopian Developers.
       </p>
     </div>
   </footer>
