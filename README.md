@@ -1,4 +1,4 @@
-# TechBlog – A Minimal and Responsive Blog Website 
+# TechBlog – Ethiopian Bloggers and Developers Website 
 
  ![License](https://img.shields.io/badge/license-MIT-white.svg)
  
