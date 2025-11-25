@@ -1,42 +1,80 @@
-# TechBlog – A Minimal and Responsive Blog Website 
+# TechBlog – Ethiopian Bloggers and Developers Website 
 
  ![License](https://img.shields.io/badge/license-MIT-white.svg)
  
-  # 🛠️Tools and Technologies We Will Use 
+  ## 🛠️Tools and Technologies We Will Use 
   
   [![Tools and Technologies](https://skillicons.dev/icons?i=html,css,js,github,git,vscode)](https://skillicons.dev)
 
-A simple and user-friendly tech blog built entirely with HTML, CSS, and JavaScript.  
-The project focuses on clean design, responsive layout, and essential blog functionalities without using any frameworks or backend services.
 
 ---
 
-## 1. Overview
-TechBlog is a front-end only project created to demonstrate core web development skills. It provides a structured layout for browsing articles, filtering posts by category, performing client-side search, and switching between light and dark themes.
+##  Project Overview
+TechBlog-Ethiopia is a comprehensive, modern tech blog platform designed to be the ultimate knowledge sharing hub for Ethiopian developers. It combines cutting-edge frontend technologies with an exceptional user experience to create a community-driven platform for tech enthusiasts, developers, and lifelong learners.
 
-The design emphasizes clarity, readability, and ease of use. All interactivity is handled with vanilla JavaScript, making this project lightweight and easy to understand.
 
 <br>
 
-## 2. Features
+## 🎯 **CORE PURPOSE**
+**A simple, clean Ethiopian tech blog sharing programming tutorials and local tech insights.**
 
-### Core Features
-- Multi-page website (Home, Articles, Categories, Contact)
-- Display of blog articles using HTML templates or JavaScript
-- Client-side search functionality
-- Category-based filtering
-- Light and dark theme switcher
-- Fully responsive design using CSS media queries
-- Clean and readable article layout
+### **1. HOME PAGE (`index.html`)**
+- Show featured Ethiopian tech articles
+- Display recent posts by Ethiopian developers
+- Simple "About TechBlog Ethiopia" intro
+- Newsletter signup for local tech updates
 
-### Small Enhancements (All Front-End Only)
-- Featured article section on the homepage
-- Recently added articles list
-- Smooth scroll for navigation
-- Simple CSS animations and transitions
-- Sticky navigation bar
-- Back-to-top button
-- Optional reading progress bar on article pages
+### **2. BLOG PAGE (`articles.html`)**
+- List all technical articles
+- Filter by categories (Web Dev, Mobile, Ethiopian Tech)
+- Search articles by title/content
+- Show post date and reading time
+
+### **3. SINGLE POST (`post.html`)**
+- Display full article with proper formatting
+- Code snippets with syntax highlighting
+- Author info (Ethiopian developer)
+- Related posts suggestions
+
+### **4. ABOUT PAGE (`about.html`)**
+- Story behind TechBlog Ethiopia
+- Mission to support Ethiopian developers
+- Author/team information
+- Contact methods
+
+### **5. CONTACT PAGE (`contact.html`)**
+- Simple contact form
+- Email, social media links
+- Location (Ethiopia-based)
+
+### **6. RESOURCES PAGE (`resources.html`)**
+- Curated list of useful tools for Ethiopian developers
+- Local tech communities and meetups
+- Learning resources relevant to Ethiopia
+
+## 🛠 **MINIMUM TECHNICAL FEATURES**
+
+### **CONTENT**
+- Technical tutorials that work in Ethiopia
+- Code examples tested in local environment
+- Articles focused on technologies used in Ethiopian market
+
+### **DESIGN**
+- Clean, readable layout
+- Mobile-friendly for Ethiopia's mobile-first users
+- Fast loading for varying internet speeds
+
+### **FUNCTIONALITY**
+- Working contact form
+- Working newsletter signup
+- Basic search and filtering
+- Code copy functionality
+
+## ⚡ **WHAT MAKES IT ETHIOPIAN**
+- Content relevant to Ethiopian developers
+- Local tech ecosystem focus
+- Solutions considering Ethiopian infrastructure
+- Community-oriented approach
 
 <br>
 
@@ -44,27 +82,41 @@ The design emphasizes clarity, readability, and ease of use. All interactivity i
 
 ```
 TechBlog/
-│
-├── index.html
+project-root/
+├── assets/
+|   |──images/
+|   |──icons/
+│   ├── css/
+│   │   ├── main.css 
+│   │   ├── animations.css 
+│   │   ├── index.css
+│   │   ├── articles.css
+│   │   ├── post.css
+│   │   ├── about.css
+│   │   ├── contact.css
+│   │   └── resources.css 
+│   └── js/
+│       ├── main.js 
+│       ├── utils.js 
+│       ├── animations.js 
+│       ├── index.js 
+│       ├── articles.js
+│       ├── post.js 
+│       ├── about.js
+│       ├── contact.js
+│       └── resources.js 
+|   |──docs/
+├── index.html 
 ├── articles.html
-├── categories.html
+├── post.html
+├── main.html
+├── resources.html
+├── about.html 
 ├── contact.html
-│
-├── css/
-│   ├── style.css
-│   ├── responsive.css
-│   └── theme.css
-│
-├── js/
-│   ├── data.js
-│   ├── search.js
-│   ├── filter.js
-│   ├── theme.js
-│   └── app.js
-│
-└── assets/
-    ├── images/
-    └── icons/
+├── footer.html 
+├── sitemap.xml
+└── README.md 
+
 ```
 
 ---
@@ -98,11 +150,13 @@ A simple and clean structure:
 
 ```
 main           → stable production code
-development    → active development
+html-branch    → active development
+css-branch
+js-branch
 feature/...    → new features
 ```
 
-Example feature branches:
+Example feature branches but not added to repo:
 ```
 feature/search
 feature/category-filter
@@ -142,7 +196,7 @@ Refactor: simplify filter logic
 - Allow users to like posts  
 - Add tag-based filtering  
 - Implement a reading progress indicator  
-- Add a simple client-side admin mode  
-- Future upgrade to a backend using Node.js, Express, and MongoDB  
+- Add a simple client-side admin mode
+- Future upgrade to a backend using PHP  and reltime upadte  by using Socket.io
 
 
