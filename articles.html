@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/articles.css" />
   </head>
 
   <body>
@@ -51,50 +52,218 @@
         </p>
       </header>
 
-      <section class="article-list placeholder" id="article">
-        <article>
-          <h2>Sample Article Title</h2>
-          <p>
-            Intro text for the sample article. Real posts will load here later.
-          </p>
-          <a href="article.html">Read more</a>
+      <!-- Articles controls: search, sort and advanced filters -->
+      <section class="articles-controls" aria-label="Article controls">
+        <div class="controls-row">
+          <div class="search-box">
+            <label for="search-input" class="visually-hidden"
+              >Search articles</label
+            >
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Search articles, authors, tags…"
+            />
+          </div>
+
+          <div class="sort-box">
+            <label for="sort-select" class="visually-hidden"
+              >Sort articles</label
+            >
+            <select id="sort-select">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="popular">Most popular</option>
+              <option value="reading_time_asc">
+                Reading time (short → long)
+              </option>
+              <option value="reading_time_desc">
+                Reading time (long → short)
+              </option>
+              <option value="alpha">Alphabetical</option>
+            </select>
+          </div>
+        </div>
+
+        <details class="filters" id="filters">
+          <summary>Advanced filters</summary>
+          <div class="filters-grid">
+            <div class="filter-group">
+              <h4>Categories</h4>
+              <label
+                ><input
+                  type="checkbox"
+                  name="category"
+                  value="Web Development"
+                />
+                Web Development</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="Mobile" />
+                Mobile</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="Data & AI" />
+                Data & AI</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="DevOps" />
+                DevOps</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="category"
+                  value="Ethiopian Tech"
+                />
+                Ethiopian Tech</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="Career" />
+                Career</label
+              >
+            </div>
+
+            <div class="filter-group">
+              <h4>Tags</h4>
+              <div class="tags-list" id="tags-list">
+                <label
+                  ><input type="checkbox" name="tag" value="javascript" />
+                  javascript</label
+                >
+                <label
+                  ><input type="checkbox" name="tag" value="python" />
+                  python</label
+                >
+                <label
+                  ><input type="checkbox" name="tag" value="flutter" />
+                  flutter</label
+                >
+                <label
+                  ><input type="checkbox" name="tag" value="ml" /> ml</label
+                >
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h4>Date range</h4>
+              <label>From <input type="date" id="date-from" /></label>
+              <label>To <input type="date" id="date-to" /></label>
+            </div>
+
+            <div class="filter-group">
+              <h4>Reading time (mins)</h4>
+              <label
+                >Min <input type="number" id="rt-min" min="0" value="0"
+              /></label>
+              <label
+                >Max <input type="number" id="rt-max" min="0" value="60"
+              /></label>
+            </div>
+          </div>
+
+          <div class="filters-actions">
+            <button id="apply-filters" type="button">Apply</button>
+            <button id="clear-filters" type="button">Clear</button>
+          </div>
+        </details>
+      </section>
+
+      <!-- Article grid (static placeholders; JS will later inject live data) -->
+      <section id="articles-container" class="articles-grid" aria-live="polite">
+        <article class="article-card">
+          <img
+            src="assets/images/articles/web.jpg"
+            alt="Featured image: Web performance"
+          />
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Web Development</span
+              ><span class="date">Nov 10, 2025</span>
+            </div>
+            <h3 class="card-title">
+              <a href="post.html">Building Accessible, Performant Web Apps</a>
+            </h3>
+            <p class="excerpt">
+              Practical tips for low-bandwidth environments: optimize images,
+              reduce JS, and prefer progressive enhancement.
+            </p>
+            <div class="meta">
+              <span>6 min read</span><span>· 1.2k views</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag">javascript</span
+              ><span class="tag">performance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img
+            src="assets/images/articles/Ai.jpg"
+            alt="Featured image: Machine learning"
+          />
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Data & AI</span
+              ><span class="date">Oct 28, 2025</span>
+            </div>
+            <h3 class="card-title">
+              <a href="post.html"
+                >Intro to Machine Learning with Local Datasets</a
+              >
+            </h3>
+            <p class="excerpt">
+              How to prepare and use local datasets for ML projects when
+              connectivity and compute are limited.
+            </p>
+            <div class="meta">
+              <span>8 min read</span><span>· 860 views</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag">python</span><span class="tag">ml</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img src="assets/images/articles/Mobile.jpg" alt="Featured image: Mobile" />
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Mobile</span
+              ><span class="date">Sep 14, 2025</span>
+            </div>
+            <h3 class="card-title">
+              <a href="post.html">Cross-platform Mobile Apps: Flutter Tips</a>
+            </h3>
+            <p class="excerpt">
+              Best practices when building Flutter apps for low-end Android
+              devices popular in Ethiopia.
+            </p>
+            <div class="meta">
+              <span>7 min read</span><span>· 940 views</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag">flutter</span><span class="tag">mobile</span>
+            </div>
+          </div>
         </article>
       </section>
-      <section class="category-grid">
-        <h1>Categories</h1>
-        <p>Explore content based on topics relevant to Ethiopian developers.</p>
-        <article>
-          <h2 id="webdev">Web Development</h2>
-          <p>HTML, CSS, JavaScript, frameworks, and modern tooling.</p>
-        </article>
 
-        <article>
-          <h2 id="mobile">Mobile Development</h2>
-          <p>Flutter, React Native, Kotlin, and more.</p>
-        </article>
-
-        <article>
-          <h2 id="data">Data & AI</h2>
-          <p>Machine learning, Python data analysis, and AI trends.</p>
-        </article>
-
-        <article>
-          <h2 id="devops">DevOps & Cloud</h2>
-          <p>Servers, deployment, cloud-native apps.</p>
-        </article>
-
-        <article>
-          <h2 id="ethiopian-tech">Ethiopian Tech Scene</h2>
-          <p>Startups, local innovations, meetups, and community updates.</p>
-        </article>
-
-        <article>
-          <h2 id="career">Career & Opportunities</h2>
-          <p>
-            Job tips, internships, and how to grow as a developer in Ethiopia.
-          </p>
-        </article>
-      </section>
+      <!-- Pagination / Load more (accessible placeholders) -->
+      <div class="pagination-controls">
+        <button id="load-more" type="button">Load more</button>
+        <nav
+          id="pagination"
+          class="pagination"
+          aria-label="Pagination"
+          role="navigation"
+        >
+          <button aria-current="page">1</button>
+          <button>2</button>
+          <button>3</button>
+        </nav>
+      </div>
 
       <section class="community" id="community">
         <section>
