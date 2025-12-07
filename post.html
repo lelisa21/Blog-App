@@ -1,14 +1,199 @@
-<article class="blog-post">
-  <h1>How to Learn JavaScript in 2025</h1>
-  <p class="date">Published on Nov 23, 2025</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How to Learn JavaScript in 2025 — TechBlog Ethiopia</title>
+    <meta
+      name="description"
+      content="Step-by-step guide to mastering JavaScript in 2025 with practical tips, tools, and code samples."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/icons/favicon-32.png"
+    />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/post.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+      integrity="sha512-QFhU0kq3toGpcxtNnGqV3ZzVY1mmrO6Dhz0UuyJLTQrhkxwqHioi8d0OyvNDgJhkjP5buxGNQHqmyA0CxLm5BQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-  <img src="images/js-banner.jpg" alt="JavaScript">
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
 
-  <p>JavaScript is one of the most powerful languages for web development...</p>
+    <div id="progress-container" aria-hidden="true">
+      <div id="progress-bar"></div>
+    </div>
 
-  <h2>1. Understand the Basics</h2>
-  <p>Start with variables, functions, loops, and DOM manipulation.</p>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="index.html">TechBlog Ethiopia</a>
+        <nav aria-label="Main Menu">
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <h2>2. Practice with projects</h2>
-  <p>Build small websites, apps, and games.</p>
-</article>
+    <main id="main" class="post-layout">
+      <aside class="toc" aria-label="Table of contents">
+        <div class="toc-title">On this page</div>
+        <ol id="toc-list"></ol>
+      </aside>
+
+      <article class="blog-post" id="post">
+        <header class="post-header">
+          <p class="eyebrow">JavaScript · Learning Path</p>
+          <h1>How to Learn JavaScript in 2025</h1>
+          <div class="post-meta">
+            <span>Published: Nov 23, 2025</span>
+            <span>· <span id="reading-time">6 min read</span></span>
+            <span>· Updated for ES2025</span>
+          </div>
+          <div class="share-row" aria-label="Share this article">
+            <button class="share-btn" data-share="twitter">Share on X</button>
+            <button class="share-btn" data-share="linkedin">
+              Share on LinkedIn
+            </button>
+            <button class="share-btn" data-share="copy">Copy link</button>
+            <button class="share-btn" data-share="native">Share</button>
+          </div>
+        </header>
+
+        <div class="hero-media">
+          <img
+            src="assets/images/articles/web.jpg"
+            alt="Illustration of JavaScript learning"
+          />
+        </div>
+
+        <section>
+          <h2>1. Understand the Basics</h2>
+          <p>
+            Start with variables, functions, loops, DOM manipulation, and the
+            new Temporal API. Focus on writing small utilities and practicing
+            with everyday tasks.
+          </p>
+          <pre><code class="language-js">// Declare, loop, and map
+const users = ["Sena", "Kiya", "Abel"];
+const greetings = users.map(name => `Selam ${name}!`);
+console.log(greetings.join(" | "));</code></pre>
+        </section>
+
+        <section>
+          <h2>2. Practice with Projects</h2>
+          <p>
+            Build small websites, mobile-friendly widgets, and dashboards. Ship
+            fast, iterate, and refactor.
+          </p>
+          <div class="code-runner" data-language="html">
+            <div class="runner-header">
+              <span>Live code demo</span>
+              <button class="run-btn" type="button">Run</button>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <textarea class="runner-editor" rows="10">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body style="font-family: system-ui; padding: 1rem"&gt;
+  &lt;h2&gt;Counter&lt;/h2&gt;
+  &lt;button id="btn"&gt;Clicked 0 times&lt;/button&gt;
+  &lt;script&gt;
+    let n = 0;
+    document.getElementById('btn').onclick = () => {
+      document.getElementById('btn').textContent = `Clicked ${++n} times`;
+    };
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+          </textarea
+            >
+            <iframe
+              title="Live preview"
+              class="runner-preview"
+              sandbox="allow-scripts"
+            ></iframe>
+          </div>
+        </section>
+
+        <section>
+          <h2>3. Learn Modern Patterns</h2>
+          <p>
+            Adopt patterns like async/await, fetch streaming, and
+            AbortController for responsive apps.
+          </p>
+          <pre><code class="language-js">async function getData(signal) {
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts", { signal });
+  if (!res.ok) throw new Error("Request failed");
+  return res.json();
+}
+
+const controller = new AbortController();
+getData(controller.signal).then(console.log).catch(console.error);
+setTimeout(() => controller.abort(), 2000);</code></pre>
+        </section>
+
+        <section>
+          <h2>4. Sharpen Debugging & Tooling</h2>
+          <p>
+            Use browser devtools, performance panel, and coverage to keep
+            bundles lean.
+          </p>
+          <pre><code class="language-bash">npm create vite@latest js-learning
+cd js-learning
+npm install
+npm run dev</code></pre>
+        </section>
+
+        <section>
+          <h2>5. Join the Community</h2>
+          <p>
+            Contribute to Ethiopian OSS, join meetups, and read local tech
+            blogs. Learning together accelerates growth.
+          </p>
+        </section>
+
+        <section class="social-share" aria-label="Social sharing">
+          <h2>Share this guide</h2>
+          <div class="share-row">
+            <button class="share-btn" data-share="twitter">Share on X</button>
+            <button class="share-btn" data-share="linkedin">
+              Share on LinkedIn
+            </button>
+            <button class="share-btn" data-share="copy">Copy link</button>
+            <button class="share-btn" data-share="native">Share</button>
+          </div>
+        </section>
+
+        <section class="related" aria-label="Related articles">
+          <div class="section-heading">
+            <h2>Related posts</h2>
+            <p>Handpicked recommendations based on this topic.</p>
+          </div>
+          <div class="related-grid" id="related-grid"></div>
+        </section>
+
+        <section class="comments" aria-label="Comments preview">
+          <h2>Comments (preview)</h2>
+          <div id="comments-list"></div>
+          <p class="muted">
+            This is a mock preview. Real commenting will arrive soon.
+          </p>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
