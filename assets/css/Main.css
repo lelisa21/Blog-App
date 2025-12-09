@@ -1,0 +1,88 @@
+/* --- Global Reset & Utilities --- */
+:root {
+    --primary-color: #007bff;
+    --header-bg: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    --text-color: #333;
+    --spacing: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; line-height: 1.6; color: var(--text-color); }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing); }
+.skip-link {
+    position: absolute; left: -9999px; padding: 8px; background: #333; color: white;
+    z-index: 9999;
+}
+.skip-link:focus { left: 0; } /* Make visible on focus */
+
+/* --- Sticky Header & Blur Effect --- */
+#main-header {
+    background: var(--header-bg);
+    position: fixed; /* Start fixed */
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out; /* For autohide/show */
+    backdrop-filter: blur(5px); /* The key blur effect */
+}
+#main-header.hidden {
+    transform: translateY(-100%); /* Used by JS to hide on scroll down */
+}
+#main-header .container {
+    display: flex; justify-content: space-between; align-items: center;
+    height: 60px;
+}
+
+/* --- Navigation & Mega Menu --- */
+#desktop-nav .nav-list { display: flex; list-style: none; }
+#desktop-nav .nav-list > li { padding: 0 15px; position: relative; }
+#desktop-nav .nav-list a { text-decoration: none; color: var(--text-color); padding: 20px 0; display: block; }
+#desktop-nav .nav-list a:hover { color: var(--primary-color); }
+
+/* Mega Menu Styling */
+.mega-menu {
+    display: none; /* Hidden by default, shown via CSS/JS hover/focus */
+    position: absolute; left: 0; top: 100%;
+    width: 600px; background: white; padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-top: 3px solid var(--primary-color);
+}
+#desktop-nav .nav-list > li:hover .mega-menu { display: flex; gap: 40px; }
+.mega-col h3 { margin-bottom: 10px; color: var(--primary-color); }
+.mega-col ul { list-style: none; }
+
+/* --- Search Modal (Fullscreen) --- */
+.search-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.98); /* Near-opaque white background */
+    z-index: 2000;
+    display: none; /* Hidden by default, shown by JS */
+    padding-top: 10vh; text-align: center;
+}
+#search-input {
+    width: 80%; max-width: 600px; padding: 15px 20px; font-size: 1.5em;
+    border: none; border-bottom: 3px solid var(--primary-color); outline: none;
+    margin-bottom: 20px;
+}
+.close-modal {
+    position: absolute; top: 30px; right: 30px; 
+    font-size: 2em; background: none; border: none; cursor: pointer;
+}
+
+/* --- Mobile Navigation & Hamburger --- */
+.hamburger { background: none; border: none; cursor: pointer; display: none; } /* Hidden on desktop */
+/* Add media queries here for mobile viewports */
+
+/* --- Breadcrumb Navigation --- */
+.breadcrumb ol { list-style: none; display: flex; padding: 15px 0; font-size: 0.9em; }
+.breadcrumb li:not(:last-child)::after { content: ' / '; margin: 0 5px; }
+.breadcrumb a { text-decoration: none; color: #666; }
+
+/* Add styles for responsive views here */
+@media (max-width: 768px) {
+    #desktop-nav { display: none; }
+    .hamburger { display: block; }
+    /* Mobile navigation styles */
+    .mobile-nav {
+        /* ... smooth slide-in styles here ... */
+    }
+}
