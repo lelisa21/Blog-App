@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blog - Home & Latest Posts</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header id="main-header" role="banner">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">Tech Blog</a></h1>
+            
+            <nav id="desktop-nav" role="navigation" aria-label="Main Blog Categories">
+                <ul class="nav-list">
+                    <li><a href="#">Categories</a>
+                        <div class="mega-menu" role="menu">
+                            <div class="mega-col">
+                                <h3>Tech Stacks</h3>
+                                <ul>
+                                    <li><a href="#">Frontend Dev</a></li>
+                                    <li><a href="#">Backend Dev</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h3>Recent Posts</h3>
+                                <ul class="recent-posts">
+                                    <li><a href="#">Post Title One</a></li>
+                                    <li><a href="#">Post Title Two</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="resources.html">Resources Hub</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-utility">
+                <button id="search-toggle" aria-label="Open fullscreen search" aria-haspopup="dialog"><i class="fas fa-search"></i></button>
+                <button id="mobile-menu-toggle" class="hamburger" aria-label="Toggle mobile menu" aria-controls="mobile-nav" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-heading">
+        <button class="close-modal" aria-label="Close search modal"><i class="fas fa-times"></i></button>
+        <h2 id="search-heading" class="visually-hidden">Site Search</h2>
+        <input type="search" id="search-input" placeholder="Start typing to see instant results..." aria-label="Search the blog">
+        <div id="search-results" class="search-results-container">
+            <p>Type to search...</p>
+        </div>
+    </div>
+    
+    <nav id="mobile-nav" class="mobile-nav" aria-hidden="true" role="navigation">
+        </nav>
+
+    <main id="main-content">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    </ol>
+            </nav>
+
+            <h2>Welcome to Sami Tech Blog</h2>
+            <p>Latest tech insights and posts...</p>
+            </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
