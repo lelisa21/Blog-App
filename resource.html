@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sami Tech Resources Hub</title>
+    <link rel="stylesheet" href="assets/css/main.css"> 
+    <link rel="stylesheet" href="assets/css/resources.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <main id="resource-content">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Resources Hub</li>
+                </ol>
+            </nav>
+
+            <h2>📚 Interactive Learning Resources</h2>
+
+            <div id="resource-filters" class="filters-bar">
+                <button data-filter="all" class="active">All Resources</button>
+                <button data-filter="book">Books</button>
+                <button data-filter="tool">Tools</button>
+                <button data-filter="course">Courses</button>
+            </div>
+
+            <section id="resource-grid" class="resource-grid">
+                <div class="resource-item" data-type="book" data-topic="js">
+                    <h3>The Modern JS Guide</h3>
+                    <p>Essential reading for any web developer.</p>
+                    
+                    <div class="voting-system">
+                        <button class="vote-up" aria-label="Upvote resource"><i class="fas fa-caret-up"></i></button>
+                        <span class="vote-count">145</span>
+                        <button class="vote-down" aria-label="Downvote resource"><i class="fas fa-caret-down"></i></button>
+                    </div>
+
+                    <a href="#" class="btn">View Details</a>
+                    <button class="btn-cheat" data-id="js-guide-1">Download Cheatsheet (PDF)</button>
+                </div>
+                </section>
+
+            <hr>
+
+            <section class="skill-trackers">
+                <h3>📈 My Skill Progress</h3>
+                <div class="skill-tracker" data-skill="HTML/CSS">
+                    <h4>HTML/CSS Proficiency</h4>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
+                    </div>
+                </div>
+                </section>
+            
+            <hr>
+
+            <section class="recommendations">
+                <h3>Featured Recommendations</h3>
+                <div class="carousel-container">
+                    <div class="recommendation-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                        <h4>Title: Deep Learning Zero to One</h4>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script> <script src="assets/js/resources.js"></script>
+</body>
+</html>
