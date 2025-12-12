@@ -1,6 +1,242 @@
-/* Dark theme variables — JS will toggle later */
-:root[data-theme="dark"] {
-  --bg: #0b0f14;
-  --text: #e6eef8;
-  --accent: #53a7ff;
+/* Any of you can change or if it's makes nonsence for you but please consider this comes through deep research*/
+
+:root {
+    /* Primary Colors */
+    --color-primary: #7efff5;         
+    --color-primary-dark: #00d9c0;     
+    --color-secondary: #ff6ec7;       
+    --color-accent: #ffd166;           
+    --color-danger: #ff5e6c;          
+    --color-success: #9ef01a;         
+    
+    /* Background*/
+    --color-bg: #0b0b1f;               
+    --color-surface: #1a1a3a;         
+    --color-card: #15152e;             
+    --color-hover: rgba(126, 255, 245, 0.08); 
+    
+    /* Text Spectrum */
+    --color-text: #e6f7ff;             
+    --color-text-secondary: #b3e0ff;   
+    --color-text-muted: #80caff;       
+    
+    /* UI Elements */
+    --color-border: rgba(126, 255, 245, 0.15); 
+    --color-shadow: rgba(255, 110, 199, 0.2);  
+    
+    /* Advanced Gradients */
+    --gradient-primary: linear-gradient(
+        135deg, 
+        var(--color-primary) 0%, 
+        #ff6ec7 50%, 
+        #9ef01a 100%
+    );
+    --gradient-bg: radial-gradient(
+        circle at 30% 20%,
+        #1a1a3a 0%,
+        #0b0b1f 70%
+    );
+    --gradient-card: linear-gradient(
+        145deg,
+        rgba(126, 255, 245, 0.05) 0%,
+        rgba(255, 110, 199, 0.02) 100%
+    );
+    
+    /* Dynamic */
+    --shadow-sm: 
+        0 2px 12px rgba(126, 255, 245, 0.15),
+        0 1px 4px rgba(255, 110, 199, 0.1);
+    --shadow-md: 
+        0 8px 32px rgba(126, 255, 245, 0.2),
+        0 4px 16px rgba(255, 110, 199, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --shadow-lg: 
+        0 20px 60px rgba(126, 255, 245, 0.25),
+        0 10px 40px rgba(255, 110, 199, 0.2),
+        0 0 0 1px rgba(126, 255, 245, 0.1);
+    
+    /* Glow */
+    --glow-primary: 
+        0 0 30px rgba(126, 255, 245, 0.6),
+        0 0 60px rgba(126, 255, 245, 0.3);
+    --glow-secondary: 
+        0 0 30px rgba(255, 110, 199, 0.6),
+        0 0 60px rgba(255, 110, 199, 0.3);
+    --glow-accent: 
+        0 0 25px rgba(158, 240, 26, 0.5),
+        0 0 50px rgba(158, 240, 26, 0.2);
+    
+    /* Shapes & Motion */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 40px;
+    --radius-full: 9999px;
+    
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Typography */
+    --font-heading: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    
+    /* Special Effects */
+    --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+    --grid-overlay: linear-gradient(
+            rgba(126, 255, 245, 0.03) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(126, 255, 245, 0.03) 1px,
+            transparent 1px
+        );
+    --grid-size: 20px;
+    
+    /* Scrollbar */
+    --scrollbar-thumb: linear-gradient(
+        to bottom,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+    --scrollbar-track: var(--color-bg);
+}
+
+/*LIGHT THEME*/
+[data-theme="light"] {
+    /* Primary Colors */
+    --color-primary: #00c2ff;         
+    --color-primary-dark: #0088cc;    
+    --color-secondary: #ff4d8d;       
+    --color-accent: #ff9e00;         
+    --color-danger: #ff3366;      
+    --color-success: #00e676;    
+    
+    /* Background */
+    --color-bg: #f8fcff;             
+    --color-surface: #ffffff;        
+    --color-card: #f0f9ff;          
+    --color-hover: rgba(0, 194, 255, 0.06);
+    
+    /* Text Spectrum  */
+    --color-text: #0a1931;            
+    --color-text-secondary: #3a506b;  
+    --color-text-muted: #5d7a9c;      
+    
+    /* UI Elements */
+    --color-border: rgba(0, 194, 255, 0.2); 
+    --color-shadow: rgba(255, 77, 141, 0.12); 
+    
+    /* Advanced Gradients */
+    --gradient-primary: linear-gradient(
+        135deg, 
+        var(--color-primary) 0%, 
+        #ff4d8d 50%, 
+        #00e676 100%
+    );
+    --gradient-bg: linear-gradient(
+        135deg,
+        #f8fcff 0%,
+        #e6f7ff 100%
+    );
+    --gradient-card: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(240, 249, 255, 0.98) 100%
+    );
+    
+    /* Dynamic Shadows */
+    --shadow-sm: 
+        0 2px 12px rgba(0, 194, 255, 0.08),
+        0 1px 4px rgba(255, 77, 141, 0.06);
+    --shadow-md: 
+        0 8px 32px rgba(0, 194, 255, 0.12),
+        0 4px 16px rgba(255, 77, 141, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    --shadow-lg: 
+        0 20px 60px rgba(0, 194, 255, 0.15),
+        0 10px 40px rgba(255, 77, 141, 0.1),
+        0 0 0 1px rgba(0, 194, 255, 0.08);
+    
+    /* Glow Effects */
+    --glow-primary: 
+        0 0 25px rgba(0, 194, 255, 0.4),
+        0 0 50px rgba(0, 194, 255, 0.2);
+    --glow-secondary: 
+        0 0 25px rgba(255, 77, 141, 0.4),
+        0 0 50px rgba(255, 77, 141, 0.2);
+    --glow-accent: 
+        0 0 20px rgba(255, 158, 0, 0.4),
+        0 0 40px rgba(255, 158, 0, 0.2);
+    
+    /* Special Effects */
+    --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+    --grid-overlay: linear-gradient(
+            rgba(0, 194, 255, 0.02) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 194, 255, 0.02) 1px,
+            transparent 1px
+        );
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes hologram-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.97; }
+}
+
+@keyframes energy-pulse {
+    0% { box-shadow: var(--glow-primary); }
+    50% { box-shadow: var(--glow-secondary); }
+    100% { box-shadow: var(--glow-primary); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/*CUSTOM PROPERTIES FOR ADVANCED EFFECTS*/
+@property --hue-rotate {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Holographic color shift effect */
+.holographic {
+    animation: hologram-flicker 3s infinite ease-in-out,
+               hue-rotate 10s infinite linear;
+}
+
+/* Dynamic gradient background */
+.dynamic-bg {
+    background: var(--gradient-bg);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glass morphism effect */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
