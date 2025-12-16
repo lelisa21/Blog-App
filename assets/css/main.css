@@ -1,0 +1,43 @@
+.stat-card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+}
+.stat-card i{
+    padding: 10px;
+    font-size: 32px;
+}
+.categories-grid , .showcase-grid , .challenges-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit , minmax(300px , 1fr));
+    gap: 2rem;
+}
+.category-card , .showcase-card , .challenge-card{
+    background: var(--color-card);
+    border: var(--color-border);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    height: 100%;
+    
+}
+.showcase-card:hover{
+animation: energy-pulse 1.4s step-start;
+}
+.resource-card , .category-icon{
+    text-align: center;
+}
+.challenge-btn{
+    margin: 15px 0;
+   background-color: var(--color-secondary); 
+   padding:  5px 10px;
+   border-radius: 10px;
+   color: var(--color-accent-secondary);
+}
+.challenge-btn:hover{
+    scale: 1.1;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color-cars);
+}

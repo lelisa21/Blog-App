@@ -179,7 +179,6 @@ a:hover {
     cursor: pointer;
 }
 
-/*  SEARCH OVERLAY  */
 .search-overlay {
     position: fixed;
     top: 0;
@@ -379,7 +378,7 @@ a:hover {
 
 .section-title {
     text-align: center;
-    margin-bottom: 3rem;
+    margin: 2rem 0;
     font-size: 2.5rem;
 }
 
@@ -422,7 +421,6 @@ a:hover {
     font-weight: 600;
 }
 
-/*  ETHIOPIAN TECH SECTION  */
 .ethiopian-tech {
     padding: 4rem 0;
 }

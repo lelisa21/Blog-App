@@ -4,7 +4,7 @@
   /* Primary Colors */
   --color-primary: #7efff5;
   --color-primary-dark: #00d9c0;
-  --color-secondary: #d1ff6eab;
+  --color-secondary: #d1ff6eb6;
   --color-accent: #ffd166;
   --color-accent-secondary:#784fb6;
   --color-danger: #ff5e6c;
@@ -96,7 +96,7 @@
   --color-primary: #00ff6ea3;
   --color-primary-dark: #0088cc;
   --color-secondary: #ff4d8d;
-  --color-accent: #ff9e00;
+  --color-accent: #ddff00;
   --color-danger: #ff3366;
   --color-success: #00e676;
 
@@ -145,8 +145,6 @@
   --glow-accent: 0 0 20px rgba(255, 158, 0, 0.4),
     0 0 40px rgba(255, 158, 0, 0.2);
 
-  /* Special Effects */
-  --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
   --grid-overlay: linear-gradient(rgba(0, 194, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 194, 255, 0.02) 1px, transparent 1px);
 }
