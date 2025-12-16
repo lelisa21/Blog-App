@@ -4,7 +4,7 @@ nav {
   background: var(--color-hover);
   padding: 10px 20px;
   position: sticky;
-  top: 0;
+  top: 30px;
   z-index: 1000;
 }
 
