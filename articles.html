@@ -25,35 +25,40 @@
   </head>
 
   <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
-
-    <header class="site-header">
+    <header class="site-header gradient-bar">
       <div class="container">
-        <a class="brand" href="index.html">ETC -Ethiopia</a>
-
+        <a class="brand" href="index.html">ETC Ethiopia</a>
         <nav aria-label="Main Menu">
           <ul class="menu">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#articles" aria-current="page">Articles</a></li>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#resources">Resources</a></li>
-            <li><a href="#community">Community</a></li>
+            <li><a href="articles.html" aria-current="page">Articles</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="about.html">About</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
     <main id="main" class="container">
-      <header>
-        <h1>All Articles</h1>
-        <p>
-          Explore tutorials, tech insights, and guides written by Ethiopian
-          developers.
+      <header class="page-header hero-lite">
+        <div class="eyebrow">Explore</div>
+        <h1 class="page-title">All Articles</h1>
+        <p class="page-subtitle">
+          Tutorials, insights, and guides by Ethiopian developers.
         </p>
+        <div class="header-actions">
+          <a class="btn btn-primary" href="post.html"
+            ><i class="fas fa-pen"></i> Write</a
+          >
+          <a class="btn btn-secondary" href="resources.html"
+            ><i class="fas fa-compass"></i> Resources</a
+          >
+        </div>
       </header>
 
       <!-- Articles controls: search, sort and advanced filters -->
-      <section class="articles-controls" aria-label="Article controls">
+      <section class="articles-controls sticky" aria-label="Article controls">
         <div class="controls-row">
           <div class="search-box">
             <label for="search-input" class="visually-hidden"
@@ -63,6 +68,7 @@
               id="search-input"
               type="search"
               placeholder="Search articles, authors, tags…"
+              class="input input-lg"
             />
           </div>
 
@@ -70,7 +76,7 @@
             <label for="sort-select" class="visually-hidden"
               >Sort articles</label
             >
-            <select id="sort-select">
+            <select id="sort-select" class="select">
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="popular">Most popular</option>
@@ -84,89 +90,6 @@
             </select>
           </div>
         </div>
-
-        <details class="filters" id="filters">
-          <summary>Advanced filters</summary>
-          <div class="filters-grid">
-            <div class="filter-group">
-              <h4>Categories</h4>
-              <label
-                ><input
-                  type="checkbox"
-                  name="category"
-                  value="Web Development"
-                />
-                Web Development</label
-              >
-              <label
-                ><input type="checkbox" name="category" value="Mobile" />
-                Mobile</label
-              >
-              <label
-                ><input type="checkbox" name="category" value="Data & AI" />
-                Data & AI</label
-              >
-              <label
-                ><input type="checkbox" name="category" value="DevOps" />
-                DevOps</label
-              >
-              <label
-                ><input
-                  type="checkbox"
-                  name="category"
-                  value="Ethiopian Tech"
-                />
-                Ethiopian Tech</label
-              >
-              <label
-                ><input type="checkbox" name="category" value="Career" />
-                Career</label
-              >
-            </div>
-
-            <div class="filter-group">
-              <h4>Tags</h4>
-              <div class="tags-list" id="tags-list">
-                <label
-                  ><input type="checkbox" name="tag" value="javascript" />
-                  javascript</label
-                >
-                <label
-                  ><input type="checkbox" name="tag" value="python" />
-                  python</label
-                >
-                <label
-                  ><input type="checkbox" name="tag" value="flutter" />
-                  flutter</label
-                >
-                <label
-                  ><input type="checkbox" name="tag" value="ml" /> ml</label
-                >
-              </div>
-            </div>
-
-            <div class="filter-group">
-              <h4>Date range</h4>
-              <label>From <input type="date" id="date-from" /></label>
-              <label>To <input type="date" id="date-to" /></label>
-            </div>
-
-            <div class="filter-group">
-              <h4>Reading time (mins)</h4>
-              <label
-                >Min <input type="number" id="rt-min" min="0" value="0"
-              /></label>
-              <label
-                >Max <input type="number" id="rt-max" min="0" value="60"
-              /></label>
-            </div>
-          </div>
-
-          <div class="filters-actions">
-            <button id="apply-filters" type="button">Apply</button>
-            <button id="clear-filters" type="button">Clear</button>
-          </div>
-        </details>
       </section>
 
       <!-- Article grid (static placeholders; JS will later inject live data) -->
@@ -178,7 +101,7 @@
           />
           <div class="card-body">
             <div class="card-meta">
-              <span class="category">Web Development</span
+              <span class="category badge">Web Development</span
               ><span class="date">Nov 10, 2025</span>
             </div>
             <h3 class="card-title">
@@ -205,7 +128,7 @@
           />
           <div class="card-body">
             <div class="card-meta">
-              <span class="category">Data & AI</span
+              <span class="category badge">Data & AI</span
               ><span class="date">Oct 28, 2025</span>
             </div>
             <h3 class="card-title">
@@ -233,7 +156,7 @@
           />
           <div class="card-body">
             <div class="card-meta">
-              <span class="category">Mobile</span
+              <span class="category badge">Mobile</span
               ><span class="date">Sep 14, 2025</span>
             </div>
             <h3 class="card-title">
@@ -251,20 +174,75 @@
             </div>
           </div>
         </article>
+
+        <article class="article-card">
+          <img
+            src="assets/images/articles/devops.jpg"
+            alt="Featured image: DevOps"
+          />
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category badge">DevOps</span
+              ><span class="date">Aug 02, 2025</span>
+            </div>
+            <h3 class="card-title">
+              <a href="post.html">CI/CD for Small Teams</a>
+            </h3>
+            <p class="excerpt">
+              Practical GitHub Actions pipelines tailored for Ethiopian startups
+              and student projects.
+            </p>
+            <div class="meta">
+              <span>5 min read</span><span>· 520 views</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag">github-actions</span
+              ><span class="tag">ci-cd</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img
+            src="assets/images/articles/datas.jpg"
+            alt="Featured image: Data"
+          />
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category badge">Data</span
+              ><span class="date">Jul 21, 2025</span>
+            </div>
+            <h3 class="card-title">
+              <a href="post.html">Visualizing Local Data with D3</a>
+            </h3>
+            <p class="excerpt">
+              Create lightweight interactive charts that work well on low
+              bandwidth.
+            </p>
+            <div class="meta">
+              <span>9 min read</span><span>· 760 views</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag">d3</span><span class="tag">visualization</span>
+            </div>
+          </div>
+        </article>
       </section>
 
       <!-- Pagination / Load more (accessible placeholders) -->
       <div class="pagination-controls">
-        <button id="load-more" type="button">Load more</button>
+        <button id="load-more" type="button" class="btn btn-primary">
+          Load more
+        </button>
         <nav
           id="pagination"
           class="pagination"
           aria-label="Pagination"
           role="navigation"
         >
-          <button aria-current="page">1</button>
-          <button>2</button>
-          <button>3</button>
+          <button class="page-btn" aria-current="page">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
         </nav>
       </div>
 
