@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href=" assets/css/resources.css">
 
     <title>Resources — TechBlog Ethiopia</title>
     <meta
@@ -11,6 +12,9 @@
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="/resources.html" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
 
     <link
       rel="icon"
@@ -18,16 +22,13 @@
       sizes="32x32"
       href="assets/icons/favicon-32.png"
     />
-    <link rel="stylesheet" href="assets/css/nav.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/theme.css" />
   </head>
 
-  <body>
+  <body data-theme="dark" class="dynamic-bg">
     <a href="#main" class="skip-link">Skip to main content</a>
 
-    <header class="site-header">
-      <div class="container">
+    <header class="site-header glass">
+      <div class="container header-inner">
         <a class="brand" href="index.html">ETC</a>
 
         <nav aria-label="Main Menu">
@@ -41,59 +42,132 @@
     </header>
 
     <main id="main" class="container">
-      <header>
+      <header class="page-header">
         <h1>Developer Resources</h1>
-        <p>Useful tools, documentation, and guides for Ethiopian devs.</p>
+        <p class="lead">Useful tools, documentation, and learning paths for Ethiopian developers.</p>
       </header>
 
-      <section class="resource-list">
-        <article>
-          <h2>Ethiopian Developer Communities</h2>
-          <ul>
-            <li><a href="https://gdg.community.dev/gdg-addis/">GDG Addis</a></li>
-            <li><a href="#">AWS User Group Ethiopia</a></li>
-            <li><a href="#">Ethiopian Linux Users</a></li>
-            <li><a href="https://www.addiscoder.com/">Addis Coder</a></li>
-          </ul>
+      <section class="resource-grid">
+        <article class="card">
+          <div class="card-head">
+            <h2>Ethiopian Developer Communities</h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><a href="#" class="link">GDG Addis</a></li>
+              <li><a href="#" class="link">AWS User Group Ethiopia</a></li>
+              <li><a href="#" class="link">Ethiopian Linux Users</a></li>
+              <li><a href="#" class="link">AddisJS</a></li>
+              <li><a href="#" class="link">Women in Tech Ethiopia</a></li>
+            </ul>
+          </div>
         </article>
 
-        <article>
-          <h2>Learning Roadmaps</h2>
-          <ul>
-            <li><a href="#">Frontend Developer Path</a></li>
-            <li><a href="https://www.meetup.com/aws-user-group-addis-ababa">Backend Developer Path</a></li>
-            <li><a href="#">Mobile Developer Path</a></li>
-          </ul>
+        <article class="card">
+          <div class="card-head">
+            <h2>Learning Roadmaps</h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><a href="#" class="link">Frontend Developer Path</a></li>
+              <li><a href="#" class="link">Backend Developer Path</a></li>
+              <li><a href="#" class="link">Mobile Developer Path</a></li>
+              <li><a href="#" class="link">Data Science Path</a></li>
+              <li><a href="#" class="link">Cloud & DevOps Path</a></li>
+            </ul>
+          </div>
         </article>
 
-        <article>
-          <h2>Open Source in Ethiopia</h2>
-          <p>Local projects you can contribute to.</p>
+        <article class="card">
+          <div class="card-head">
+            <h2>Open Source in Ethiopia</h2>
+          </div>
+          <div class="card-body">
+            <p>Local projects you can contribute to and starter issues for first-time contributors.</p>
+            <ul>
+              <li><a href="#" class="link">Ethiopia Open Data Projects</a></li>
+              <li><a href="#" class="link">Local civic tech repos</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card highlight">
+          <div class="card-head">
+            <h2>Tech Media and News</h2>
+          </div>
+          <div class="card-body">
+            <p>Follow these outlets for policy updates, startup news, and analysis.</p>
+            <ul>
+              <li><a href="#" class="link">Shega</a></li>
+              <li><a href="#" class="link">Zare Journal</a></li>
+              <li><a href="#" class="link">Ethiopian Innovation News</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Learning Hubs and Bootcamps</h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><a href="#" class="link">A2SV Academy</a></li>
+              <li><a href="#" class="link">IceAddis</a></li>
+              <li><a href="#" class="link">Yared Technology School</a></li>
+              <li><a href="#" class="link">ZalaTech Learning Hub</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Government and Policy</h2>
+          </div>
+          <div class="card-body">
+            <p>Key policy and strategy documents to understand the national digital agenda.</p>
+            <ul>
+              <li><a href="#" class="link">Digital Ethiopia 2025</a></li>
+              <li><a href="#" class="link">Ministry of Innovation and Technology</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Startup Hubs and Incubators</h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><a href="#" class="link">IceAddis Incubator</a></li>
+              <li><a href="#" class="link">BlueMoon Labs</a></li>
+              <li><a href="#" class="link">Sheba Valley</a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card callout">
+          <div class="card-head">
+            <h2>How to Get Started</h2>
+          </div>
+          <div class="card-body">
+            <ol>
+              <li>Pick a learning path and follow the roadmap.</li>
+              <li>Join a local community for mentorship and events.</li>
+              <li>Contribute to open source and build a portfolio.</li>
+            </ol>
+          </div>
         </article>
       </section>
 
-      <section class="learning-hubs">
-        <h2>Digital Leaning Hubs</h2>
-   <li><a href="https://ethiopia.alxafrica.com/">ALX Ethiopia</a></li>
-   <li><a href="https://zalatechs.com/">Zala Tech</a></li>
-   <li><a href="https://learning.gov.et/all-courses/">Digital Ethiopia</a></li>
-   <li><a href=""></a></li>
-   <li><a href=""></a></li>
-
-      </section>
-      <section class="internship">
-        <h2>Internship Program companies</h2>
-        <li><a href="https://mereb.tech"></a>mereb Technology</li>
-        <li><a href="https://minabtech.com">Minab Tech</a></li>
-        <li><a href=""></a></li>
-        <li><a href=""></a></li>
-        <li><a href=""></a></li>
+      <section class="resources-footer">
+        <h2>Contribute and Suggest Resources</h2>
+        <p>If you have a resource to add, open an issue on our GitHub or email the editors.</p>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer glass">
       <div class="container">
-        <p>© 2025 ETC Ethiopia</p>
+        <p>© 2025 TechBlog Ethiopia</p>
       </div>
     </footer>
 
