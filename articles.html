@@ -58,51 +58,18 @@
       </header>
 
       <!-- Articles controls: search, sort and advanced filters -->
-      <section class="articles-controls sticky" aria-label="Article controls">
-        <div class="controls-row">
-          <div class="search-box">
-            <label for="search-input" class="visually-hidden"
-              >Search articles</label
-            >
-            <input
-              id="search-input"
-              type="search"
-              placeholder="Search articles, authors, tags…"
-              class="input input-lg"
-            />
-          </div>
-
-          <div class="sort-box">
-            <label for="sort-select" class="visually-hidden"
-              >Sort articles</label
-            >
-            <select id="sort-select" class="select">
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="popular">Most popular</option>
-              <option value="reading_time_asc">
-                Reading time (short → long)
-              </option>
-              <option value="reading_time_desc">
-                Reading time (long → short)
-              </option>
-              <option value="alpha">Alphabetical</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <!-- Article grid (static placeholders; JS will later inject live data) -->
       <section id="articles-container" class="articles-grid" aria-live="polite">
         <article class="article-card">
-          <img
-            src="assets/images/articles/web.jpg"
-            alt="Featured image: Web performance"
-          />
+          <div class="card-media">
+            <img
+              src="assets/images/articles/web.jpg"
+              alt="Featured image: Web performance"
+            />
+          </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="category badge">Web Development</span
-              ><span class="date">Nov 10, 2025</span>
+              <span class="category badge category-web">Web Development</span>
+              <span class="date">Nov 10, 2025</span>
             </div>
             <h3 class="card-title">
               <a href="post.html">Building Accessible, Performant Web Apps</a>
@@ -112,24 +79,43 @@
               reduce JS, and prefer progressive enhancement.
             </p>
             <div class="meta">
-              <span>6 min read</span><span>· 1.2k views</span>
+              <span class="reading-time">6 min read</span>
+              <span class="views">1.2k views</span>
             </div>
             <div class="card-tags">
-              <span class="tag">javascript</span
-              ><span class="tag">performance</span>
+              <span class="tag">javascript</span>
+              <span class="tag">performance</span>
+            </div>
+            <div class="card-footer">
+              <div class="author">
+                <span class="name">Akila Kibrom</span>
+              </div>
+              <div class="card-actions">
+                <button class="icon-btn like" aria-label="Like article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
+                </button>
+                <button class="icon-btn bookmark" aria-label="Bookmark article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </button>
+                <a class="read-more" href="post.html">
+                  Read more <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="article-card">
-          <img
-            src="assets/images/articles/Ai.jpg"
-            alt="Featured image: Machine learning"
-          />
+          <div class="card-media">
+            <img
+              src="assets/images/articles/Ai.jpg"
+              alt="Featured image: Machine learning"
+            />
+          </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="category badge">Data & AI</span
-              ><span class="date">Oct 28, 2025</span>
+              <span class="category badge category-data">Data &amp; AI</span>
+              <span class="date">Oct 28, 2025</span>
             </div>
             <h3 class="card-title">
               <a href="post.html"
@@ -141,23 +127,42 @@
               connectivity and compute are limited.
             </p>
             <div class="meta">
-              <span>8 min read</span><span>· 860 views</span>
+              <span class="reading-time">8 min read</span>
+              <span class="views">860 views</span>
             </div>
             <div class="card-tags">
               <span class="tag">python</span><span class="tag">ml</span>
+            </div>
+            <div class="card-footer">
+              <div class="author">
+                <span class="name">Tilahun Shiferaw</span>
+              </div>
+              <div class="card-actions">
+                <button class="icon-btn like" aria-label="Like article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
+                </button>
+                <button class="icon-btn bookmark" aria-label="Bookmark article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </button>
+                <a class="read-more" href="post.html">
+                  Read more <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="article-card">
-          <img
-            src="assets/images/articles/Mobile.jpg"
-            alt="Featured image: Mobile"
-          />
+          <div class="card-media">
+            <img
+              src="assets/images/articles/Mobile.jpg"
+              alt="Featured image: Mobile"
+            />
+          </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="category badge">Mobile</span
-              ><span class="date">Sep 14, 2025</span>
+              <span class="category badge category-mobile">Mobile</span>
+              <span class="date">Sep 14, 2025</span>
             </div>
             <h3 class="card-title">
               <a href="post.html">Cross-platform Mobile Apps: Flutter Tips</a>
@@ -167,50 +172,79 @@
               devices popular in Ethiopia.
             </p>
             <div class="meta">
-              <span>7 min read</span><span>· 940 views</span>
+              <span class="reading-time">7 min read</span>
+              <span class="views">940 views</span>
             </div>
             <div class="card-tags">
               <span class="tag">flutter</span><span class="tag">mobile</span>
             </div>
+            <div class="card-footer">
+              <div class="author">
+                <span class="name">Robel Mesfin</span>
+              </div>
+              <div class="card-actions">
+                <button class="icon-btn like" aria-label="Like article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
+                </button>
+                <button class="icon-btn bookmark" aria-label="Bookmark article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </button>
+                <a class="read-more" href="post.html">
+                  Read more <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
           </div>
         </article>
 
         <article class="article-card">
-          <img
-            src="assets/images/articles/devops.jpg"
-            alt="Featured image: DevOps"
-          />
+          <div class="card-media">
+            <img
+              src="assets/images/articles/devops.jpg"
+              alt="Featured image: DevOps"
+            />
+          </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="category badge">DevOps</span
-              ><span class="date">Aug 02, 2025</span>
+              <span class="category badge category-devops">DevOps</span>
+              <span class="date">Aug 02, 2025</span>
             </div>
             <h3 class="card-title">
               <a href="post.html">CI/CD for Small Teams</a>
             </h3>
-            <p class="excerpt">
-              Practical GitHub Actions pipelines tailored for Ethiopian startups
-              and student projects.
-            </p>
-            <div class="meta">
-              <span>5 min read</span><span>· 520 views</span>
-            </div>
-            <div class="card-tags">
-              <span class="tag">github-actions</span
-              ><span class="tag">ci-cd</span>
+            <p class="excerpt">Practical GitHub Actions pipelines tailored for Ethiopian startups and student projects.</p>
+            <div class="meta"><span class="reading-time">5 min read</span><span class="views">520 views</span></div>
+            <div class="card-tags"><span class="tag">github-actions</span><span class="tag">ci-cd</span></div>
+            <div class="card-footer">
+              <div class="author">
+                <span class="name">Hanan Negash</span>
+              </div>
+              <div class="card-actions">
+                <button class="icon-btn like" aria-label="Like article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
+                </button>
+                <button class="icon-btn bookmark" aria-label="Bookmark article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </button>
+                <a class="read-more" href="post.html">
+                  Read more <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="article-card">
-          <img
-            src="assets/images/articles/datas.jpg"
-            alt="Featured image: Data"
-          />
+          <div class="card-media">
+            <img
+              src="assets/images/articles/datas.jpg"
+              alt="Featured image: Data"
+            />
+          </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="category badge">Data</span
-              ><span class="date">Jul 21, 2025</span>
+              <span class="category badge category-data">Data</span>
+              <span class="date">Jul 21, 2025</span>
             </div>
             <h3 class="card-title">
               <a href="post.html">Visualizing Local Data with D3</a>
@@ -220,15 +254,30 @@
               bandwidth.
             </p>
             <div class="meta">
-              <span>9 min read</span><span>· 760 views</span>
+              <span class="reading-time">9 min read</span>
+              <span class="views">760 views</span>
             </div>
             <div class="card-tags">
               <span class="tag">d3</span><span class="tag">visualization</span>
             </div>
+            <div class="card-footer">
+              <div class="author">
+                <span class="name">Yigba Nibret</span>
+              </div>
+              <div class="card-actions">
+                <button class="icon-btn like" aria-label="Like article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
+                </button>
+                <button class="icon-btn bookmark" aria-label="Bookmark article">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </button>
+                <a class="read-more" href="post.html">
+                  Read more <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
           </div>
         </article>
-      </section>
-
       <!-- Pagination / Load more (accessible placeholders) -->
       <div class="pagination-controls">
         <button id="load-more" type="button" class="btn btn-primary">
