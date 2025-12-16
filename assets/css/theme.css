@@ -6,7 +6,7 @@
   --color-primary-dark: #00d9c0;
   --color-secondary: #d1ff6eb6;
   --color-accent: #ffd166;
-  --color-accent-secondary:#784fb6;
+  --color-accent-secondary: #784fb6;
   --color-danger: #ff5e6c;
   --color-success: #9ef01a;
 
@@ -227,4 +227,86 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* ===== GLOBAL UI UTILITIES (buttons, inputs, layout) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(126, 255, 245, 0.25);
+}
+.btn-primary {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: #0b0b1f;
+  border-color: transparent;
+}
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
 
+.input,
+.select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.input:focus-visible,
+.select:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 0 0 3px rgba(126, 255, 245, 0.25);
+}
+.input-lg {
+  padding: 0.75rem 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--gradient-card);
+  color: var(--color-text-secondary);
+}
+
+.gradient-bar {
+  background: linear-gradient(
+    90deg,
+    rgba(126, 255, 245, 0.12),
+    rgba(255, 77, 141, 0.08)
+  );
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-lite {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
