@@ -41,3 +41,10 @@ animation: energy-pulse 1.4s step-start;
     transition: all 0.3s ease-in-out;
     background-color: var(--color-cars);
 }
+.avatar-item{
+    align-items: center;
+    background: var(--color-border);
+    text-align: center;
+    border-radius: 5px;
+    padding: 1rem;
+}

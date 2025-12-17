@@ -149,7 +149,7 @@
     linear-gradient(90deg, rgba(0, 194, 255, 0.02) 1px, transparent 1px);
 }
 
-/* ===== ANIMATIONS ===== */
+/*  ANIMATIONS  */
 @keyframes hologram-flicker {
   0%,
   100% {
@@ -227,7 +227,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* ===== GLOBAL UI UTILITIES (buttons, inputs, layout) ===== */
+/* GLOBAL UI UTILITIES (buttons, inputs, layout) */
 .btn {
   display: inline-flex;
   align-items: center;

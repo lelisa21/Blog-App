@@ -55,7 +55,6 @@ a:hover {
 
 /* UTILITY CLASSES*/
 .container {
-    max-width: 1280px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -224,7 +223,7 @@ a:hover {
 
 /*  HERO SECTION  */
 .hero {
-    padding: 4rem 0;
+    padding: 2rem 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -233,13 +232,13 @@ a:hover {
 
 .hero .hero-bg{
     padding: 20px;
-    width:auto;
-    position: relative;
+    width: auto;
     border-radius: 10px;
     height: 500px;
     background: url(../images/hero.png) no-repeat;
     background-position:center;
     background-size: cover;
+    backface-visibility: visible;
 }
 .inner-bg{
     position: absolute;
@@ -525,11 +524,17 @@ a:hover {
     display: flex;
     gap: 10px;
 }
+.community-visual{
+    background: var(--color-surface);
+    padding: 2rem;
+    margin: 20px auto;
+}
 
 .community-visual .avatar-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    
+  border-radius: 40px;
+  gap: 2rem;
 }
 .date-day {
     font-size: 2rem;

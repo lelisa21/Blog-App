@@ -65,7 +65,8 @@ nav {
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 2rem;
+  margin-right: 5%;
 }
 
 .nav-item {
