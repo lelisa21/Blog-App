@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethiopian Tech Events 2026 - ETC Community</title>
-    <meta name="description" content="Official calendar of tech events in Ethiopia 2026: Hackathons, Conferences, Workshops, and Community Meetups">
-    
-    <!-- Font Awesome -->
+    <meta name="description" content="Official calendar of tech events in Ethiopia">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Files -->
@@ -14,709 +12,846 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/nav.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/events.css">
+    <link rel="stylesheet" href="assets/css/calendar.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav-main">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-campground"></i>
-                <span>ETC</span>
-            </a>
-            
-            <div class="nav-links">
-                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-                <a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> Articles</a>
-                <a href="events.html" class="nav-link active"><i class="fas fa-calendar-alt"></i> Events</a>
-                <a href="community.html" class="nav-link"><i class="fas fa-users"></i> Community</a>
-                <a href="resources.html" class="nav-link"><i class="fas fa-cube"></i> Resources</a>
-                <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
-            </div>
-        </div>
-    </nav>
+ 
+    <div id="nav-placeholder">
+        <!-- we will fetch through js for know i think home is enough -->
+         <a href="index.html">ETC</a>
+    </div>
 
-    <!-- Events Hero Section -->
-    <header class="events-hero">
-        <div class="hero-content">
-            <div class="ethiopian-year">
-                <i class="fas fa-calendar-star"></i>
-                <span>Ethiopian Year 2018</span>
-            </div>
-            
-            <h1 class="hero-title">Ethiopian Tech Events 2026</h1>
-            
-            <p class="hero-subtitle">
-                Where Ethiopia's brightest minds connect, collaborate, and build the future
-            </p>
-            
-            <!-- Key Upcoming Events -->
-            <div class="key-events">
-                <div class="key-event">
-                    <i class="fas fa-code"></i>
-                    <span>National AI Hackathon - March 15</span>
-                </div>
-                <div class="key-event">
-                    <i class="fas fa-users"></i>
-                    <span>ETC Annual Summit - June 22-24</span>
-                </div>
-                <div class="key-event">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Student Dev Conference - September 5</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Events Calendar View -->
-    <main class="events-calendar">
-        <!-- MEGA EVENTS SECTION -->
-        <section class="mega-events">
-            <h2 class="section-title"><i class="fas fa-star"></i> Flagship Events 2026</h2>
-            
-            <!-- Event 1: ANNUAL ETC SUMMIT -->
-            <article class="mega-event-card">
-                <div class="mega-event-header">
-                    <div class="mega-event-badge">
-                        <i class="fas fa-crown"></i>
-                        ANNUAL SUMMIT
-                    </div>
-                    <div class="mega-event-date">
-                        <i class="far fa-calendar"></i>
-                        June 22-24, 2026
-                    </div>
-                </div>
-                
-                <div class="mega-event-content">
-                    <h3 class="mega-event-title">
-                        <i class="fas fa-mountain"></i>
-                        Ethiopian Tech Camp Annual Summit 2026
-                    </h3>
-                    
-                    <div class="mega-event-details">
-                        <div class="detail-group">
-                            <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
-                            <p>Addis Ababa Millennium Hall</p>
-                            <p>Virtual Streaming Available</p>
-                        </div>
-                        
-                        <div class="detail-group">
-                            <h4><i class="fas fa-users"></i> Expected Attendance</h4>
-                            <p>5,000+ In-Person</p>
-                            <p>20,000+ Virtual</p>
-                        </div>
-                        
-                        <div class="detail-group">
-                            <h4><i class="fas fa-microphone"></i> Key Tracks</h4>
-                            <ul>
-                                <li><i class="fas fa-brain"></i> AI & Machine Learning</li>
-                                <li><i class="fas fa-mobile-alt"></i> Mobile Development</li>
-                                <li><i class="fas fa-cloud"></i> Cloud & DevOps</li>
-                                <li><i class="fas fa-chart-line"></i> Data Science</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="mega-event-features">
-                        <h4><i class="fas fa-gem"></i> Summit Features</h4>
-                        <div class="features-grid">
-                            <div class="feature">
-                                <i class="fas fa-laptop-code"></i>
-                                <span>100+ Technical Workshops</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-handshake"></i>
-                                <span>50+ Industry Partners</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-trophy"></i>
-                                <span>Startup Pitch Competition</span>
-                            </div>
-                            <div class="feature">
-                                <i class="fas fa-briefcase"></i>
-                                <span>Career Fair</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mega-event-actions">
-                        <button class="btn-primary">
-                            <i class="fas fa-ticket-alt"></i>
-                            Register for Summit
-                        </button>
-                        <button class="btn-secondary">
-                            <i class="fas fa-file-alt"></i>
-                            Call for Speakers
-                        </button>
-                        <button class="btn-tertiary">
-                            <i class="fas fa-hands-helping"></i>
-                            Become a Sponsor
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event 2: NATIONAL AI HACKATHON -->
-            <article class="mega-event-card">
-                <div class="mega-event-header">
-                    <div class="mega-event-badge">
-                        <i class="fas fa-robot"></i>
-                        NATIONAL COMPETITION
-                    </div>
-                    <div class="mega-event-date">
-                        <i class="far fa-calendar"></i>
-                        March 15-17, 2026
-                    </div>
-                </div>
-                
-                <div class="mega-event-content">
-                    <h3 class="mega-event-title">
-                        <i class="fas fa-code"></i>
-                        Ethiopian National AI Hackathon 2026
-                    </h3>
-                    
-                    <div class="mega-event-theme">
-                        <h4><i class="fas fa-lightbulb"></i> Theme: "AI for Ethiopian Agriculture"</h4>
-                        <p>Build AI solutions to transform Ethiopia's agriculture sector using local data and constraints.</p>
-                    </div>
-                    
-                    <div class="mega-event-prizes">
-                        <h4><i class="fas fa-award"></i> Prize Pool: 500,000 ETB</h4>
-                        <div class="prizes-grid">
-                            <div class="prize">
-                                <i class="fas fa-trophy"></i>
-                                <span class="prize-amount">200,000 ETB</span>
-                                <span class="prize-category">First Place</span>
-                            </div>
-                            <div class="prize">
-                                <i class="fas fa-medal"></i>
-                                <span class="prize-amount">150,000 ETB</span>
-                                <span class="prize-category">Second Place</span>
-                            </div>
-                            <div class="prize">
-                                <i class="fas fa-award"></i>
-                                <span class="prize-amount">100,000 ETB</span>
-                                <span class="prize-category">Third Place</span>
-                            </div>
-                            <div class="prize">
-                                <i class="fas fa-star"></i>
-                                <span class="prize-amount">50,000 ETB</span>
-                                <span class="prize-category">Special Awards</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mega-event-requirements">
-                        <h4><i class="fas fa-clipboard-check"></i> Participation Requirements</h4>
-                        <ul>
-                            <li><i class="fas fa-user-graduate"></i> Open to all Ethiopian developers</li>
-                            <li><i class="fas fa-users"></i> Teams of 3-5 members</li>
-                            <li><i class="fas fa-database"></i> Must use Ethiopian datasets</li>
-                            <li><i class="fas fa-language"></i> Documentation in English/Amharic</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mega-event-actions">
-                        <button class="btn-primary">
-                            <i class="fas fa-user-plus"></i>
-                            Register Team
-                        </button>
-                        <button class="btn-secondary">
-                            <i class="fas fa-file-code"></i>
-                            View Problem Statements
-                        </button>
-                        <button class="btn-tertiary">
-                            <i class="fas fa-database"></i>
-                            Access Datasets
-                        </button>
-                    </div>
-                </div>
-            </article>
-        </section>
-
-        <!-- MONTHLY COMMUNITY EVENTS -->
-        <section class="community-events">
-            <h2 class="section-title"><i class="fas fa-users"></i> Monthly Community Events</h2>
-            
-            <div class="events-grid">
-                <!-- Addis Ababa -->
-                <article class="community-event-card">
-                    <div class="event-city">
-                        <i class="fas fa-city"></i>
-                        Addis Ababa
-                    </div>
-                    
-                    <h3 class="event-title">
-                        <i class="fas fa-code-branch"></i>
-                        Addis Tech Meetup
-                    </h3>
-                    
-                    <div class="event-schedule">
-                        <div class="schedule-item">
-                            <i class="far fa-calendar"></i>
-                            <span>Every First Thursday</span>
-                        </div>
-                        <div class="schedule-item">
-                            <i class="far fa-clock"></i>
-                            <span>6:00 PM EAT</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-topics">
-                        <h4><i class="fas fa-bullseye"></i> 2026 Topics</h4>
-                        <ul>
-                            <li>Web3 in Ethiopia</li>
-                            <li>DevOps for Ethiopian Startups</li>
-                            <li>Mobile App Localization</li>
-                            <li>Ethical AI Development</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="event-venue">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Sheger Innovation Hub
-                    </div>
-                </article>
-
-                <!-- Bahir Dar -->
-                <article class="community-event-card">
-                    <div class="event-city">
-                        <i class="fas fa-water"></i>
-                        Bahir Dar
-                    </div>
-                    
-                    <h3 class="event-title">
-                        <i class="fab fa-react"></i>
-                        React Ethiopia - Bahir Dar
-                    </h3>
-                    
-                    <div class="event-schedule">
-                        <div class="schedule-item">
-                            <i class="far fa-calendar"></i>
-                            <span>Every Second Saturday</span>
-                        </div>
-                        <div class="schedule-item">
-                            <i class="far fa-clock"></i>
-                            <span>10:00 AM EAT</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-topics">
-                        <h4><i class="fas fa-bullseye"></i> 2026 Focus</h4>
-                        <ul>
-                            <li>React 19 Features</li>
-                            <li>State Management</li>
-                            <li>Performance Optimization</li>
-                            <li>Testing Strategies</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="event-venue">
-                        <i class="fas fa-university"></i>
-                        Bahir Dar University
-                    </div>
-                </article>
-
-                <!-- Virtual -->
-                <article class="community-event-card">
-                    <div class="event-city">
-                        <i class="fas fa-laptop-house"></i>
-                        Virtual
-                    </div>
-                    
-                    <h3 class="event-title">
-                        <i class="fas fa-globe"></i>
-                        ETC Virtual Code Sessions
-                    </h3>
-                    
-                    <div class="event-schedule">
-                        <div class="schedule-item">
-                            <i class="far fa-calendar"></i>
-                            <span>Every Wednesday</span>
-                        </div>
-                        <div class="schedule-item">
-                            <i class="far fa-clock"></i>
-                            <span>8:00 PM EAT</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-topics">
-                        <h4><i class="fas fa-bullseye"></i> Weekly Focus</h4>
-                        <ul>
-                            <li>Live Coding Challenges</li>
-                            <li>Open Source Contributions</li>
-                            <li>Code Reviews</li>
-                            <li>Pair Programming</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="event-platform">
-                        <i class="fas fa-satellite-dish"></i>
-                        Zoom + GitHub Live
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- STUDENT & UNIVERSITY EVENTS -->
-        <section class="student-events">
-            <h2 class="section-title"><i class="fas fa-user-graduate"></i> Student Developer Events</h2>
-            
-            <article class="student-event-card">
-                <div class="student-event-header">
-                    <div class="student-event-badge">
-                        <i class="fas fa-graduation-cap"></i>
-                        UNIVERSITY CONFERENCE
-                    </div>
-                    <div class="student-event-date">
-                        September 5-7, 2026
-                    </div>
-                </div>
-                
-                <h3 class="student-event-title">
-                    Ethiopian Student Developer Conference 2026
-                </h3>
-                
-                <div class="student-event-details">
-                    <div class="detail-column">
-                        <h4><i class="fas fa-university"></i> Participating Universities</h4>
-                        <ul>
-                            <li>Addis Ababa University</li>
-                            <li>Bahir Dar University</li>
-                            <li>Mekelle University</li>
-                            <li>Hawassa University</li>
-                            <li>Jimma University</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="detail-column">
-                        <h4><i class="fas fa-tasks"></i> Conference Tracks</h4>
-                        <ul>
-                            <li>Final Year Project Showcase</li>
-                            <li>Research Paper Presentations</li>
-                            <li>Startup Idea Competition</li>
-                            <li>Industry-Academia Bridge</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="detail-column">
-                        <h4><i class="fas fa-award"></i> Awards & Recognition</h4>
-                        <ul>
-                            <li>Best Research Paper</li>
-                            <li>Most Innovative Project</li>
-                            <li>Best Startup Idea</li>
-                            <li>Industry Partnership Awards</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="student-event-actions">
-                    <button class="btn-primary">
-                        <i class="fas fa-user-graduate"></i>
-                        Student Registration
-                    </button>
-                    <button class="btn-secondary">
-                        <i class="fas fa-file-upload"></i>
-                        Submit Project
+    <main class="events-main">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Ethiopian Tech Events 2026</h1>
+            <p class="subtitle">Discover, attend, and organize technology events across Ethiopia</p>
+            <div class="header-actions">
+                <button id="submit-event-btn" class="btn-primary">
+                    <i class="fas fa-plus-circle"></i> Submit an Event
+                </button>
+                <div class="date-toggle">
+                    <button id="toggle-date-format" class="btn-outline">
+                        <span class="gregorian">Switch to Ethiopian Calendar</span>
+                        <span class="ethiopian" style="display:none;">Switch to Gregorian Calendar</span>
                     </button>
                 </div>
-            </article>
-        </section>
+            </div>
+        </header>
 
-        <!-- CAREER & INDUSTRY EVENTS -->
-        <section class="career-events">
-            <h2 class="section-title"><i class="fas fa-briefcase"></i> Career & Industry Events</h2>
+        <!-- A. Interactive Calendar Section -->
+        <section class="calendar-section">
+            <div class="section-header">
+                <h2>Event Calendar</h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="month"><i class="fas fa-calendar-alt"></i> Month</button>
+                    <button class="view-btn" data-view="week"><i class="fas fa-calendar-week"></i> Week</button>
+                    <button class="view-btn" data-view="list"><i class="fas fa-list"></i> List</button>
+                </div>
+            </div>
             
-            <div class="career-events-grid">
-                <article class="career-event-card">
-                    <div class="career-event-type">
-                        <i class="fas fa-users-rectangle"></i>
-                        JOB FAIR
-                    </div>
+            <!-- Month View -->
+            <div id="month-view" class="calendar-view active">
+                <div class="calendar-header">
+                    <button class="nav-btn prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="current-month">March 2026</h3>
+                    <button class="nav-btn next-month"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid">
+                    <!-- Days of week header -->
+                    <div class="day-header">Mon</div>
+                    <div class="day-header">Tue</div>
+                    <div class="day-header">Wed</div>
+                    <div class="day-header">Thu</div>
+                    <div class="day-header">Fri</div>
+                    <div class="day-header">Sat</div>
+                    <div class="day-header">Sun</div>
                     
-                    <h3 class="career-event-title">
-                        Ethiopian Tech Job Fair 2026
-                    </h3>
-                    
-                    <div class="career-event-info">
-                        <div class="info-item">
-                            <i class="far fa-calendar"></i>
-                            <span>October 15-16, 2026</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-building"></i>
-                            <span>Skylight Hotel, Addis</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-suitcase"></i>
-                            <span>100+ Companies</span>
-                        </div>
+                    <!-- Calendar days will be populated by JavaScript -->
+                    <div class="calendar-placeholder">
+                        Calendar will be loaded here with Ethiopian holidays and events
                     </div>
-                    
-                    <div class="career-event-target">
-                        <h4><i class="fas fa-bullseye"></i> Target Audience</h4>
-                        <ul>
-                            <li>Recent Graduates</li>
-                            <li>Mid-Level Developers</li>
-                            <li>Tech Managers</li>
-                            <li>Career Switchers</li>
-                        </ul>
+                </div>
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <span class="legend-color conference"></span>
+                        <span>Conference</span>
                     </div>
-                </article>
-
-                <article class="career-event-card">
-                    <div class="career-event-type">
-                        <i class="fas fa-handshake"></i>
-                        NETWORKING
+                    <div class="legend-item">
+                        <span class="legend-color workshop"></span>
+                        <span>Workshop</span>
                     </div>
-                    
-                    <h3 class="career-event-title">
-                        Ethiopia-Diaspora Tech Connect
-                    </h3>
-                    
-                    <div class="career-event-info">
-                        <div class="info-item">
-                            <i class="far fa-calendar"></i>
-                            <span>November 5, 2026</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-globe-americas"></i>
-                            <span>Virtual + Addis</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-user-tie"></i>
-                            <span>Global Connections</span>
-                        </div>
+                    <div class="legend-item">
+                        <span class="legend-color hackathon"></span>
+                        <span>Hackathon</span>
                     </div>
-                    
-                    <div class="career-event-target">
-                        <h4><i class="fas fa-bullseye"></i> Opportunities</h4>
-                        <ul>
-                            <li>Remote Job Placements</li>
-                            <li>Mentorship Programs</li>
-                            <li>Investment Connections</li>
-                            <li>Knowledge Transfer</li>
-                        </ul>
+                    <div class="legend-item">
+                        <span class="legend-color meetup"></span>
+                        <span>Meetup</span>
                     </div>
-                </article>
+                    <div class="legend-item">
+                        <span class="legend-color holiday"></span>
+                        <span>Holiday</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week View -->
+            <div id="week-view" class="calendar-view">
+                <div class="calendar-header">
+                    <button class="nav-btn prev-week"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="current-week">Week Events</h3>
+                    <button class="nav-btn next-week"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="week-grid">
+                    <!-- Week view will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- List View -->
+            <div id="list-view" class="calendar-view">
+                <div class="events-list">
+                    <!-- List view will be populated by JavaScript -->
+                </div>
             </div>
         </section>
 
-        <!-- WORKSHOPS & TRAININGS -->
-        <section class="workshop-events">
-            <h2 class="section-title"><i class="fas fa-tools"></i> Technical Workshops 2026</h2>
-            
-            <div class="workshops-timeline">
-                <article class="workshop-card">
-                    <div class="workshop-quarter">
-                        <i class="fas fa-calendar"></i>
-                        Q1 2026
-                    </div>
-                    
-                    <h3 class="workshop-title">
-                        DevOps for Ethiopian Enterprises
-                    </h3>
-                    
-                    <div class="workshop-details">
-                        <div class="detail">
-                            <i class="fas fa-calendar-day"></i>
-                            <span>January - March</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Multiple Cities</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-clock"></i>
-                            <span>8-Week Program</span>
-                        </div>
-                    </div>
-                    
-                    <div class="workshop-topics">
-                        <h4><i class="fas fa-list-check"></i> Curriculum</h4>
-                        <ul>
-                            <li>Containerization with Docker</li>
-                            <li>Kubernetes for Ethiopian Scale</li>
-                            <li>CI/CD Pipeline Setup</li>
-                            <li>Monitoring & Observability</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="workshop-card">
-                    <div class="workshop-quarter">
-                        <i class="fas fa-calendar"></i>
-                        Q2 2026
-                    </div>
-                    
-                    <h3 class="workshop-title">
-                        Mobile App Development Bootcamp
-                    </h3>
-                    
-                    <div class="workshop-details">
-                        <div class="detail">
-                            <i class="fas fa-calendar-day"></i>
-                            <span>April - June</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Regional Capitals</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-clock"></i>
-                            <span>12-Week Intensive</span>
-                        </div>
-                    </div>
-                    
-                    <div class="workshop-topics">
-                        <h4><i class="fas fa-list-check"></i> Technologies</h4>
-                        <ul>
-                            <li>Flutter for Cross-Platform</li>
-                            <li>React Native with Ethiopian UI</li>
-                            <li>Offline-First Development</li>
-                            <li>App Store Deployment</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="workshop-card">
-                    <div class="workshop-quarter">
-                        <i class="fas fa-calendar"></i>
-                        Q3 2026
-                    </div>
-                    
-                    <h3 class="workshop-title">
-                        Data Science & AI Workshop Series
-                    </h3>
-                    
-                    <div class="workshop-details">
-                        <div class="detail">
-                            <i class="fas fa-calendar-day"></i>
-                            <span>July - September</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Virtual + Physical</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-clock"></i>
-                            <span>10 Modules</span>
-                        </div>
-                    </div>
-                    
-                    <div class="workshop-topics">
-                        <h4><i class="fas fa-list-check"></i> Focus Areas</h4>
-                        <ul>
-                            <li>Ethiopian Data Collection</li>
-                            <li>Local Language NLP</li>
-                            <li>Agricultural AI Models</li>
-                            <li>Healthcare Predictive Analytics</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="workshop-card">
-                    <div class="workshop-quarter">
-                        <i class="fas fa-calendar"></i>
-                        Q4 2026
-                    </div>
-                    
-                    <h3 class="workshop-title">
-                        Cybersecurity for Ethiopian Organizations
-                    </h3>
-                    
-                    <div class="workshop-details">
-                        <div class="detail">
-                            <i class="fas fa-calendar-day"></i>
-                            <span>October - December</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Government + Private Sector</span>
-                        </div>
-                        <div class="detail">
-                            <i class="fas fa-clock"></i>
-                            <span>Certification Program</span>
-                        </div>
-                    </div>
-                    
-                    <div class="workshop-topics">
-                        <h4><i class="fas fa-list-check"></i> Security Domains</h4>
-                        <ul>
-                            <li>Network Security Fundamentals</li>
-                            <li>Ethical Hacking</li>
-                            <li>Incident Response</li>
-                            <li>GDPR & Ethiopian Data Laws</li>
-                        </ul>
-                    </div>
-                </article>
+        <!-- B. Event Filtering Section -->
+        <section class="filter-section">
+            <div class="section-header">
+                <h2>Filter Events</h2>
+                <button id="clear-filters" class="btn-text">Clear All Filters</button>
             </div>
-        </section>
-
-        <!-- CALL TO ACTION SECTION -->
-        <section class="events-cta">
-            <div class="cta-content">
-                <h2><i class="fas fa-calendar-plus"></i> Host Your Tech Event with ETC</h2>
-                <p>Reach thousands of Ethiopian developers through our platform</p>
+            
+            <div class="filters-grid">
+                <!-- City Filter -->
+                <div class="filter-group">
+                    <h4><i class="fas fa-map-marker-alt"></i> City</h4>
+                    <div class="filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="city" value="addis" checked>
+                            <span class="checkmark"></span>
+                            Addis Ababa
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="city" value="bahirdar">
+                            <span class="checkmark"></span>
+                            Bahir Dar
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="city" value="mekelle">
+                            <span class="checkmark"></span>
+                            Mekelle
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="city" value="hawassa">
+                            <span class="checkmark"></span>
+                            Hawassa
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="city" value="jimma">
+                            <span class="checkmark"></span>
+                            Jimma
+                        </label>
+                    </div>
+                </div>
                 
-                <div class="cta-options">
-                    <div class="cta-option">
-                        <i class="fas fa-handshake"></i>
-                        <h3>Partner with Us</h3>
-                        <p>Co-organize events and reach our community</p>
-                        <button class="btn-cta">
-                            <i class="fas fa-envelope"></i>
-                            Contact Partnership
-                        </button>
+                <!-- Event Type Filter -->
+                <div class="filter-group">
+                    <h4><i class="fas fa-calendar-check"></i> Event Type</h4>
+                    <div class="filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="type" value="meetup" checked>
+                            <span class="checkmark"></span>
+                            Meetup
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="type" value="workshop" checked>
+                            <span class="checkmark"></span>
+                            Workshop
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="type" value="hackathon">
+                            <span class="checkmark"></span>
+                            Hackathon
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="type" value="conference">
+                            <span class="checkmark"></span>
+                            Conference
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Tech Stack Filter -->
+                <div class="filter-group">
+                    <h4><i class="fas fa-code"></i> Tech Stack</h4>
+                    <div class="filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="tech" value="web">
+                            <span class="checkmark"></span>
+                            Web Development
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="tech" value="mobile">
+                            <span class="checkmark"></span>
+                            Mobile Development
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="tech" value="ai">
+                            <span class="checkmark"></span>
+                            AI & Machine Learning
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="tech" value="devops">
+                            <span class="checkmark"></span>
+                            DevOps & Cloud
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Difficulty Level Filter -->
+                <div class="filter-group">
+                    <h4><i class="fas fa-chart-line"></i> Difficulty Level</h4>
+                    <div class="filter-options">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="difficulty" value="beginner" checked>
+                            <span class="checkmark"></span>
+                            Beginner
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="difficulty" value="intermediate" checked>
+                            <span class="checkmark"></span>
+                            Intermediate
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" name="difficulty" value="advanced">
+                            <span class="checkmark"></span>
+                            Advanced
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Virtual/In-person Toggle -->
+            <div class="event-mode-toggle">
+                <h4><i class="fas fa-laptop-house"></i> Event Mode</h4>
+                <div class="toggle-switch">
+                    <span class="toggle-label">In-person</span>
+                    <label class="switch">
+                        <input type="checkbox" id="virtual-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">Virtual</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- C. Event Cards Section -->
+        <section class="events-section">
+            <div class="section-header">
+                <h2>Upcoming Events</h2>
+                <div class="sort-options">
+                    <span>Sort by:</span>
+                    <select id="sort-events">
+                        <option value="date">Date</option>
+                        <option value="popularity">Popularity</option>
+                        <option value="city">City</option>
+                        <option value="type">Event Type</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="events-container">
+                <!-- Event Card Example 1 -->
+                <div class="event-card conference" data-city="addis" data-type="conference" data-tech="web,ai" data-difficulty="intermediate" data-mode="in-person">
+                    <div class="event-header">
+                        <div class="event-type-badge conference">Conference</div>
+                        <div class="event-countdown" data-date="2026-03-15T09:00:00">
+                            <i class="fas fa-clock"></i> <span class="countdown-timer">14 days left</span>
+                        </div>
                     </div>
                     
-                    <div class="cta-option">
-                        <i class="fas fa-bullhorn"></i>
-                        <h3>List Your Event</h3>
-                        <p>Free listing for Ethiopian tech events</p>
-                        <button class="btn-cta">
-                            <i class="fas fa-plus-circle"></i>
-                            Submit Event
-                        </button>
+                    <h3 class="event-title">Ethio-Tech Summit 2026</h3>
+                    <p class="event-description">Annual technology conference showcasing Ethiopian innovation in AI, web technologies, and entrepreneurship.</p>
+                    
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-day"></i>
+                            <span>March 15, 2026 | 9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Addis Ababa, Ethiopia</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>Expected: 500+ attendees</span>
+                        </div>
                     </div>
                     
-                    <div class="cta-option">
-                        <i class="fas fa-microphone"></i>
-                        <h3>Become a Speaker</h3>
-                        <p>Share your knowledge with Ethiopian developers</p>
-                        <button class="btn-cta">
-                            <i class="fas fa-user-check"></i>
-                            Apply as Speaker
-                        </button>
+                    <div class="event-tech-tags">
+                        <span class="tech-tag web">Web</span>
+                        <span class="tech-tag ai">AI</span>
+                        <span class="tech-tag entrepreneurship">Entrepreneurship</span>
+                    </div>
+                    
+                    <div class="event-attendees">
+                        <h4>Attendees <span class="attendee-count">(247)</span></h4>
+                        <div class="attendee-avatars">
+                            <div class="avatar"><img src="assets/images/avatars/user1.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user2.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user3.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user4.jpg" alt="User"></div>
+                            <div class="avatar count">+243</div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-actions">
+                        <button class="action-btn interested"><i class="far fa-star"></i> Interested</button>
+                        <button class="action-btn going"><i class="fas fa-check-circle"></i> Going</button>
+                        <div class="action-dropdown">
+                            <button class="action-btn share"><i class="fas fa-share-alt"></i> Share</button>
+                            <div class="dropdown-content">
+                                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
+                                <a href="#" class="copy-link"><i class="fas fa-link"></i> Copy Link</a>
+                            </div>
+                        </div>
+                        <div class="action-dropdown">
+                            <button class="action-btn calendar"><i class="far fa-calendar-plus"></i> Add to Calendar</button>
+                            <div class="dropdown-content">
+                                <a href="#" class="google-calendar"><i class="fab fa-google"></i> Google Calendar</a>
+                                <a href="#" class="outlook"><i class="fas fa-envelope"></i> Outlook</a>
+                                <a href="#" class="ical"><i class="fas fa-file-download"></i> iCal</a>
+                            </div>
+                        </div>
+                        <a href="#" class="map-link"><i class="fas fa-map-marked-alt"></i> View Map</a>
+                    </div>
+                </div>
+                
+                <!-- Event Card Example 2 -->
+                <div class="event-card workshop" data-city="bahirdar" data-type="workshop" data-tech="mobile" data-difficulty="beginner" data-mode="in-person">
+                    <div class="event-header">
+                        <div class="event-type-badge workshop">Workshop</div>
+                        <div class="event-countdown" data-date="2026-03-10T14:00:00">
+                            <i class="fas fa-clock"></i> <span class="countdown-timer">9 days left</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="event-title">Flutter Mobile Development Workshop</h3>
+                    <p class="event-description">Hands-on workshop for beginners to learn Flutter and Dart for cross-platform mobile app development.</p>
+                    
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-day"></i>
+                            <span>March 10, 2026 | 2:00 PM - 6:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bahir Dar University</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>Limited to: 50 attendees</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-tech-tags">
+                        <span class="tech-tag mobile">Mobile</span>
+                        <span class="tech-tag flutter">Flutter</span>
+                        <span class="tech-tag dart">Dart</span>
+                    </div>
+                    
+                    <div class="event-attendees">
+                        <h4>Attendees <span class="attendee-count">(38)</span></h4>
+                        <div class="attendee-avatars">
+                            <div class="avatar"><img src="assets/images/avatars/user5.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user6.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user7.jpg" alt="User"></div>
+                            <div class="avatar count">+35</div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-actions">
+                        <button class="action-btn interested"><i class="far fa-star"></i> Interested</button>
+                        <button class="action-btn going"><i class="fas fa-check-circle"></i> Going</button>
+                        <div class="action-dropdown">
+                            <button class="action-btn share"><i class="fas fa-share-alt"></i> Share</button>
+                            <div class="dropdown-content">
+                                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
+                                <a href="#" class="copy-link"><i class="fas fa-link"></i> Copy Link</a>
+                            </div>
+                        </div>
+                        <div class="action-dropdown">
+                            <button class="action-btn calendar"><i class="far fa-calendar-plus"></i> Add to Calendar</button>
+                            <div class="dropdown-content">
+                                <a href="#" class="google-calendar"><i class="fab fa-google"></i> Google Calendar</a>
+                                <a href="#" class="outlook"><i class="fas fa-envelope"></i> Outlook</a>
+                                <a href="#" class="ical"><i class="fas fa-file-download"></i> iCal</a>
+                            </div>
+                        </div>
+                        <a href="#" class="map-link"><i class="fas fa-map-marked-alt"></i> View Map</a>
+                    </div>
+                </div>
+
+                <!-- Event Card Example 3 (Virtual Event) -->
+                <div class="event-card meetup" data-city="virtual" data-type="meetup" data-tech="ai,web" data-difficulty="intermediate" data-mode="virtual">
+                    <div class="event-header">
+                        <div class="event-type-badge meetup">Virtual Meetup</div>
+                        <div class="event-countdown" data-date="2026-03-05T18:00:00">
+                            <i class="fas fa-clock"></i> <span class="countdown-timer">4 days left</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="event-title">AI in Ethiopian Agriculture</h3>
+                    <p class="event-description">Virtual discussion on AI applications in Ethiopian agriculture with industry experts.</p>
+                    
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-day"></i>
+                            <span>March 5, 2026 | 6:00 PM - 7:30 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-video"></i>
+                            <span>Online - Google Meet</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>Max: 100 participants</span>
+                        </div>
+                    </div>
+                    
+                    <div class="event-tech-tags">
+                        <span class="tech-tag ai">AI</span>
+                        <span class="tech-tag agriculture">Agriculture</span>
+                        <span class="tech-tag data-science">Data Science</span>
+                    </div>
+                    
+                    <div class="event-attendees">
+                        <h4>Attendees <span class="attendee-count">(72)</span></h4>
+                        <div class="attendee-avatars">
+                            <div class="avatar"><img src="assets/images/avatars/user8.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user9.jpg" alt="User"></div>
+                            <div class="avatar"><img src="assets/images/avatars/user10.jpg" alt="User"></div>
+                            <div class="avatar count">+69</div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-actions">
+                        <button class="action-btn interested"><i class="far fa-star"></i> Interested</button>
+                        <button class="action-btn going"><i class="fas fa-check-circle"></i> Going</button>
+                        <div class="action-dropdown">
+                            <button class="action-btn share"><i class="fas fa-share-alt"></i> Share</button>
+                            <div class="dropdown-content">
+                                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                <a href="#"><i class="fab fa-telegram"></i> Telegram</a>
+                                <a href="#" class="copy-link"><i class="fas fa-link"></i> Copy Link</a>
+                            </div>
+                        </div>
+                        <div class="action-dropdown">
+                            <button class="action-btn calendar"><i class="far fa-calendar-plus"></i> Add to Calendar</button>
+                            <div class="dropdown-content">
+                                <a href="#" class="google-calendar"><i class="fab fa-google"></i> Google Calendar</a>
+                                <a href="#" class="outlook"><i class="fas fa-envelope"></i> Outlook</a>
+                                <a href="#" class="ical"><i class="fas fa-file-download"></i> iCal</a>
+                            </div>
+                        </div>
+                        <a href="#" class="meeting-link"><i class="fas fa-video"></i> Join Meeting</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more-container">
+                <button id="load-more-events" class="btn-outline">Load More Events</button>
+            </div>
+        </section>
+
+        <!-- D. Event Creation Modal (Hidden by default) -->
+        <div id="event-creation-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Submit an Event</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <form id="event-submission-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Event Information</h3>
+                        <div class="form-group">
+                            <label for="event-title">Event Title *</label>
+                            <input type="text" id="event-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-description">Description *</label>
+                            <textarea id="event-description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-type">Event Type *</label>
+                                <select id="event-type" required>
+                                    <option value="">Select type</option>
+                                    <option value="meetup">Meetup</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="hackathon">Hackathon</option>
+                                    <option value="conference">Conference</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-difficulty">Difficulty Level</label>
+                                <select id="event-difficulty">
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate" selected>Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Location & Time</h3>
+                        <div class="form-group">
+                            <label for="event-mode">Event Mode *</label>
+                            <div class="mode-selector">
+                                <label class="mode-option">
+                                    <input type="radio" name="mode" value="in-person" checked>
+                                    <span>In-person</span>
+                                </label>
+                                <label class="mode-option">
+                                    <input type="radio" name="mode" value="virtual">
+                                    <span>Virtual</span>
+                                </label>
+                                <label class="mode-option">
+                                    <input type="radio" name="mode" value="hybrid">
+                                    <span>Hybrid</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="location-section">
+                            <div class="form-group">
+                                <label for="event-city">City *</label>
+                                <select id="event-city" required>
+                                    <option value="">Select city</option>
+                                    <option value="addis">Addis Ababa</option>
+                                    <option value="bahirdar">Bahir Dar</option>
+                                    <option value="mekelle">Mekelle</option>
+                                    <option value="hawassa">Hawassa</option>
+                                    <option value="jimma">Jimma</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-venue">Venue Name *</label>
+                                <input type="text" id="event-venue" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Select on Map</label>
+                                <div id="location-map-preview" class="map-preview">
+                                    <p>Click to select location on map</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-date">Date *</label>
+                                <input type="date" id="event-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-time">Start Time *</label>
+                                <select id="event-time" required>
+                                    <option value="">Select time</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-duration">Duration</label>
+                                <select id="event-duration">
+                                    <option value="1">1 hour</option>
+                                    <option value="2">2 hours</option>
+                                    <option value="3">3 hours</option>
+                                    <option value="4">4 hours</option>
+                                    <option value="8">Full day (8 hours)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-tags"></i> Tags & Tech Stack</h3>
+                        <div class="form-group">
+                            <label>Tech Stack *</label>
+                            <div class="tech-checkboxes">
+                                <label><input type="checkbox" name="tech-stack" value="web"> Web Development</label>
+                                <label><input type="checkbox" name="tech-stack" value="mobile"> Mobile Development</label>
+                                <label><input type="checkbox" name="tech-stack" value="ai"> AI & Machine Learning</label>
+                                <label><input type="checkbox" name="tech-stack" value="devops"> DevOps & Cloud</label>
+                                <label><input type="checkbox" name="tech-stack" value="data"> Data Science</label>
+                                <label><input type="checkbox" name="tech-stack" value="blockchain"> Blockchain</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-tags">Additional Tags (comma separated)</label>
+                            <input type="text" id="event-tags" placeholder="flutter, entrepreneurship, startup">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-users"></i> Capacity & Registration</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-capacity">Maximum Capacity</label>
+                                <input type="number" id="event-capacity" min="1" value="50">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-fee">Registration Fee (ETB)</label>
+                                <input type="number" id="event-fee" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-registration-link">Registration Link (if external)</label>
+                            <input type="url" id="event-registration-link">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline close-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- E. Event Management Section -->
+        <section class="management-section">
+            <div class="section-header">
+                <h2>My Events</h2>
+                <div class="management-tabs">
+                    <button class="tab-btn active" data-tab="rsvp">My RSVPs</button>
+                    <button class="tab-btn" data-tab="organized">Events I Organized</button>
+                    <button class="tab-btn" data-tab="waitlist">Waitlist</button>
+                </div>
+            </div>
+            
+            <div id="rsvp-tab" class="tab-content active">
+                <div class="rsvp-list">
+                    <div class="rsvp-item">
+                        <div class="rsvp-event-info">
+                            <h4>Ethio-Tech Summit 2026</h4>
+                            <p>March 15, 2026 | Addis Ababa</p>
+                        </div>
+                        <div class="rsvp-status">
+                            <span class="status-badge confirmed">Confirmed</span>
+                        </div>
+                        <div class="rsvp-actions">
+                            <button class="btn-small reminder-btn"><i class="fas fa-bell"></i> Set Reminder</button>
+                            <button class="btn-small cancel-btn"><i class="fas fa-times"></i> Cancel RSVP</button>
+                        </div>
+                    </div>
+                    <div class="rsvp-item">
+                        <div class="rsvp-event-info">
+                            <h4>Flutter Mobile Development Workshop</h4>
+                            <p>March 10, 2026 | Bahir Dar</p>
+                        </div>
+                        <div class="rsvp-status">
+                            <span class="status-badge waitlist">Waitlist (#5)</span>
+                        </div>
+                        <div class="rsvp-actions">
+                            <button class="btn-small reminder-btn"><i class="fas fa-bell"></i> Set Reminder</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="organized-tab" class="tab-content">
+                <div class="organized-events">
+                    <p>You haven't organized any events yet.</p>
+                    <button id="organize-first-event" class="btn-outline">Organize Your First Event</button>
+                </div>
+            </div>
+            
+            <div id="waitlist-tab" class="tab-content">
+                <div class="waitlist-events">
+                    <p>You are not on any waitlists.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- F. Ethiopian Tech Events Feed -->
+        <section class="feed-section">
+            <div class="section-header">
+                <h2>Tech Events Feed</h2>
+                <div class="feed-sources">
+                    <span class="source-active" data-source="all">All</span>
+                    <span data-source="twitter">Twitter/X</span>
+                    <span data-source="universities">Universities</span>
+                    <span data-source="communities">Communities</span>
+                </div>
+            </div>
+            
+            <div class="feed-container">
+                <div class="feed-item twitter">
+                    <div class="feed-source">
+                        <i class="fab fa-twitter"></i> @EthioTech
+                    </div>
+                    <div class="feed-content">
+                        <p>Call for speakers for the EthioAI Conference 2026 is now open! Submit your proposals by March 1. #Ethiopia #AI #MachineLearning</p>
+                        <span class="feed-time">2 hours ago</span>
+                    </div>
+                </div>
+                
+                <div class="feed-item university">
+                    <div class="feed-source">
+                        <i class="fas fa-university"></i> AAiT Tech Club
+                    </div>
+                    <div class="feed-content">
+                        <p>Weekly coding workshop every Thursday at AAiT. This week: Introduction to React.js. Open to all students. Room 304, 3PM.</p>
+                        <span class="feed-time">1 day ago</span>
+                    </div>
+                </div>
+                
+                <div class="feed-item community">
+                    <div class="feed-source">
+                        <i class="fas fa-users"></i> Addis Devs
+                    </div>
+                    <div class="feed-content">
+                        <p>Monthly meetup this Saturday: "Building Scalable APIs with Node.js". Food and drinks provided. RSVP required.</p>
+                        <span class="feed-time">2 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- G. Virtual Events System -->
+        <section class="virtual-events-section">
+            <div class="section-header">
+                <h2>Virtual Events</h2>
+                <div class="timezone-converter">
+                    <span>Timezone:</span>
+                    <select id="timezone-select">
+                        <option value="eat">Addis Ababa (EAT)</option>
+                        <option value="est">New York (EST)</option>
+                        <option value="gmt">London (GMT)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="virtual-events-container">
+                <div class="virtual-event-card">
+                    <div class="virtual-event-header">
+                        <h3>Virtual Coffee with Ethiopian Developers</h3>
+                        <span class="virtual-badge"><i class="fas fa-laptop"></i> Virtual</span>
+                    </div>
+                    <div class="virtual-event-details">
+                        <div class="detail-item">
+                            <i class="fas fa-video"></i>
+                            <span>Platform: Google Meet</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>March 8, 2026 | 7:00 PM EAT</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Also: 12:00 PM EST | 5:00 PM GMT</span>
+                        </div>
+                    </div>
+                    <div class="virtual-event-actions">
+                        <button class="btn-primary join-btn"><i class="fas fa-video"></i> Join Meeting</button>
+                        <button class="btn-outline network-btn"><i class="fas fa-handshake"></i> Networking</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- H. Analytics & Insights -->
+        <section class="analytics-section">
+            <div class="section-header">
+                <h2>Community Insights</h2>
+                <select id="analytics-period">
+                    <option value="month">This Month</option>
+                    <option value="quarter">This Quarter</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h4><i class="fas fa-city"></i> Most Active Cities</h4>
+                    <div class="city-ranking">
+                        <div class="city-rank">
+                            <span class="rank-number">1</span>
+                            <span class="city-name">Addis Ababa</span>
+                            <span class="city-events">142 events</span>
+                        </div>
+                        <div class="city-rank">
+                            <span class="rank-number">2</span>
+                            <span class="city-name">Bahir Dar</span>
+                            <span class="city-events">67 events</span>
+                        </div>
+                        <div class="city-rank">
+                            <span class="rank-number">3</span>
+                            <span class="city-name">Mekelle</span>
+                            <span class="city-events">48 events</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h4><i class="fas fa-chart-pie"></i> Popular Topics</h4>
+                    <div class="topics-chart">
+                        <div class="topic-item">
+                            <span class="topic-name">Web Development</span>
+                            <div class="topic-bar">
+                                <div class="topic-fill" style="width: 65%"></div>
+                            </div>
+                            <span class="topic-percent">65%</span>
+                        </div>
+                        <div class="topic-item">
+                            <span class="topic-name">AI & ML</span>
+                            <div class="topic-bar">
+                                <div class="topic-fill" style="width: 45%"></div>
+                            </div>
+                            <span class="topic-percent">45%</span>
+                        </div>
+                        <div class="topic-item">
+                            <span class="topic-name">Mobile Dev</span>
+                            <div class="topic-bar">
+                                <div class="topic-fill" style="width: 38%"></div>
+                            </div>
+                            <span class="topic-percent">38%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h4><i class="fas fa-users"></i> Community Growth</h4>
+                    <div class="growth-stats">
+                        <div class="growth-stat">
+                            <span class="stat-value">2,847</span>
+                            <span class="stat-label">Total Members</span>
+                        </div>
+                        <div class="growth-stat">
+                            <span class="stat-value">+324</span>
+                            <span class="stat-label">This Month</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><img src="assets/images/logo.png" alt="" width="70"> </i> Ethiopian Tech Camp</h3>
-                <p>Building Ethiopia's tech community since 2023</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
-                <a href="#">ETC Summit 2026</a>
-                <a href="#">AI Hackathon</a>
-                <a href="#">Student Conference</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3><i class="fas fa-city"></i> Regional Chapters</h3>
-                <a href="#">Addis Ababa</a>
-                <a href="#">Bahir Dar</a>
-                <a href="#">Mekelle</a>
-                <a href="#">Hawassa</a>
-            </div>
-        </div>
-    </footer>
+    <!-- JavaScript Files -->
+    <script src="assets/js/nav-loader.js"></script>
+    <script src="assets/js/calendar.js"></script>
+    <script src="assets/js/events.js"></script>
+    <script src="assets/js/filters.js"></script>
+    <script src="assets/js/event-creation.js"></script>
 </body>
 </html>
