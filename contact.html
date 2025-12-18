@@ -21,47 +21,238 @@
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/theme.css" />
+     <link rel="stylesheet" href="assets/css/contact.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="assets/icons/etc-favicon.ico" />
   </head>
 
-  <body>
-    <header class="site-header">
-      <div class="container">
-        <a class="brand" href="index.html">TechBlog Ethiopia</a>
-
-        <nav aria-label="Main Menu">
-          <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="articles.html">Articles</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="contact.html" aria-current="page">Contact</a></li>
-          </ul>
-        </nav>
+  <body data-theme="dark">
+    <div class="announcement-bar">
+      <div class="announcement-content">
+        <i class="fas fa-bullhorn"></i>
+        <span>
+          New: Weekly Coding Challenges for Ethiopian Developers - Join
+          Now!</span
+        >
+        <a href="#challenges" class="announcement-link">Explore →</a>
       </div>
-    </header>
+    </div>
 
-    <main id="main" class="container">
-      <header>
+    <!-- Custom Navigation Bar -->
+    <nav >
+      <div class="nav-container">
+        <!-- Logo with Animation -->
+        <a href="index.html" class="logo">
+          <div class="logo-animation">
+            <div class="logo-circle circle-1"></div>
+            <div class="logo-circle circle-2"></div>
+            <div class="logo-circle circle-3"></div>
+          </div>
+        <img src="assets/images/logo.png" alt="ETC" width="60">
+        </a>
+
+        <!-- Navigation Menu -->
+        <div class="nav-link">
+          <a href="index.html" class="nav-item active" data-tooltip="Home">
+            <i class="fas fa-home"></i>
+            <span class="nav-label">Home</span>
+          </a>
+
+          <div class="nav-item dropdown">
+            <a
+              href="articles.html"
+              class="nav-link"
+              data-tooltip="Browse Articles"
+            >
+              <i class="fas fa-newspaper"></i>
+              <span class="nav-label">Articles</span>
+            </a>
+            <div class="dropdown-menu">
+              <a href="articles.html?category=ai"
+                ><i class="fas fa-brain"></i> AI & ML</a
+              >
+              <a href="articles.html?category=web"
+                ><i class="fas fa-code"></i> Web Dev</a
+              >
+              <a href="articles.html?category=mobile"
+                ><i class="fas fa-mobile"></i> Mobile</a
+              >
+              <a href="articles.html?category=data"
+                ><i class="fas fa-chart-bar"></i> Data Science</a
+              >
+              <a href="articles.html?category=cybersecurity"
+                ><i class="fas fa-shield-alt"></i> Cybersecurity</a
+              >
+            </div>
+          </div>
+
+          <a href="resources.html" class="nav-item" data-tooltip="Resources">
+            <i class="fas fa-cube"></i>
+            <span class="nav-label">Resources</span>
+          </a>
+
+          <a href="community.html" class="nav-item" data-tooltip="Community">
+            <i class="fas fa-users"></i>
+            <span class="nav-label">Community</span>
+          </a>
+
+          <div class=" nav-item nav-dropdown">
+            <a href="#" class="nav-item" data-tooltip="More">
+              <i class="fas fa-ellipsis-h"></i>
+              <span class="nav-label">More</span>
+            </a>
+            <div class="dropdown-content">
+              <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+              <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+              <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+            </div>
+          </div>
+          <!-- Theme Toggle -->
+          <div class="theme-switch">
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              data-tooltip="Toggle Theme"
+            >
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+            </button>
+          </div>
+
+          <!-- User Profile -->
+          <div class="user-profile">
+            <button class="profile-btn">
+              <div class="avatar">
+                <i class="far fa-user"></i>
+                <span class="status-indicator online"></span>
+              </div>
+              <span class="user-name">User</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="profile-menu">
+              <a href="#"><i class="fas fa-user"></i> Profile</a>
+              <a href="#"><i class="fas fa-cog"></i> Settings</a>
+              <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+            </div>
+          </div>
+
+          <!-- Write Post Button -->
+          <a href="post.html" class="write-btn">
+            <i class="fas fa-pen"></i>
+            <span>Write</span>
+          </a>
+          <!-- Mobile Menu Toggle
+        <button class="mobile-toggle" id="mobileToggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button> -->
+        </div>
+      </div>
+    </nav>
+
+    <main id="main" class="container contact-page">
+      <header class="contact-header">
         <h1>Contact Us</h1>
-        <p>Have a question or want to contribute? Reach out!</p>
+        <p>We’re here to help! Whether you want to contribute content, report an issue, partner with us, or just say hello.</p>
       </header>
 
-      <form>
-        <label for="name">Your Name</label>
-        <input id="name" type="text" required />
+      <div class="contact-layout">
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <h2>Send us a Message</h2>
+          <form>
+            <label for="name">Your Name</label>
+            <input id="name" type="text" placeholder="John Doe" required />
 
-        <label for="email">Email</label>
-        <input id="email" type="email" required />
+            <label for="email">Email Address</label>
+            <input id="email" type="email" placeholder="you@example.com" required />
 
-        <label for="message">Message</label>
-        <textarea id="message" rows="5" required></textarea>
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" placeholder="e.g., Article Submission" required />
 
-        <button type="submit">Send</button>
-      </form>
+            <label for="message">Your Message</label>
+            <textarea id="message" rows="6" placeholder="Tell us how we can help..." required></textarea>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+
+        <!-- Contact Info & Social -->
+        <div class="contact-info-section">
+          <h2>Other Ways to Connect</h2>
+          <ul class="info-list">
+            <li class="info-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <strong>Email</strong>
+                hello@techblogethiopia.com<br>
+                <small>For contributions & inquiries</small>
+              </div>
+            </li>
+            <li class="info-item">
+              <i class="fab fa-telegram"></i>
+              <div>
+                <strong>Telegram Community</strong>
+                @ETC_Ethiopia<br>
+                <small>Join 5,000+ developers</small>
+              </div>
+            </li>
+            <li class="info-item">
+              <i class="fab fa-discord"></i>
+              <div>
+                <strong>Discord Server</strong>
+                discord.gg/etc-ethiopia<br>
+                <small>Live discussions & mentorship</small>
+              </div>
+            </li>
+            <li class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <strong>Location</strong>
+                Addis Ababa, Ethiopia<br>
+                <small>Remote-first community</small>
+              </div>
+            </li>
+          </ul>
+
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simple FAQ -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <strong>How can I contribute an article?</strong><br>
+          Send your draft or idea via the form above with subject "Article Submission".
+        </div>
+        <div class="faq-item">
+          <strong>Can I suggest a topic or resource?</strong><br>
+          Absolutely! Use the form or join our Telegram/Discord to share ideas.
+        </div>
+        <div class="faq-item">
+          <strong>Do you organize events or meetups?</strong><br>
+          Yes! Check the <a href="events.html">Events page</a> or follow us on social media.
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
       <div class="container">
-        <p>© 2025 TechBlog Ethiopia</p>
+        <p>© 2025 TechBlog Ethiopia - Ethiopian Tech Community</p>
       </div>
     </footer>
 
