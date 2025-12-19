@@ -1,5 +1,3 @@
-/* post-enhanced.css - Enhanced Post Page Styles */
-
 :root {
   /* Color Palette */
   --bg-primary: #0a0f1e;
@@ -263,7 +261,7 @@ p {
 }
 
 .brand::before {
-  content: "🇪🇹";
+  content: "";
   font-size: 1.2em;
 }
 

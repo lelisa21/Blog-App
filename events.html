@@ -10,15 +10,20 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/theme.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/calendar.css">
+    <link rel="stylesheet" href="assets/css/events/events.css">
 </head>
-<body>
+<body data-theme="light">
  
-    <div id="nav-placeholder">
-        <!-- we will fetch through js for know i think home is enough -->
-         <a href="index.html">ETC</a>
+    <div id="nav-placeholder">       
+         <a href="index.html"><img src="./assets/images/logo.png" alt="ETC" width="70"> </a>
+
+          <div>
+            <a href="index.html">Home</a>
+            <a href="articles.html">Articles</a>
+            <a href="resources.html">Resources</a>
+            <a href="community.html">Community</a>  
+         </div>
     </div>
 
     <main class="events-main">
@@ -39,7 +44,7 @@
             </div>
         </header>
 
-        <!-- A. Interactive Calendar Section -->
+        <!--  Calendar Section -->
         <section class="calendar-section">
             <div class="section-header">
                 <h2>Event Calendar</h2>
@@ -58,7 +63,6 @@
                     <button class="nav-btn next-month"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="calendar-grid">
-                    <!-- Days of week header -->
                     <div class="day-header">Mon</div>
                     <div class="day-header">Tue</div>
                     <div class="day-header">Wed</div>
@@ -67,7 +71,7 @@
                     <div class="day-header">Sat</div>
                     <div class="day-header">Sun</div>
                     
-                    <!-- Calendar days will be populated by JavaScript -->
+                    <!-- Calendar days by JavaScript -->
                     <div class="calendar-placeholder">
                         Calendar will be loaded here with Ethiopian holidays and events
                     </div>
@@ -398,7 +402,7 @@
                     </div>
                 </div>
 
-                <!-- Event Card Example 3 (Virtual Event) -->
+                <!-- Event Card Example 3 -->
                 <div class="event-card meetup" data-city="virtual" data-type="meetup" data-tech="ai,web" data-difficulty="intermediate" data-mode="virtual">
                     <div class="event-header">
                         <div class="event-type-badge meetup">Virtual Meetup</div>
@@ -770,7 +774,7 @@
             </div>
         </section>
 
-        <!-- H. Analytics & Insights -->
+        <!--  Analytics & Insights -->
         <section class="analytics-section">
             <div class="section-header">
                 <h2>Community Insights</h2>

@@ -1,6 +1,3 @@
-/* Page-specific tweaks for Articles */
-
-/* Restore gradient bar used by the top header */
 .gradient-bar {
   background: linear-gradient(
     90deg,
@@ -10,7 +7,7 @@
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
 }
 
-/* Restore header inline layout so nav links sit side by side */
+/*  side */
 .site-header .container {
   display: flex;
   align-items: center;
@@ -681,4 +678,3 @@ main#main > header p {
   }
 }
 
-/* Utility styles now centralized in theme.css: .input, .select, .btn, .btn-primary, .btn-secondary, .input-lg */

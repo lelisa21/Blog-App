@@ -34,12 +34,15 @@ animation: energy-pulse 1.4s step-start;
    background-color: var(--color-secondary); 
    padding:  5px 10px;
    border-radius: 10px;
+    border: none;
    color: var(--color-accent-secondary);
 }
 .challenge-btn:hover{
     scale: 1.1;
     transition: all 0.3s ease-in-out;
     background-color: var(--color-cars);
+   
+    cursor: pointer;
 }
 .avatar-item{
     align-items: center;
