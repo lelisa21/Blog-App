@@ -1,176 +1,680 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" data-theme="dark">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href=" assets/css/resources.css">
-
-    <title>Resources — TechBlog Ethiopia</title>
-    <meta
-      name="description"
-      content="Developer resources, communities and learning paths for Ethiopian developers."
-    />
+    <title>Developer Resources — Ethiopian Tech Camp</title>
+    <meta name="description" content="Comprehensive interactive developer resources, learning paths, tools, communities, and career guides tailored for Ethiopian developers." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="/resources.html" />
+    
+    <!-- Optimized CSS loading -->
     <link rel="stylesheet" href="assets/css/theme.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/resources.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-link">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-animation">
+                    <div class="logo-circle circle-1"></div>
+                    <div class="logo-circle circle-2"></div>
+                    <div class="logo-circle circle-3"></div>
+                </div>
+                <img src="assets/images/logo.png" alt="ETC" width="60" loading="lazy">
+            </a>
 
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="assets/icons/favicon-32.png"
-    />
-  </head>
-
-  <body data-theme="dark" class="dynamic-bg">
-    <a href="#main" class="skip-link">Skip to main content</a>
-
-    <header class="site-header glass">
-      <div class="container header-inner">
-        <a class="brand" href="index.html">ETC</a>
-
-        <nav aria-label="Main Menu">
-          <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="resources.html" aria-current="page">Resources</a></li>
-            <li><a href="articles.html">Articles</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+            <div class="nav-link">
+                <a href="index.html" class="nav-item" data-tooltip="Home">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-label">Home</span>
+                </a>
+                <a href="resources.html" class="nav-item active" data-tooltip="Resources">
+                    <i class="fas fa-cube"></i>
+                    <span class="nav-label">Resources</span>
+                </a>
+                <a href="articles.html" class="nav-item" data-tooltip="Articles">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="nav-label">Articles</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <main id="main" class="container">
-      <header class="page-header">
-        <h1>Developer Resources</h1>
-        <p class="lead">Useful tools, documentation, and learning paths for Ethiopian developers.</p>
-      </header>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-content">
+                <h1>Developer Resources for Ethiopia</h1>
+                <div class="time-indicator">
+                    <i class="far fa-clock"></i>
+                    <span id="current-time">Loading GMT...</span>
+                </div>
+                <p class="lead">Interactive roadmaps, tools, communities, and career resources optimized for Ethiopian developers. All times in GMT. Designed for reliability on local networks.</p>
+            </div>
+        </header>
 
-      <section class="resource-grid">
-        <article class="card">
-          <div class="card-head">
-            <h2>Ethiopian Developer Communities</h2>
-          </div>
-          <div class="card-body">
-            <ul>
-              <li><a href="#" class="link">GDG Addis</a></li>
-              <li><a href="#" class="link">AWS User Group Ethiopia</a></li>
-              <li><a href="#" class="link">Ethiopian Linux Users</a></li>
-              <li><a href="#" class="link">AddisJS</a></li>
-              <li><a href="#" class="link">Women in Tech Ethiopia</a></li>
-            </ul>
-          </div>
-        </article>
+        <!-- Hero Images with lazy loading -->
+        <div class="hero-images-grid">
+            <div class="hero-image-wrapper">
+                <img 
+                    src="assets/images/resources/ethioExplore.png"         
+                    alt="Ethiopian tech hub" 
+                    class="lazy-image"
+                    loading="lazy"
+                    width="400"
+                    height="300">
+            </div>
+            <div class="hero-image-wrapper">
+                <img 
+                    src="assets/images/resources/EthioAI.png" 
+                    alt="Ethiopian AI developer" 
+                    class="lazy-image"
+                    loading="lazy"
+                    width="400"
+                    height="300">
+            </div>
+            <div class="hero-image-wrapper">
+                <img 
+                    src="assets/images/resources/EthioBootcamp.png" 
+                    alt="Tech meetup in Ethiopia" 
+                    class="lazy-image"
+                    loading="lazy"
+                    width="400"
+                    height="300">
+            </div>
+        </div>
 
-        <article class="card">
-          <div class="card-head">
-            <h2>Learning Roadmaps</h2>
-          </div>
-          <div class="card-body">
-            <ul>
-              <li><a href="#" class="link">Frontend Developer Path</a></li>
-              <li><a href="#" class="link">Backend Developer Path</a></li>
-              <li><a href="#" class="link">Mobile Developer Path</a></li>
-              <li><a href="#" class="link">Data Science Path</a></li>
-              <li><a href="#" class="link">Cloud & DevOps Path</a></li>
-            </ul>
-          </div>
-        </article>
+        <!-- Interactive Learning Paths -->
+        <section class="learning-paths-section">
+            <div class="section-header">
+                <h2><i class="fas fa-map-signs"></i> Interactive Learning Paths</h2>
+                <p>Progress saved locally. Estimated times account for Ethiopian internet/power constraints.</p>
+            </div>
 
-        <article class="card">
-          <div class="card-head">
-            <h2>Open Source in Ethiopia</h2>
-          </div>
-          <div class="card-body">
-            <p>Local projects you can contribute to and starter issues for first-time contributors.</p>
-            <ul>
-              <li><a href="#" class="link">Ethiopia Open Data Projects</a></li>
-              <li><a href="#" class="link">Local civic tech repos</a></li>
-            </ul>
-          </div>
-        </article>
+            <div class="learning-paths-grid">
+                <!-- Web Developer Path -->
+                <article class="path-card active" id="web-path">
+                    <div class="path-header">
+                        <h3>Ethiopian Web Developer</h3>
+                        <span class="path-estimate">6-12 months</span>
+                    </div>
+                    <div class="path-content">
+                        <ol class="path-steps">
+                            <li class="completed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>HTML/CSS/JS Basics (freeCodeCamp – offline)</span>
+                            </li>
+                            <li class="in-progress">
+                                <i class="fas fa-spinner"></i>
+                                <span>React.js (most in-demand in Addis jobs)</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Node.js/Express backend</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Deploy on local hosts (HahuCloud/Yegara)</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Integrate payments (Chapa, HelloCash)</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Amharic localization & offline support</span>
+                            </li>
+                        </ol>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>30% Complete</span>
+                                <button class="btn-progress" onclick="updateProgress('web', 10)">Mark 10% Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
 
-        <article class="card highlight">
-          <div class="card-head">
-            <h2>Tech Media and News</h2>
-          </div>
-          <div class="card-body">
-            <p>Follow these outlets for policy updates, startup news, and analysis.</p>
-            <ul>
-              <li><a href="#" class="link">Shega</a></li>
-              <li><a href="#" class="link">Zare Journal</a></li>
-              <li><a href="#" class="link">Ethiopian Innovation News</a></li>
-            </ul>
-          </div>
-        </article>
+                <!-- Mobile Developer Path -->
+                <article class="path-card" id="mobile-path">
+                    <div class="path-header">
+                        <h3>Mobile App Developer</h3>
+                        <span class="path-estimate">8-14 months</span>
+                    </div>
+                    <div class="path-content">
+                        <ol class="path-steps">
+                            <li class="completed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Flutter (cross-platform, low data usage)</span>
+                            </li>
+                            <li class="in-progress">
+                                <i class="fas fa-spinner"></i>
+                                <span>Android focus (90%+ market share)</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Offline-first architecture</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Amharic/Ge'ez script support</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Publish on local app stores</span>
+                            </li>
+                        </ol>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 20%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>20% Complete</span>
+                                <button class="btn-progress" onclick="updateProgress('mobile', 10)">Mark 10% Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
 
-        <article class="card">
-          <div class="card-head">
-            <h2>Learning Hubs and Bootcamps</h2>
-          </div>
-          <div class="card-body">
-            <ul>
-              <li><a href="#" class="link">A2SV Academy</a></li>
-              <li><a href="#" class="link">IceAddis</a></li>
-              <li><a href="#" class="link">Yared Technology School</a></li>
-              <li><a href="#" class="link">ZalaTech Learning Hub</a></li>
-            </ul>
-          </div>
-        </article>
+                <!-- AI Learning Track -->
+                <article class="path-card" id="ai-path">
+                    <div class="path-header">
+                        <h3>AI & Data Science Track</h3>
+                        <span class="path-estimate">9-15 months</span>
+                    </div>
+                    <div class="path-content">
+                        <ol class="path-steps">
+                            <li class="completed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Python basics (Anaconda offline)</span>
+                            </li>
+                            <li class="in-progress">
+                                <i class="fas fa-spinner"></i>
+                                <span>ML with Google Colab (low bandwidth)</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Local apps: AgriTech, Amharic NLP</span>
+                            </li>
+                            <li>
+                                <i class="far fa-circle"></i>
+                                <span>Ethiopian AI Institute projects</span>
+                            </li>
+                        </ol>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>25% Complete</span>
+                                <button class="btn-progress" onclick="updateProgress('ai', 10)">Mark 10% Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-        <article class="card">
-          <div class="card-head">
-            <h2>Government and Policy</h2>
-          </div>
-          <div class="card-body">
-            <p>Key policy and strategy documents to understand the national digital agenda.</p>
-            <ul>
-              <li><a href="#" class="link">Digital Ethiopia 2025</a></li>
-              <li><a href="#" class="link">Ministry of Innovation and Technology</a></li>
-            </ul>
-          </div>
-        </article>
+        <!-- Resource Library Grid -->
+        <section class="resources-grid-section">
+            <div class="section-header">
+                <h2><i class="fas fa-th-large"></i> Resource Library</h2>
+                <p>Curated resources for Ethiopian developers across all regions</p>
+            </div>
 
-        <article class="card">
-          <div class="card-head">
-            <h2>Startup Hubs and Incubators</h2>
-          </div>
-          <div class="card-body">
-            <ul>
-              <li><a href="#" class="link">IceAddis Incubator</a></li>
-              <li><a href="#" class="link">BlueMoon Labs</a></li>
-              <li><a href="#" class="link">Sheba Valley</a></li>
-            </ul>
-          </div>
-        </article>
+            <div class="resources-grid">
+                <!-- Communities & Meetups -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fas fa-users"></i>
+                        <h3>Communities & Meetups</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="https://gdg.community.dev/gdg-addis/" target="_blank" class="resource-link">
+                                    GDG Addis (DevFest 2026)
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://ethiocoders.et/" target="_blank" class="resource-link">
+                                    5 Million Ethiopian Coders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/groups/154989467898754/" target="_blank" class="resource-link">
+                                    Ethiopian Developers Network
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.iceaddis.com/" target="_blank" class="resource-link">
+                                    iceAddis Events
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
 
-        <article class="card callout">
-          <div class="card-head">
-            <h2>How to Get Started</h2>
-          </div>
-          <div class="card-body">
-            <ol>
-              <li>Pick a learning path and follow the roadmap.</li>
-              <li>Join a local community for mentorship and events.</li>
-              <li>Contribute to open source and build a portfolio.</li>
-            </ol>
-          </div>
-        </article>
-      </section>
+                <!-- Learning Hubs & Bootcamps -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Learning Hubs & Bootcamps</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="https://a2sv.org/" target="_blank" class="resource-link">
+                                    A2SV Academy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.iceaddis.com/" target="_blank" class="resource-link">
+                                    iceAddis
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://blueMoon.et/" target="_blank" class="resource-link">
+                                    blueMoon AgriTech Youth Academy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://learn.zalatechs.com/" target="_blank" class="resource-link">
+                                    ZalaTech
+                                </a>
+                            </li>
+                            <li>
+                                <span class="resource-text">AddisCoder (free summer program)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
 
-      <section class="resources-footer">
-        <h2>Contribute and Suggest Resources</h2>
-        <p>If you have a resource to add, open an issue on our GitHub or email the editors.</p>
-      </section>
+                <!-- Open Source Projects -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fab fa-github"></i>
+                        <h3>Open Source Projects</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="https://github.com/ethiopian" target="_blank" class="resource-link">
+                                    Ethiopian GitHub Org
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/abela12/made-in-ethiopia" target="_blank" class="resource-link">
+                                    Made in Ethiopia Collection
+                                </a>
+                            </li>
+                            <li>
+                                <span class="resource-text">Amharic NLP tools & calendars</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Tech Media & News -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Tech Media & News</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="https://shega.co/" target="_blank" class="resource-link">
+                                    Shega (leading source)
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://zarejournal.com/" target="_blank" class="resource-link">
+                                    Zare Journal
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Government & Policy -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fas fa-landmark"></i>
+                        <h3>Government & Policy</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="http://www.mint.gov.et/" target="_blank" class="resource-link">
+                                    Ministry of Innovation & Technology
+                                </a>
+                            </li>
+                            <li>
+                                <span class="resource-text">Digital Ethiopia 2025 → 2030</span>
+                            </li>
+                            <li>
+                                <span class="resource-text">Fayda Digital ID</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Startup Hubs & Incubators -->
+                <article class="resource-card">
+                    <div class="resource-card-header">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Startup Hubs & Incubators</h3>
+                    </div>
+                    <div class="resource-card-body">
+                        <ul>
+                            <li>
+                                <a href="https://www.iceaddis.com/" target="_blank" class="resource-link">
+                                    iceAddis
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://blueMoon.et/" target="_blank" class="resource-link">
+                                    blueMoon
+                                </a>
+                            </li>
+                            <li>
+                                <span class="resource-text">XHub Addis</span>
+                            </li>
+                            <li>
+                                <span class="resource-text">EDI (Entrepreneurship Development Institute)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Tool Comparison Matrix -->
+        <section class="tool-comparison-section">
+            <div class="section-header">
+                <h2><i class="fas fa-balance-scale"></i> Tool Comparison for Ethiopian Context</h2>
+                <p>Evaluated for slow internet, cost in ETB, and local support</p>
+            </div>
+
+            <div class="comparison-table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Tool</th>
+                            <th>Slow Internet Performance</th>
+                            <th>Cost (ETB approx)</th>
+                            <th>Local Adoption/Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hosting</td>
+                            <td>HahuCloud</td>
+                            <td><span class="rating excellent">Excellent</span></td>
+                            <td>From ~500/year</td>
+                            <td>High, Telegram support</td>
+                        </tr>
+                        <tr>
+                            <td>Hosting</td>
+                            <td>Yegara Host</td>
+                            <td><span class="rating good">Very Good</span></td>
+                            <td>Unlimited ~1,000/year</td>
+                            <td>High, phone/chat</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Gateway</td>
+                            <td>Chapa</td>
+                            <td><span class="rating excellent">Excellent</span></td>
+                            <td>~2% fee</td>
+                            <td>Very High</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Gateway</td>
+                            <td>HelloCash</td>
+                            <td><span class="rating good">Good</span></td>
+                            <td>Low fees</td>
+                            <td>Widespread</td>
+                        </tr>
+                        <tr>
+                            <td>Framework</td>
+                            <td>React/Flutter</td>
+                            <td><span class="rating good">Good</span></td>
+                            <td>Free</td>
+                            <td>High in major cities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Career Resources -->
+        <section class="career-resources-section">
+            <div class="section-header">
+                <h2><i class="fas fa-briefcase"></i> Career Resources</h2>
+                <p>2026 Salary Estimates & Career Guidance</p>
+            </div>
+
+            <div class="career-content">
+                <div class="salary-guide">
+                    <h3>Salary Estimates (Monthly)</h3>
+                    <div class="salary-grid">
+                        <div class="salary-level">
+                            <span class="level">Junior Developer</span>
+                            <span class="salary">20,000 - 40,000 ETB</span>
+                        </div>
+                        <div class="salary-level">
+                            <span class="level">Mid-Level Developer</span>
+                            <span class="salary">40,000 - 60,000 ETB</span>
+                        </div>
+                        <div class="salary-level">
+                            <span class="level">Senior Developer</span>
+                            <span class="salary">60,000 - 100,000 ETB</span>
+                        </div>
+                        <div class="salary-level">
+                            <span class="level">Remote (International)</span>
+                            <span class="salary">$3,000+ USD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="career-tips">
+                    <h3>Career Development Tips</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-code"></i>
+                            <span>Popular stacks: React/Node, Flutter, Python/ML</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-comments"></i>
+                            <span>Interview prep: LeetCode + local context questions</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-globe"></i>
+                            <span>Remote work: Strong GitHub portfolio & LinkedIn</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-passport"></i>
+                            <span>Visa focus: Remote opportunities or local startups</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Center -->
+        <section class="download-center-section">
+            <div class="section-header">
+                <h2><i class="fas fa-download"></i> Download Center</h2>
+                <p>Offline materials for Ethiopian developers</p>
+            </div>
+
+            <div class="download-grid">
+                <div class="download-item">
+                    <div class="download-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Ethiopian Tech Templates</h3>
+                    <p>Contract templates and project proposals</p>
+                    <button class="btn-download" onclick="downloadResource('templates')">
+                        Download (Coming Soon)
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="download-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Localized ChGMTsheets</h3>
+                    <p>React/Chapa setup, deployment guides</p>
+                    <button class="btn-download" onclick="downloadResource('chGMTsheets')">
+                        Download (Coming Soon)
+                    </button>
+                </div>
+
+                <div class="download-item">
+                    <div class="download-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Offline Tutorials</h3>
+                    <p>PDF guides for slow internet access</p>
+                    <button class="btn-download" onclick="downloadResource('tutorials')">
+                        Download (Coming Soon)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Contributions -->
+        <section class="contribution-section">
+            <div class="section-header">
+                <h2><i class="fas fa-hands-helping"></i> Contribute & Suggest Resources</h2>
+                <p>Help build the Ethiopian tech ecosystem</p>
+            </div>
+
+            <div class="contribution-content">
+                <p>Open an issue on GitHub or email us. Let's build together!</p>
+                <div class="contribution-actions">
+                    <a href="https://github.com/ETC-Ethiopia/resources" target="_blank" class="btn-contribute">
+                        <i class="fab fa-github"></i> GitHub Issues
+                    </a>
+                    <a href="mailto:resources@ethiopiantechcamp.et" class="btn-contribute">
+                        <i class="fas fa-envelope"></i> Email Suggestions
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="site-footer glass">
-      <div class="container">
-        <p>© 2025 TechBlog Ethiopia</p>
-      </div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="ETC" width="60" loading="lazy">
+                    <div>
+                        <h3>Ethiopian Tech Camp</h3>
+                        <p>Empowering developers nationwide</p>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    Connecting Ethiopian developers with resources, communities, and opportunities across all regions.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <a href="index.html">Home</a>
+                <a href="resources.html">Resources</a>
+                <a href="articles.html">Articles</a>
+                <a href="community.html">Community</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Ethiopia-Wide</h4>
+                <p>Serving developers across all regions of Ethiopia.</p>
+                <div class="footer-time">
+                    <i class="far fa-clock"></i>
+                    Current GMT: <span id="footer-time"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Ethiopian Tech Camp — Built for Ethiopian developers.</p>
+        </div>
     </footer>
 
-    <script src="assets/js/app.js" defer></script>
-  </body>
+    <!-- Font Awesome loaded asynchronously -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    
+    <!-- JavaScript loaded defer -->
+    <script src="assets/js/resources.js" defer></script>
+    
+    <!-- Inline scripts for critical functionality -->
+    <script>
+        // Update Ethiopia time
+        function updateEthiopiaTime() {
+            const now = new Date();
+            const ethiopiaTime = new Date(now.getTime());
+            const timeString = ethiopiaTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('current-time').textContent = timeString + ' GMT';
+            document.getElementById('footer-time').textContent = timeString + ' GMT';
+        }
+        
+        
+        // Progress tracking
+        function updateProgress(path, amount) {
+            const progress = localStorage.getItem(path + '-progress') || 0;
+            const newProgress = Math.min(parseInt(progress) + amount, 100);
+            localStorage.setItem(path + '-progress', newProgress);
+            
+            // Update UI
+            const fill = document.querySelector(`#${path}-path .progress-fill`);
+            if (fill) {
+                fill.style.width = newProgress + '%';
+            }
+            
+            alert(`Progress updated to ${newProgress}%`);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateEthiopiaTime();
+            lazyLoadImages();
+            
+            // Update time every minute
+            setInterval(updateEthiopiaTime, 60000);
+            
+            // Load saved progress
+            ['web', 'mobile', 'ai'].forEach(path => {
+                const saved = localStorage.getItem(path + '-progress');
+                if (saved) {
+                    const fill = document.querySelector(`#${path}-path .progress-fill`);
+                    if (fill) {
+                        fill.style.width = saved + '%';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
 </html>
