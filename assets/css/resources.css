@@ -7,7 +7,10 @@ body {
     min-height: 100vh;
     transition: background-color var(--transition-normal);
 }
-
+nav{
+    margin-top: 0%;
+    top: 0%;
+}
 .nav-label{
 color: #ffffff;
 }

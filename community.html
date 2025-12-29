@@ -20,9 +20,33 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 <body>
-    <!-- Navigation will be loaded via JavaScript -->
-    <div id="nav-placeholder"></div>
+   <nav class="nav-link">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-animation">
+                    <div class="logo-circle circle-1"></div>
+                    <div class="logo-circle circle-2"></div>
+                    <div class="logo-circle circle-3"></div>
+                </div>
+                <img src="assets/images/logo.png" alt="ETC" width="60" loading="lazy">
+            </a>
 
+            <div class="nav-link">
+                <a href="index.html" class="nav-item" data-tooltip="Home">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-label">Home</span>
+                </a>
+                <a href="resources.html" class="nav-item active" data-tooltip="Resources">
+                    <i class="fas fa-cube"></i>
+                    <span class="nav-label">Resources</span>
+                </a>
+                <a href="articles.html" class="nav-item" data-tooltip="Articles">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="nav-label">Articles</span>
+                </a>
+            </div>
+        </div>
+    </nav>
     <main class="container">
         <!-- Community Hero Section: Main landing area showcasing community stats and call-to-action buttons -->
         <section class="community-hero">
@@ -678,22 +702,6 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <!-- Your existing footer code -->
     </footer>
 
-    <!-- Core JavaScript Files: Navigation loader, main community functionality, theme switching, and app initialization -->
-    <script src="assets/js/load-navigation.js"></script>
-    <script src="assets/js/community.js"></script>
-    <script src="assets/js/community-features.js"></script>
-    <script src="assets/js/theme-switcher.js"></script>
-    <script src="assets/js/main.js"></script>
-
-    <!-- Feature-Specific JavaScript: Modular scripts for dashboard, directory, forums, projects, gamification, and realtime features -->
-    <script src="assets/js/community-dashboard.js"></script>
-    <script src="assets/js/community-directory.js"></script>
-    <script src="assets/js/community-forums.js"></script>
-    <script src="assets/js/community-projects.js"></script>
-    <script src="assets/js/community-gamification.js"></script>
-    <script src="assets/js/community-realtime.js"></script>
-</body>
 </html>

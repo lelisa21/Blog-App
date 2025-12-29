@@ -409,7 +409,9 @@ a:hover {
     align-items: center;
     justify-content: center;
 }
-
+.showcase-visual:hover{
+  animation: energy-pulse 1s ease-in-out;
+}
 .visual-icon {
     width: 80px;
     height: 80px;

@@ -1,6 +1,6 @@
 /* Any of you can change or if it's makes nonsence for you but please consider this comes through deep research*/
 
-:root {
+[data-theme="dark"] {
   /* Primary Colors */
   --color-primary: #7efff5;
   --color-primary-dark: #1e293b;
@@ -11,12 +11,12 @@
   --color-success: #9ef01a;
 
   /* Background*/
-  --color-bg: #0c0c14;
+  --color-bg: #242428;
   --color-surface: #6f75697b;
   --color-card: #1e293b;
   --color-hover: #7efff514;
   --nav-bg:#000000bc;
-  
+
   /* Text Spectrum */
   --color-text: #e6f7ff;
   --color-text-secondary: #b3e0ff;
@@ -91,10 +91,10 @@
   --scrollbar-track: var(--color-bg);
 }
 
-/*LIGHT THEME*/
-[data-theme="light"] {
+/*DARK THEME*/
+:root {
   /* Primary Colors */
-  --color-primary: #1b1e1ca3;
+  --color-primary: #070707a3;
   --color-primary-dark: #0088cc;
   --color-secondary: #00d165;
   --color-accent: #ddff00;
@@ -108,8 +108,8 @@
   --color-hover: rgba(0, 194, 255, 0.06);
    --nav-bg:#004556;
   /* Text Spectrum  */
-  --color-text: #0a1931;
-  --color-text-secondary: #3a506b;
+  --color-text: #050709;
+  --color-text-secondary: #516072;
   --color-text-muted: #5d7a9c;
 
   /* UI Elements */
