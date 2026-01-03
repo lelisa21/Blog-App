@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/css/resources.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon.png" />
 </head>
-<body data-theme="light">
+<body>
     <!-- Navigation -->
     <nav class="nav-link">
         <div class="nav-container">
@@ -26,7 +26,9 @@
                 </div>
                 <img src="assets/images/logo.png" alt="ETC" width="60" loading="lazy">
             </a>
-
+              <div class="theme-switch">
+                    <button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button>
+                </div>
             <div class="nav-link">
                 <a href="index.html" class="nav-item" data-tooltip="Home">
                     <i class="fas fa-home"></i>
@@ -615,7 +617,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 2026 Ethiopian Tech Camp — Built for Ethiopian developers.</p>
+            <p>© 202 Ethiopian Tech Camp — Built for Ethiopian developers.</p>
         </div>
     </footer>
 
@@ -624,6 +626,8 @@
     
     <!-- JavaScript loaded defer -->
     <script src="assets/js/resources.js" defer></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/theme.js"></script>
     
     <!-- Inline scripts for critical functionality -->
     <script>

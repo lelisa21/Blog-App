@@ -269,6 +269,10 @@ nav {
     z-index: 2000;
 }
 
+.profile-menu.show {
+    display: block;
+}
+
 .search-overlay.active {
     display: flex;
     align-items: flex-start;
@@ -301,6 +305,20 @@ nav {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: var(--glow-primary);
+}
+
+.article-card {
+    cursor: pointer;
+}
+
+.event-register:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.challenge-btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
 }
 
 @media (max-width: 1080px) {

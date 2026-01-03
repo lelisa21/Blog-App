@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/theme.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="assets/css/events/events.css">
 </head>
@@ -17,7 +18,9 @@
  
     <div id="nav-placeholder">       
          <a href="index.html"><img src="./assets/images/logo.png" alt="ETC" width="70"> </a>
-
+              <div class="theme-switch">
+                    <button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button>
+                </div>
           <div>
             <a href="index.html">Home</a>
             <a href="articles.html">Articles</a>
@@ -852,10 +855,10 @@
     </main>
 
     <!-- JavaScript Files -->
-    <script src="assets/js/nav-loader.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/theme.js"></script>
     <script src="assets/js/calendar.js"></script>
     <script src="assets/js/events.js"></script>
-    <script src="assets/js/filters.js"></script>
-    <script src="assets/js/event-creation.js"></script>
+ 
 </body>
 </html>
