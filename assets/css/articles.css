@@ -1,0 +1,680 @@
+.gradient-bar {
+  background: linear-gradient(
+    90deg,
+    rgba(14, 165, 164, 0.12),
+    rgba(59, 130, 246, 0.08)
+  );
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+/*  side */
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-header nav {
+  flex: 1;
+  margin-left: 1rem;
+}
+.site-header .menu {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-header .menu li {
+  margin: 0;
+}
+.site-header .menu a {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.site-header .menu a:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+.site-header .menu a[aria-current="page"] {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: #0b0b1f;
+  border: 1px solid transparent;
+}
+
+/* Card: reuse shared card visuals from theme/resources */
+.article-card {
+  background: var(--gradient-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: stretch;
+  min-height: 200px;
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+  position: relative;
+}
+.article-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-size: 3rem; /* match index h1 */
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+  font-weight: 700;
+}
+.page-subtitle {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 1.25rem; /* match hero subtitle on index */
+}
+
+.controls-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.search-box input {
+  width: 420px;
+  max-width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+}
+.sort-box select {
+  padding: 0.55rem;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+/* Grid & cards */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  column-gap: 1.25rem;
+  row-gap: 3rem;
+  margin: 1rem 0;
+  align-items: start;
+}
+
+/* Stronger scoping to override any global list styles */
+#articles-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 1.25rem;
+  row-gap: 3rem;
+  align-items: start;
+}
+.articles-grid .article-card .badge {
+  background: linear-gradient(90deg, #e6fffa, #ecfeff);
+}
+.card-media {
+  background: transparent;
+  display: block;
+  min-height: 180px;
+}
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Hover zoom effect applied to images only (desktop). Images zoom inside their container. */
+.card-media {
+  overflow: hidden;
+}
+.card-media img {
+  transition: transform var(--transition-normal, 0.32s) ease;
+  will-change: transform;
+}
+.article-card:hover .card-media img {
+  transform: scale(1.03);
+}
+
+/* Disable zoom on small screens to avoid layout shift */
+@media (max-width: 720px) {
+  .article-card:hover .card-media img {
+    transform: none;
+  }
+}
+
+/* Action buttons inside cards: use global button tokens */
+.icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.45rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast), color var(--transition-fast);
+}
+.icon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-primary);
+  background: var(--color-hover);
+}
+
+.read-more {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.read-more .arrow {
+  transition: transform var(--transition-fast);
+}
+.read-more:hover .arrow {
+  transform: translateX(4px);
+}
+.card-media {
+  background: transparent;
+  display: block;
+  min-height: 180px;
+}
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+.article-card .card-body a {
+  text-decoration: none;
+}
+.article-card .card-body a:hover {
+  text-decoration: underline;
+}
+.article-card .card-body {
+  align-self: stretch;
+}
+.article-card .card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+/* subtle separator inset so cards feel grouped */
+.article-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 6px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.card-meta {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+  align-items: center;
+}
+.card-meta .category {
+  font-weight: 600;
+}
+.card-meta .date {
+  color: var(--color-text-secondary);
+}
+.card-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.75rem; /* match index h3 */
+  font-weight: 600;
+}
+.card-title a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+.card-title a:hover {
+  text-decoration: underline;
+  color: var(--accent-600);
+}
+.excerpt {
+  margin: 0;
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+.meta {
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+}
+.meta span + span::before {
+  content: "·";
+  margin: 0 0.35rem;
+  color: var(--color-text-secondary);
+}
+.card-tags {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.tag {
+  background: var(--gradient-card);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+/* Pagination */
+.pagination-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+.sticky {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 10;
+}
+#load-more {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(14, 165, 164, 0.18);
+}
+.pagination {
+  display: flex;
+  gap: 0.35rem;
+}
+.pagination button {
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: #fff;
+}
+.pagination button[aria-current="page"],
+.pagination button:disabled {
+  background: linear-gradient(180deg, #0ea5a4, #059287);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Small screens */
+@media (max-width: 720px) {
+  .search-box input {
+    width: 100%;
+  }
+  .articles-grid {
+    grid-template-columns: 1fr;
+    row-gap: 1.25rem;
+  }
+  .article-card {
+    grid-template-columns: 1fr;
+  }
+  .article-card img {
+    height: 180px;
+    border-right: 0;
+  }
+  .card-title {
+    font-size: 1.06rem;
+  }
+  .excerpt {
+    font-size: 0.98rem;
+  }
+}
+
+/* Slightly increase base font for better readability */
+body {
+  font-size: 16px;
+}
+
+/* Additional visual polish and layout improvements */
+main#main {
+  max-width: 1180px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+main#main > header {
+  background: linear-gradient(
+    90deg,
+    rgba(14, 165, 164, 0.06),
+    rgba(59, 130, 246, 0.03)
+  );
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.03);
+}
+/* hero-lite and header-actions are provided globally in theme.css */
+main#main > header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+}
+main#main > header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+/* Use global background from theme/style to match index */
+
+/* nicer search input with icon */
+.search-box {
+  position: relative;
+}
+.search-box input {
+  padding-left: 40px;
+}
+.search-box::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%238A8F98' viewBox='0 0 24 24'><path d='M21 20l-4.35-4.35a7 7 0 10-1.414 1.414L20 21zM11 18a7 7 0 110-14 7 7 0 010 14z'/></svg>");
+  background-size: 18px;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+}
+
+/* Emphasize controls row on wider screens */
+.controls-row {
+  padding: 0.4rem 0.2rem;
+}
+
+/* Card micro-interactions */
+.article-card {
+  will-change: transform, opacity;
+}
+.article-card {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: cardIn 0.36s ease forwards;
+}
+.article-card:nth-child(1) {
+  animation-delay: 0.03s;
+}
+.article-card:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.article-card:nth-child(3) {
+  animation-delay: 0.09s;
+}
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Emphasize metadata */
+.card-meta .category {
+  background: linear-gradient(90deg, #e6fffa, #ecfeff);
+  padding: 0.18rem 0.45rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #065f46;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(6, 95, 70, 0.06);
+}
+.card-meta .date {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Make excerpt slightly lighter and more readable */
+.excerpt {
+  color: var(--color-text-secondary);
+}
+
+/* Improve pagination visuals */
+.pagination button {
+  min-width: 42px;
+  text-align: center;
+}
+.pagination button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(12, 74, 110, 0.06);
+}
+
+/* Responsive tweaks aligned with global utilities */
+@media (max-width: 1024px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #articles-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Prevent header nav items from overflowing on narrow screens */
+@media (max-width: 900px) {
+  .site-header .container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .site-header nav {
+    flex: 0 0 100%;
+    margin-left: 0;
+    order: 2;
+  }
+  .site-header .menu {
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    justify-content: flex-start;
+  }
+  .site-header .menu a {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.95rem;
+  }
+  .brand {
+    order: 1;
+  }
+}
+/* Card footer layout and avatar sizing */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+.author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.author .avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: var(--gradient-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.card-actions {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+/* Mid breakpoint: stack cards for narrower screens and reduce paddings */
+@media (max-width: 900px) {
+  .articles-grid,
+  #articles-container {
+    grid-template-columns: 1fr;
+  }
+  .article-card {
+    grid-template-columns: 1fr;
+  }
+  .card-media {
+    min-height: 200px;
+  }
+  .card-body {
+    padding: 0.9rem;
+    gap: 0.45rem;
+  }
+  .author .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+  .card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .card-media {
+    min-height: 180px;
+  }
+  .card-body {
+    padding: 0.75rem;
+  }
+  .author .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.82rem;
+  }
+  .card-actions .read-more {
+    align-self: flex-end;
+  }
+  .articles-grid {
+    row-gap: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-title {
+    font-size: 1.4rem;
+  }
+  .search-box input {
+    padding: 0.6rem 0.9rem;
+  }
+}
+@media (max-width: 640px) {
+  main#main > header .hero-lite {
+    grid-template-columns: 1fr;
+  }
+  main#main > header .header-actions {
+    justify-self: start;
+  }
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+  #articles-container {
+    grid-template-columns: 1fr;
+  }
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+}
+
+/* Ultra-wide screens: increase density */
+@media (min-width: 1400px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #articles-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Remove high-specificity overrides to reduce conflicts */
+
+/* Dark theme adjustments */
+[data-theme="dark"] body {
+  background: linear-gradient(180deg, #0b1220, #0a1420);
+}
+[data-theme="dark"] .article-card {
+  background: #0f172a;
+  border-color: rgba(148, 163, 184, 0.12);
+}
+[data-theme="dark"] .card-title a {
+  color: #e2e8f0;
+}
+[data-theme="dark"] .excerpt {
+  color: #e2e8f0;
+}
+[data-theme="dark"] .meta {
+  color: #94a3b8;
+}
+[data-theme="dark"] .tag {
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.24);
+}
+[data-theme="dark"] .page-header {
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.3));
+  border-color: rgba(148, 163, 184, 0.12);
+}
+[data-theme="dark"] .btn {
+  background: #0b1220;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+[data-theme="dark"] .btn-secondary {
+  background: #0b1220;
+}
+[data-theme="dark"] .select,
+[data-theme="dark"] .input {
+  background: #0b1220;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.18);
+}
+
+/* small-screen tweaks */
+@media (max-width: 480px) {
+  main#main > header h1 {
+    font-size: 1.4rem;
+  }
+  .card-body {
+    padding: 0.75rem;
+  }
+  .article-card img {
+    height: 160px;
+  }
+}
+
