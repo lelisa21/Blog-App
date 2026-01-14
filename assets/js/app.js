@@ -8,6 +8,7 @@ class AppUtils {
         });
     }
     
+    
     static debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
