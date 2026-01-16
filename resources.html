@@ -42,6 +42,11 @@
                     <i class="fas fa-newspaper"></i>
                     <span class="nav-label">Articles</span>
                 </a>
+                <a href="community.html" class="nav-item" data-tooltip="Articles">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="nav-label">Community</span>
+                </a>
+                
             </div>
         </div>
     </nav>
@@ -223,6 +228,267 @@
             </div>
         </section>
 
+                <!-- Interactive Tutorials Section -->
+        <section class="interactive-tutorials-section section-card">
+            <div class="section-header">
+                <h2><i class="fas fa-graduation-cap"></i> Interactive Ethiopian Tutorials</h2>
+                <p>Step-by-step guides optimized for Ethiopian context</p>
+            </div>
+            <div class="tutorials-container">
+                <div class="tutorial-card glass" data-tutorial="ethio-website">
+                    <div class="tutorial-card-header">
+                        <h3>Build Ethiopian Business Website</h3>
+                        <span class="badge">Beginner</span>
+                    </div>
+                    <div class="tutorial-card-body">
+                        <p>Create websites optimized for Ethiopian market with local payment integration</p>
+                        <div class="tutorial-meta">
+                            <span><i class="fas fa-clock"></i> 2-3 weeks</span>
+                            <span><i class="fas fa-wifi"></i> Works offline</span>
+                        </div>
+                        <button class="btn btn-primary btn-start-tutorial" data-tutorial="ethio-website">
+                            Start Tutorial
+                        </button>
+                        <div class="tutorial-steps" style="display: none;">
+                            <ol>
+                                <li data-step="1">Set up project with Ethiopian timezone</li>
+                                <li data-step="2">Implement Amharic language support</li>
+                                <li data-step="3">Integrate Chapa payment gateway</li>
+                                <li data-step="4">Optimize for slow internet connections</li>
+                                <li data-step="5">Deploy on Ethiopian hosting (HahuCloud)</li>
+                            </ol>
+                            <div class="tutorial-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                                <button class="btn btn-secondary btn-mark-complete">Mark Step Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tutorial-card glass" data-tutorial="mobile-app">
+                    <div class="tutorial-card-header">
+                        <h3>Create Ethiopian Mobile App</h3>
+                        <span class="badge">Intermediate</span>
+                    </div>
+                    <div class="tutorial-card-body">
+                        <p>Build mobile apps for Ethiopian market with offline capabilities</p>
+                        <div class="tutorial-meta">
+                            <span><i class="fas fa-clock"></i> 1-2 months</span>
+                            <span><i class="fas fa-mobile-alt"></i> Android focused</span>
+                        </div>
+                        <button class="btn btn-primary btn-start-tutorial" data-tutorial="mobile-app">
+                            Start Tutorial
+                        </button>
+                        <div class="tutorial-steps" style="display: none;">
+                            <ol>
+                                <li data-step="1">Choose Flutter for cross-platform</li>
+                                <li data-step="2">Implement offline-first architecture</li>
+                                <li data-step="3">Add Amharic/Ge'ez text support</li>
+                                <li data-step="4">Integrate Ethiopian payment options</li>
+                                <li data-step="5">Publish on local app stores</li>
+                            </ol>
+                            <div class="tutorial-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                                <button class="btn btn-secondary btn-mark-complete">Mark Step Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cheatsheet Generator -->
+        <section class="cheatsheet-section section-card">
+            <div class="section-header">
+                <h2><i class="fas fa-file-code"></i> Ethiopian Developer Cheatsheets</h2>
+                <p>Quick reference guides for Ethiopian tech stacks</p>
+            </div>
+            <div class="cheatsheet-generator glass">
+                <div class="cheatsheet-controls">
+                    <select id="cheatsheetType" class="select">
+                        <option value="">Select Cheatsheet Type</option>
+                        <option value="tech-stack">Ethiopian Tech Stack</option>
+                        <option value="deployment">Deployment Commands</option>
+                        <option value="apis">Ethiopian APIs</option>
+                        <option value="localization">Amharic Localization</option>
+                    </select>
+                    <div class="button-group">
+                        <button id="generateCheatsheet" class="btn btn-primary">
+                            <i class="fas fa-code"></i> Generate Cheatsheet
+                        </button>
+                        <button id="downloadCheatsheet" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div class="cheatsheet-output" id="cheatsheetOutput">
+                    <div class="placeholder">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Select a cheatsheet type and generate your guide</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Builder -->
+        <section class="tech-stack-section section-card">
+            <div class="section-header">
+                <h2><i class="fas fa-layer-group"></i> Ethiopian Tech Stack Builder</h2>
+                <p>Build your optimal tech stack for Ethiopian market</p>
+            </div>
+            <div class="stack-builder-container">
+                <div class="components-panel glass">
+                    <h3><i class="fas fa-toolbox"></i> Available Components</h3>
+                    <div class="components-grid">
+                        <div class="component-category">
+                            <h4>Frontend</h4>
+                            <div class="component-list">
+                                <div class="component-item" draggable="true" data-component="react" data-category="frontend">
+                                    <i class="fab fa-react"></i>
+                                    <span>React.js</span>
+                                    <small>Most in-demand in Addis</small>
+                                </div>
+                                <div class="component-item" draggable="true" data-component="vue" data-category="frontend">
+                                    <i class="fab fa-vuejs"></i>
+                                    <span>Vue.js</span>
+                                    <small>Growing in popularity</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-category">
+                            <h4>Backend</h4>
+                            <div class="component-list">
+                                <div class="component-item" draggable="true" data-component="node" data-category="backend">
+                                    <i class="fab fa-node-js"></i>
+                                    <span>Node.js</span>
+                                    <small>JavaScript full stack</small>
+                                </div>
+                                <div class="component-item" draggable="true" data-component="python" data-category="backend">
+                                    <i class="fab fa-python"></i>
+                                    <span>Python/Django</span>
+                                    <small>AI/Data Science</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-category">
+                            <h4>Hosting</h4>
+                            <div class="component-list">
+                                <div class="component-item" draggable="true" data-component="hahu" data-category="hosting">
+                                    <i class="fas fa-cloud"></i>
+                                    <span>HahuCloud</span>
+                                    <small>Local, best support</small>
+                                </div>
+                                <div class="component-item" draggable="true" data-component="yegara" data-category="hosting">
+                                    <i class="fas fa-server"></i>
+                                    <span>Yegara Host</span>
+                                    <small>Unlimited bandwidth</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stack-panel glass">
+                    <h3><i class="fas fa-project-diagram"></i> Your Ethiopian Tech Stack</h3>
+                    <div class="stack-area" id="stackArea">
+                        <p class="empty-stack">Drag components here to build your stack</p>
+                    </div>
+                    <div class="stack-actions">
+                        <button id="saveStack" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Stack
+                        </button>
+                        <button id="clearStack" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="exportStack" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="stack-output glass" id="stackOutput" style="display: none;">
+                <h4>Generated Configuration:</h4>
+                <pre><code id="stackConfig"></code></pre>
+            </div>
+        </section>
+
+        <!-- Community Features -->
+        <section class="community-features-section section-card">
+            <div class="section-header">
+                <h2><i class="fas fa-hands-helping"></i> Community Features</h2>
+                <p>Connect, learn, and grow with Ethiopian developers</p>
+            </div>
+            <div class="community-grid">
+                <div class="community-card glass">
+                    <div class="community-card-header">
+                        <i class="fas fa-star"></i>
+                        <h3>Resource Rating</h3>
+                    </div>
+                    <div class="community-card-body">
+                        <p>Rate resources to help other developers</p>
+                        <div class="rating-section">
+                            <div class="stars">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                            <small class="rating-text">Rate this page</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-card glass">
+                    <div class="community-card-header">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Achievements</h3>
+                    </div>
+                    <div class="community-card-body">
+                        <p>Earn achievements as you learn</p>
+                        <div class="achievements-preview">
+                            <div class="achievement-badge" data-achieved="false">
+                                <i class="fas fa-code"></i>
+                                <span>First Resource</span>
+                            </div>
+                            <div class="achievement-badge" data-achieved="false">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Tutorial Complete</span>
+                            </div>
+                            <div class="achievement-badge" data-achieved="false">
+                                <i class="fas fa-users"></i>
+                                <span>Community Helper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-card glass">
+                    <div class="community-card-header">
+                        <i class="fas fa-certificate"></i>
+                        <h3>Skill Verification</h3>
+                    </div>
+                    <div class="community-card-body">
+                        <p>Get your skills verified by the community</p>
+                        <div class="verification-options">
+                            <button class="btn btn-sm btn-secondary" data-skill="html_css">
+                                HTML/CSS
+                            </button>
+                            <button class="btn btn-sm btn-secondary" data-skill="javascript">
+                                JavaScript
+                            </button>
+                            <button class="btn btn-sm btn-secondary" data-skill="react">
+                                React.js
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Resource Library Grid -->
         <section class="resources-grid-section">
             <div class="section-header">
@@ -628,6 +894,8 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/resources.js"></script>
+    <script src="assets/js/performance.js"></script>
     
     <!-- Inline scripts for critical functionality -->
     <script>

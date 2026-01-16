@@ -170,7 +170,7 @@ nav {
 }
 
 .theme-toggle {
-    background: var(--color-surface);
+    background: transparent;
     border: 1px solid var(--color-border);
     color: var(--color-text);
     width: 40px;

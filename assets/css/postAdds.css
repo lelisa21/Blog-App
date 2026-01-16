@@ -1,0 +1,277 @@
+/* Post Creation Section */
+.create-post-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: var(--gradient-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.create-post-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.create-post-header h2 {
+    color: var(--color-text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.create-post-header p {
+    color: var(--color-text-secondary);
+    font-size: 1.1em;
+}
+
+/* Form Styles */
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    transition: all var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(126, 255, 245, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 200px;
+    font-family: var(--font-mono);
+}
+
+.char-counter {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: var(--color-text-muted);
+    font-size: 0.9em;
+    background: var(--color-surface);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+/* Editor Tools */
+.editor-tools {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.editor-btn {
+    padding: 8px 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.editor-btn:hover {
+    background: var(--color-hover);
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+/* Ethiopian Context Box */
+.ethiopian-context-box {
+    background: var(--color-card);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid var(--color-border);
+}
+
+.context-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.context-header i {
+    color: var(--color-accent);
+    font-size: 1.2em;
+}
+
+.context-header h4 {
+    margin: 0;
+    color: var(--color-text);
+}
+
+.context-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.suggestion-btn {
+    padding: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-btn:hover {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+}
+
+.suggestion-btn i {
+    font-size: 1.2em;
+}
+
+/* Post Meta Fields */
+.post-meta-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .post-meta-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tag-preview {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    min-height: 30px;
+}
+
+/* Post Preview */
+.post-preview {
+    padding: 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+}
+
+.post-preview h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-text);
+}
+
+.preview-content {
+    background: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    min-height: 150px;
+}
+
+.preview-placeholder {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 40px;
+    font-style: italic;
+}
+
+/* Post Actions */
+.post-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.post-actions .btn {
+    min-width: 120px;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-post-section {
+        padding: 20px;
+    }
+    
+    .post-actions {
+        flex-direction: column;
+    }
+    
+    .post-actions .btn {
+        width: 100%;
+    }
+    
+    .context-suggestions {
+        grid-template-columns: 1fr;
+    }
+    
+    .editor-tools {
+        justify-content: center;
+    }
+}
+
+/* Dark mode adjustments for code blocks */
+[data-theme="dark"] .post-preview code {
+    background: rgba(126, 255, 245, 0.1);
+    color: var(--color-primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+}
+
+[data-theme="dark"] .post-preview pre {
+    background: rgba(30, 41, 59, 0.5);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+}
+
+/* Ethiopian flag emoji styling */
+[data-theme="dark"] .ethiopian-context-box {
+    border-left: 4px solid #ffd700;
+    border-right: 4px solid #ff0000;
+    border-image: linear-gradient(to right, #ff0000, #ffd700, #008000) 1;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.loading {
+    animation: pulse 1.5s infinite;
+}

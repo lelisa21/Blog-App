@@ -7,6 +7,17 @@
     box-shadow: var(--shadow-md);
 }
 
+.skills-visualization {
+    position: relative;
+    height: 200px; /* Fixed height for container */
+    width: 100%;
+}
+
+#skills-chart {
+    max-height: 180px !important;
+    width: 100% !important;
+}
+
 .section-header {
     display: flex;
     justify-content: space-between;

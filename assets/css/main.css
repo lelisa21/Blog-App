@@ -407,9 +407,10 @@
         gap: 2rem;
         text-align: center;
     }
-    .hero-stats {
-        flex-direction: column;
-        gap: 1.5rem;
+    .hero-stats,.community-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit , 250px);
+        gap: 1rem;
     }
 }
 @media (max-width: 480px) {
