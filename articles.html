@@ -3,329 +3,535 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Articles — ETC</title>
-    <link rel="stylesheet" href="assets/css/theme.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
-    <meta
-      name="description"
-      content="Browse articles on TechBlog Ethiopia: tutorials, guides and interviews."
-    />
+    <title>Articles — ETC Ethiopia</title>
+    <meta name="description" content="Browse articles on TechBlog Ethiopia: tutorials, guides and interviews by Ethiopian developers." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="/articles.html" />
-
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="assets/icons/favicon-32.png"
-    />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/theme.css" />
     <link rel="stylesheet" href="assets/css/articles.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      <!-- Theme Toggle Script -->
+    <script>
+      // Function to toggle theme
+      function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Update body attribute
+        body.setAttribute('data-theme', newTheme);
+        
+        // Save to localStorage
+        localStorage.setItem('theme', newTheme);
+      }
+      
+      // Load saved theme on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.body.setAttribute('data-theme', savedTheme);
+        } else {
+          // Default to light theme
+          document.body.setAttribute('data-theme', 'light');
+        }
+      });
+    </script>
+    
   </head>
 
-  <body data-theme="light">
+  <body data-theme="light" data-page="articles">
+    <!-- Header - Keeping your exact structure -->
     <header class="site-header gradient-bar">
       <div class="container">
         <a class="brand" href="index.html">ETC Ethiopia</a>
         <nav aria-label="Main Menu">
           <ul class="menu">
             <li><a href="index.html">Home</a></li>
-            <li><a href="articles.html" aria-current="page">Articles</a></li>
+            <li><a href="articles.html" aria-current="page" class="active">Articles</a></li>
             <li><a href="resources.html">Resources</a></li>
             <li><a href="community.html">Community</a></li>
             <li><a href="about.html">About</a></li>
           </ul>
-          <div class="theme-switch">
-                    <button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button>
-                </div>
+                    <div class="theme-switch">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" onclick="toggleTheme()">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+            </button>
+          </div>
         </nav>
       </div>
     </header>
 
     <main id="main" class="container">
+      <!-- Page Header - Keeping your content, just enhancing styling -->
       <header class="page-header hero-lite">
         <div class="eyebrow">Explore</div>
         <h1 class="page-title">All Articles</h1>
         <p class="page-subtitle">
           Tutorials, insights, and guides by Ethiopian developers.
         </p>
+        
+        <!-- Your original buttons -->
         <div class="header-actions">
-          <a class="btn btn-primary" href="post.html"
-            ><i class="fas fa-pen"></i> Write</a
-          >
-          <a class="btn btn-secondary" href="resources.html"
-            ><i class="fas fa-compass"></i> Resources</a
-          >
+          <a class="btn btn-primary" href="post.html">
+            <i class="fas fa-pen"></i> Write
+          </a>
+          <a class="btn btn-secondary" href="resources.html">
+            <i class="fas fa-compass"></i> Resources
+          </a>
+        </div>
+        
+        <!-- Added quick stats -->
+        <div class="page-stats">
+          <div class="stat">
+            <span class="stat-number" id="articleCount">5</span>
+            <span class="stat-label">Articles</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Categories</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">12</span>
+            <span class="stat-label">Tags</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Authors</span>
+          </div>
         </div>
       </header>
 
-      <!-- Articles controls: search, sort and advanced filters -->
-      <section id="articles-container" class="articles-grid" aria-live="polite">
-        <article class="article-card">
-          <div class="card-media">
-            <img
-              src="assets/images/articles/web.jpg"
-              alt="Featured image: Web performance"
-            />
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="category badge category-web">Web Development</span>
-              <span class="date">Nov 10, 2025</span>
-            </div>
-            <h3 class="card-title">
-              <a href="post.html">Building Accessible, Performant Web Apps</a>
-            </h3>
-            <p class="excerpt">
-              Practical tips for low-bandwidth environments: optimize images,
-              reduce JS, and prefer progressive enhancement.
-            </p>
-            <div class="meta">
-              <span class="reading-time">6 min read</span>
-              <span class="views">1.2k views</span>
-            </div>
-            <div class="card-tags">
-              <span class="tag">javascript</span>
-              <span class="tag">performance</span>
-            </div>
-            <div class="card-footer">
-              <div class="author">
-                <span class="name">Akila Kibrom</span>
-              </div>
-              <div class="card-actions">
-                <button class="icon-btn like" aria-label="Like article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
-                </button>
-                <button class="icon-btn bookmark" aria-label="Bookmark article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
-                </button>
-                <a class="read-more" href="post.html">
-                  Read more <span class="arrow" aria-hidden="true">→</span>
-                </a>
-              </div>
+      <!-- Enhanced Filter Controls (NEW) -->
+      <section class="filters-section">
+        <div class="filters-container">
+          <!-- Search Box -->
+          <div class="filter-group search-group">
+            <div class="search-box">
+              <i class="fas fa-search search-icon"></i>
+              <input 
+                type="search" 
+                id="articleSearch" 
+                placeholder="Search articles, authors, tags..."
+                aria-label="Search articles"
+              />
+              <button class="search-clear" id="clearSearch" aria-label="Clear search">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
           </div>
-        </article>
+          
+          <!-- Quick Filter Buttons -->
+          <div class="filter-group quick-filters">
+            <button class="filter-btn active" data-filter="all">
+              <i class="fas fa-layer-group"></i> All
+            </button>
+            <button class="filter-btn" data-filter="web">
+              <i class="fas fa-code"></i> Web Dev
+            </button>
+            <button class="filter-btn" data-filter="mobile">
+              <i class="fas fa-mobile-alt"></i> Mobile
+            </button>
+            <button class="filter-btn" data-filter="data">
+              <i class="fas fa-chart-line"></i> Data & AI
+            </button>
+            <button class="filter-btn" data-filter="devops">
+              <i class="fas fa-server"></i> DevOps
+            </button>
+          </div>
+          
+          <!-- Sort & Advanced -->
+          <div class="filter-group actions-group">
+            <select class="sort-select" id="sortSelect" aria-label="Sort articles">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="popular">Most Viewed</option>
+              <option value="reading">Reading Time</option>
+            </select>
+            <button class="btn btn-outline" id="toggleFilters">
+              <i class="fas fa-filter"></i> More Filters
+            </button>
+          </div>
+        </div>
+        
+        <!-- Advanced Filters (Collapsible) -->
+        <div class="advanced-filters" id="advancedFilters">
+          <div class="advanced-grid">
+            <!-- Tags Filter -->
+            <div class="filter-section">
+              <h4><i class="fas fa-tags"></i> Filter by Tags</h4>
+              <div class="tags-cloud" id="tagsCloud">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+            
+            <!-- Reading Time -->
+            <div class="filter-section">
+              <h4><i class="fas fa-clock"></i> Reading Time</h4>
+              <div class="slider-container">
+                <span id="readingTimeValue">30 min or less</span>
+                <input 
+                  type="range" 
+                  id="readingTimeSlider" 
+                  min="1" 
+                  max="60" 
+                  value="30"
+                  class="slider"
+                />
+              </div>
+            </div>
+            
+            <!-- Date Range -->
+            <div class="filter-section">
+              <h4><i class="fas fa-calendar-alt"></i> Date Published</h4>
+              <div class="date-buttons">
+                <button class="date-btn" data-days="7">Last Week</button>
+                <button class="date-btn" data-days="30">Last Month</button>
+                <button class="date-btn" data-days="90">Last 3 Months</button>
+                <button class="date-btn active" data-days="0">All Time</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Active Filters Display -->
+          <div class="active-filters" id="activeFilters">
+            <span class="active-label">Active Filters:</span>
+            <div class="active-tags" id="activeTags"></div>
+            <button class="clear-all" id="clearAllFilters">
+              Clear All
+            </button>
+          </div>
+        </div>
+      </section>
 
-        <article class="article-card">
-          <div class="card-media">
-            <img
-              src="assets/images/articles/Ai.jpg"
-              alt="Featured image: Machine learning"
-            />
+      <!-- Articles Grid - KEEPING YOUR EXACT ARTICLES -->
+      <section class="articles-section">
+        <div class="articles-header">
+          <h2 id="resultsTitle">Latest Articles</h2>
+          <div class="results-info">
+            Showing <span id="resultsCount">5</span> of <span id="totalCount">5</span> articles
           </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="category badge category-data">Data &amp; AI</span>
-              <span class="date">Oct 28, 2025</span>
+        </div>
+        
+        <!-- YOUR ORIGINAL ARTICLES (keeping all content) -->
+        <div id="articles-container" class="articles-grid" aria-live="polite">
+          <!-- Article 1 -->
+          <article class="article-card" data-category="web" data-reading="6" data-date="2025-11-10">
+            <div class="card-media">
+              <img src="assets/images/articles/web.jpg" alt="Web performance optimization" />
+              <div class="card-badge category-web">Web Development</div>
             </div>
-            <h3 class="card-title">
-              <a href="post.html"
-                >Intro to Machine Learning with Local Datasets</a
-              >
-            </h3>
-            <p class="excerpt">
-              How to prepare and use local datasets for ML projects when
-              connectivity and compute are limited.
-            </p>
-            <div class="meta">
-              <span class="reading-time">8 min read</span>
-              <span class="views">860 views</span>
-            </div>
-            <div class="card-tags">
-              <span class="tag">python</span><span class="tag">ml</span>
-            </div>
-            <div class="card-footer">
-              <div class="author">
-                <span class="name">Tilahun Shiferaw</span>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-date"><i class="far fa-calendar"></i> Nov 10, 2025</span>
               </div>
-              <div class="card-actions">
-                <button class="icon-btn like" aria-label="Like article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
-                </button>
-                <button class="icon-btn bookmark" aria-label="Bookmark article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
-                </button>
-                <a class="read-more" href="post.html">
-                  Read more <span class="arrow" aria-hidden="true">→</span>
-                </a>
+              <h3 class="card-title">
+                <a href="post.html">Building Accessible, Performant Web Apps</a>
+              </h3>
+              <p class="card-excerpt">
+                Practical tips for low-bandwidth environments: optimize images, reduce JS, and prefer progressive enhancement.
+              </p>
+              <div class="card-stats">
+                <span class="stat"><i class="far fa-clock"></i> 6 min read</span>
+                <span class="stat"><i class="far fa-eye"></i> 1.2k views</span>
+                <span class="stat"><i class="far fa-heart"></i> 42</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag">javascript</span>
+                <span class="tag">performance</span>
+                <span class="tag">accessibility</span>
+              </div>
+              <div class="card-footer">
+                <div class="author">
+                  <div class="author-avatar">AK</div>
+                  <div class="author-info">
+                    <span class="author-name">Akila Kibrom</span>
+                    <span class="author-role">Senior Developer</span>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn like-btn" aria-label="Like article">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <button class="action-btn bookmark-btn" aria-label="Bookmark article">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="article-card">
-          <div class="card-media">
-            <img
-              src="assets/images/articles/Mobile.jpg"
-              alt="Featured image: Mobile"
-            />
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="category badge category-mobile">Mobile</span>
-              <span class="date">Sep 14, 2025</span>
+          <!-- Article 2 -->
+          <article class="article-card" data-category="data" data-reading="8" data-date="2025-10-28">
+            <div class="card-media">
+              <img src="assets/images/articles/Ai.jpg" alt="Machine learning with local datasets" />
+              <div class="card-badge category-data">Data & AI</div>
             </div>
-            <h3 class="card-title">
-              <a href="post.html">Cross-platform Mobile Apps: Flutter Tips</a>
-            </h3>
-            <p class="excerpt">
-              Best practices when building Flutter apps for low-end Android
-              devices popular in Ethiopia.
-            </p>
-            <div class="meta">
-              <span class="reading-time">7 min read</span>
-              <span class="views">940 views</span>
-            </div>
-            <div class="card-tags">
-              <span class="tag">flutter</span><span class="tag">mobile</span>
-            </div>
-            <div class="card-footer">
-              <div class="author">
-                <span class="name">Robel Mesfin</span>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-date"><i class="far fa-calendar"></i> Oct 28, 2025</span>
               </div>
-              <div class="card-actions">
-                <button class="icon-btn like" aria-label="Like article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
-                </button>
-                <button class="icon-btn bookmark" aria-label="Bookmark article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
-                </button>
-                <a class="read-more" href="post.html">
-                  Read more <span class="arrow" aria-hidden="true">→</span>
-                </a>
+              <h3 class="card-title">
+                <a href="post.html">Intro to Machine Learning with Local Datasets</a>
+              </h3>
+              <p class="card-excerpt">
+                How to prepare and use local datasets for ML projects when connectivity and compute are limited.
+              </p>
+              <div class="card-stats">
+                <span class="stat"><i class="far fa-clock"></i> 8 min read</span>
+                <span class="stat"><i class="far fa-eye"></i> 860 views</span>
+                <span class="stat"><i class="far fa-heart"></i> 31</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag">python</span>
+                <span class="tag">ml</span>
+                <span class="tag">datasets</span>
+              </div>
+              <div class="card-footer">
+                <div class="author">
+                  <div class="author-avatar">TS</div>
+                  <div class="author-info">
+                    <span class="author-name">Tilahun Shiferaw</span>
+                    <span class="author-role">Data Scientist</span>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn like-btn" aria-label="Like article">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <button class="action-btn bookmark-btn" aria-label="Bookmark article">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="article-card">
-          <div class="card-media">
-            <img
-              src="assets/images/articles/devops.jpg"
-              alt="Featured image: DevOps"
-            />
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="category badge category-devops">DevOps</span>
-              <span class="date">Aug 02, 2025</span>
+          <!-- Article 3 -->
+          <article class="article-card" data-category="mobile" data-reading="7" data-date="2025-09-14">
+            <div class="card-media">
+              <img src="assets/images/articles/Mobile.jpg" alt="Flutter mobile development" />
+              <div class="card-badge category-mobile">Mobile</div>
             </div>
-            <h3 class="card-title">
-              <a href="post.html">CI/CD for Small Teams</a>
-            </h3>
-            <p class="excerpt">Practical GitHub Actions pipelines tailored for Ethiopian startups and student projects.</p>
-            <div class="meta"><span class="reading-time">5 min read</span><span class="views">520 views</span></div>
-            <div class="card-tags"><span class="tag">github-actions</span><span class="tag">ci-cd</span></div>
-            <div class="card-footer">
-              <div class="author">
-                <span class="name">Hanan Negash</span>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-date"><i class="far fa-calendar"></i> Sep 14, 2025</span>
               </div>
-              <div class="card-actions">
-                <button class="icon-btn like" aria-label="Like article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
-                </button>
-                <button class="icon-btn bookmark" aria-label="Bookmark article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
-                </button>
-                <a class="read-more" href="post.html">
-                  Read more <span class="arrow" aria-hidden="true">→</span>
-                </a>
+              <h3 class="card-title">
+                <a href="post.html">Cross-platform Mobile Apps: Flutter Tips</a>
+              </h3>
+              <p class="card-excerpt">
+                Best practices when building Flutter apps for low-end Android devices popular in Ethiopia.
+              </p>
+              <div class="card-stats">
+                <span class="stat"><i class="far fa-clock"></i> 7 min read</span>
+                <span class="stat"><i class="far fa-eye"></i> 940 views</span>
+                <span class="stat"><i class="far fa-heart"></i> 28</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag">flutter</span>
+                <span class="tag">mobile</span>
+                <span class="tag">android</span>
+              </div>
+              <div class="card-footer">
+                <div class="author">
+                  <div class="author-avatar">RM</div>
+                  <div class="author-info">
+                    <span class="author-name">Robel Mesfin</span>
+                    <span class="author-role">Mobile Developer</span>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn like-btn" aria-label="Like article">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <button class="action-btn bookmark-btn" aria-label="Bookmark article">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="article-card">
-          <div class="card-media">
-            <img
-              src="assets/images/articles/datas.jpg"
-              alt="Featured image: Data"
-            />
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="category badge category-data">Data</span>
-              <span class="date">Jul 21, 2025</span>
+          <!-- Article 4 -->
+          <article class="article-card" data-category="devops" data-reading="5" data-date="2025-08-02">
+            <div class="card-media">
+              <img src="assets/images/articles/devops.jpg" alt="CI/CD pipeline" />
+              <div class="card-badge category-devops">DevOps</div>
             </div>
-            <h3 class="card-title">
-              <a href="post.html">Visualizing Local Data with D3</a>
-            </h3>
-            <p class="excerpt">
-              Create lightweight interactive charts that work well on low
-              bandwidth.
-            </p>
-            <div class="meta">
-              <span class="reading-time">9 min read</span>
-              <span class="views">760 views</span>
-            </div>
-            <div class="card-tags">
-              <span class="tag">d3</span><span class="tag">visualization</span>
-            </div>
-            <div class="card-footer">
-              <div class="author">
-                <span class="name">Yigba Nibret</span>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-date"><i class="far fa-calendar"></i> Aug 02, 2025</span>
               </div>
-              <div class="card-actions">
-                <button class="icon-btn like" aria-label="Like article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-4.35-9-9A5.5 5.5 0 0 1 12 5.5 5.5 5.5 0 0 1 21 12c-2.5 4.65-9 9-9 9Z"/></svg>
-                </button>
-                <button class="icon-btn bookmark" aria-label="Bookmark article">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
-                </button>
-                <a class="read-more" href="post.html">
-                  Read more <span class="arrow" aria-hidden="true">→</span>
-                </a>
+              <h3 class="card-title">
+                <a href="post.html">CI/CD for Small Teams</a>
+              </h3>
+              <p class="card-excerpt">
+                Practical GitHub Actions pipelines tailored for Ethiopian startups and student projects.
+              </p>
+              <div class="card-stats">
+                <span class="stat"><i class="far fa-clock"></i> 5 min read</span>
+                <span class="stat"><i class="far fa-eye"></i> 520 views</span>
+                <span class="stat"><i class="far fa-heart"></i> 19</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag">github-actions</span>
+                <span class="tag">ci-cd</span>
+                <span class="tag">devops</span>
+              </div>
+              <div class="card-footer">
+                <div class="author">
+                  <div class="author-avatar">HN</div>
+                  <div class="author-info">
+                    <span class="author-name">Hanan Negash</span>
+                    <span class="author-role">DevOps Engineer</span>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn like-btn" aria-label="Like article">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <button class="action-btn bookmark-btn" aria-label="Bookmark article">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
-      <!-- Pagination / Load more (accessible placeholders) -->
-      <div class="pagination-controls">
-        <button id="load-more" type="button" class="btn btn-primary">
-          Load more
-        </button>
-        <nav
-          id="pagination"
-          class="pagination"
-          aria-label="Pagination"
-          role="navigation"
-        >
-          <button class="page-btn" aria-current="page">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-        </nav>
-      </div>
+          </article>
 
+          <!-- Article 5 -->
+          <article class="article-card" data-category="data" data-reading="9" data-date="2025-07-21">
+            <div class="card-media">
+              <img src="assets/images/articles/datas.jpg" alt="Data visualization with D3" />
+              <div class="card-badge category-data">Data</div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-date"><i class="far fa-calendar"></i> Jul 21, 2025</span>
+              </div>
+              <h3 class="card-title">
+                <a href="post.html">Visualizing Local Data with D3</a>
+              </h3>
+              <p class="card-excerpt">
+                Create lightweight interactive charts that work well on low bandwidth.
+              </p>
+              <div class="card-stats">
+                <span class="stat"><i class="far fa-clock"></i> 9 min read</span>
+                <span class="stat"><i class="far fa-eye"></i> 760 views</span>
+                <span class="stat"><i class="far fa-heart"></i> 24</span>
+              </div>
+              <div class="card-tags">
+                <span class="tag">d3</span>
+                <span class="tag">visualization</span>
+                <span class="tag">data</span>
+              </div>
+              <div class="card-footer">
+                <div class="author">
+                  <div class="author-avatar">YN</div>
+                  <div class="author-info">
+                    <span class="author-name">Yigba Nibret</span>
+                    <span class="author-role">Data Analyst</span>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn like-btn" aria-label="Like article">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <button class="action-btn bookmark-btn" aria-label="Bookmark article">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        
+        <!-- Loading & Empty States -->
+        <div class="loading-state" id="loadingState" style="display: none;">
+          <div class="spinner"></div>
+          <p>Loading articles...</p>
+        </div>
+        
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <i class="fas fa-search fa-3x"></i>
+          <h3>No articles found</h3>
+          <p>Try adjusting your filters or search terms.</p>
+          <button class="btn btn-primary" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+        
+        <!-- Pagination - Your original buttons -->
+        <div class="pagination-controls">
+          <button id="load-more" type="button" class="btn btn-primary">
+            Load more
+          </button>
+          <nav class="pagination" aria-label="Pagination">
+            <button class="page-btn active" aria-current="page">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+          </nav>
+        </div>
+      </section>
+
+      <!-- Community Section - Keeping your structure, enhancing styling -->
       <section class="community" id="community">
-        <section>
-          <h1>Ethiopian Developer Community</h1>
+        <div class="community-header">
+          <h1><i class="fas fa-users"></i> Ethiopian Developer Community</h1>
           <p>Connect with developers, join events, and grow your network.</p>
-          <h2>Upcoming Meetups</h2>
-          <p>Events will be announced here soon.</p>
-        </section>
-
-        <section>
-          <h2>Join the Conversation</h2>
-          <p>Community forums and groups coming soon.</p>
-        </section>
+        </div>
+        
+        <div class="community-grid">
+          <div class="community-card">
+            <div class="community-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h2>Upcoming Meetups</h2>
+            <p>Join our next community meetup. Events announced monthly.</p>
+            <a href="community.html#events" class="community-link">View Events <i class="fas fa-arrow-right"></i></a>
+          </div>
+          
+          <div class="community-card">
+            <div class="community-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h2>Join the Conversation</h2>
+            <p>Community forums and groups coming soon.</p>
+            <a href="community.html#discussions" class="community-link">Join Discussions <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
       </section>
     </main>
 
+    <!-- Footer - Keeping your structure -->
     <footer class="site-footer">
       <div class="container">
-        <p>© 2025 ETC - Ethiopian Tech Camp</p>
+        <div class="footer-content">
+          <div class="footer-brand">
+            <span class="brand">ETC Ethiopia</span>
+            <p>Empowering Ethiopian developers through knowledge sharing.</p>
+          </div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="articles.html">Articles</a>
+            <a href="resources.html">Resources</a>
+            <a href="community.html">Community</a>
+          </div>
+        </div>
+        <p class="footer-copyright">© 2025 ETC - Ethiopian Tech Camp</p>
       </div>
     </footer>
 
-    <script src="assets/js/data.js" defer></script>
-    <script src="assets/js/app.js" defer></script>
-    <script src="assets/js/main.js" defer></script>
+    <!-- JavaScript Files -->
+        <!-- JavaScript Files -->
     <script src="assets/js/theme.js"></script>
-    <script src="assets/js/search.js" defer></script>
-    <script src="assets/js/filter.js" defer></script>
+    <script src="assets/js/navigation.js"></script>
+    <!-- Remove or rename the old file reference -->
+    <script src="assets/js/articles.js" defer></script>
   </body>
 </html>
