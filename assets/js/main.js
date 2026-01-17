@@ -210,10 +210,6 @@ function initKeyboardShortcuts() {
   });
 }
 
-/**
- * Initialize performance monitoring for Ethiopian network conditions
- * Logs performance metrics to help optimize for low-bandwidth scenarios
- */
 function initPerformanceMonitoring() {
   // Only run in development or if explicitly enabled
   if (

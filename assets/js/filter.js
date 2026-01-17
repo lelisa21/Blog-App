@@ -1,11 +1,3 @@
-/**
- * filter.js - Article filtering functionality
- * Incorporates articles.js filtering features
- */
-
-/**
- * ArticlesController - Manages article listing, filtering, and pagination
- */
 class ArticlesController {
   constructor() {
     this.articles = [];
@@ -65,19 +57,11 @@ class ArticlesController {
     const match = readingTimeEl.textContent.match(/(\d+)\s*min/);
     return match ? parseInt(match[1]) : null;
   }
-
-  /**
-   * Extract date from article card
-   */
   extractDate(card) {
     const dateEl = card.querySelector(".date, .article-date");
     if (!dateEl) return new Date();
     return new Date(dateEl.textContent) || new Date();
   }
-
-  /**
-   * Extract view count from article card
-   */
   extractViews(card) {
     const viewsEl = card.querySelector(".views");
     if (!viewsEl) return 0;

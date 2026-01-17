@@ -1,8 +1,3 @@
- /**
- * Ethiopian Tech Community - REAL FUNCTIONALITY
- * All features working immediately
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🇪🇹 Ethiopian Tech Community - Initializing...');
     
@@ -20,21 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize time display
     updateEthiopianTime();
     setInterval(updateEthiopianTime, 1000);
-    
-    console.log('✅ All community features loaded!');
 });
 
 // ========== A. LIVE ACTIVITY DASHBOARD ==========
 function initLiveDashboard() {
-    console.log('📊 Initializing Live Dashboard...');
-    
-    // A.1 Live member counter animation
     const memberCountElement = document.getElementById('live-member-count');
     if (memberCountElement) {
         animateCounter(memberCountElement, 5000, 5234, 2000);
     }
-    
-    // A.2 Currently online indicator
     const onlineCountElement = document.getElementById('online-count');
     if (onlineCountElement) {
         updateOnlineUsers();
@@ -238,7 +226,7 @@ function showCityDetails(city) {
 
 function updateDashboardView(view) {
     console.log(`Switching to ${view} view`);
-    // In a real app, this would fetch different data based on the view
+    // We would fetch different data based on the view
 }
 
 // ========== B. MEMBER DIRECTORY ==========
@@ -280,7 +268,7 @@ function filterMembers() {
     const city = document.getElementById('city-filter')?.value || '';
     const availability = document.getElementById('availability-filter')?.value || '';
     
-    // In a real app, this would filter actual member cards
+    // For Feature we  would filter actual member cards
     console.log(`Filtering: search="${searchTerm}", skill="${skill}", city="${city}", availability="${availability}"`);
     
     // Show search results
@@ -629,14 +617,10 @@ function initFAQ() {
 
 // ========== D. PROJECT COLLABORATION ==========
 function initProjectCollaboration() {
-    console.log('🤝 Initializing Project Collaboration...');
-    
-    // D.1 Team listings
-    loadTeamListings();
-    
+   // D.1 Team listings
+    loadTeamListings();   
     // D.2 Open source projects
-    loadOpenSourceProjects();
-    
+    loadOpenSourceProjects();   
     // D.3 Team matching
     initTeamMatching();
 }
@@ -796,9 +780,7 @@ function initTeamMatching() {
 
 // ========== E. LEARNING GROUPS ==========
 function initLearningGroups() {
-    console.log('📚 Initializing Learning Groups...');
-    
-    // E.1 Study group join buttons
+       // E.1 Study group join buttons
     document.querySelectorAll('.btn-group').forEach(btn => {
         btn.addEventListener('click', function() {
             const groupName = this.closest('.group-card').querySelector('h4').textContent;
@@ -861,14 +843,11 @@ function initLearningGroups() {
 
 // ========== F. GAMIFICATION SYSTEM ==========
 function initGamification() {
-    console.log('🎮 Initializing Gamification...');
-    
+    console.log('🎮 Initializing Gamification...');   
     // F.1 Points system
-    updateUserPoints();
-    
+    updateUserPoints();  
     // F.2 Badges interaction
-    initBadges();
-    
+    initBadges(); 
     // F.3 Leaderboards
     loadLeaderboards();
 }
@@ -944,9 +923,6 @@ function loadLeaderboards() {
     // Load initial leaderboard
     displayLeaderboard('weekly', container, leaderboards);
 }
-
-// Continued from F.3 Leaderboards section...
-
 function displayLeaderboard(period, container, leaderboards) {
     const data = leaderboards[period] || leaderboards.weekly;
     
@@ -1083,7 +1059,6 @@ function initNetworkingFeatures() {
                 coffeeMatchResult.querySelector('.start-chat').addEventListener('click', function() {
                     alert(`Opening chat with ${match.name}...\n\nTip: Schedule a 15-minute virtual coffee chat!`);
                 });
-                
                 // Add rematch functionality
                 coffeeMatchResult.querySelector('.rematch').addEventListener('click', function() {
                     coffeeMatchResult.innerHTML = '';
@@ -1095,8 +1070,7 @@ function initNetworkingFeatures() {
                 findCoffeeMatchBtn.disabled = false;
             }, 1500);
         });
-    }
-    
+    }   
     // G.2 Interest groups
     const interestTags = document.querySelectorAll('.interest-tag');
     interestTags.forEach(tag => {
@@ -1138,7 +1112,6 @@ function initJobReferralSystem() {
     // Load initial referral listings
     loadReferralListings();
 }
-
 function loadReferralListings() {
     const referralBoard = document.getElementById('referral-board');
     if (!referralBoard) return;

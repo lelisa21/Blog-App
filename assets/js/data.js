@@ -1,8 +1,3 @@
-/**
- * data.js - Blogger API integration for fetching blog posts
- * Handles fetching and displaying posts from Google Blogger API
- */
-
 const API_KEY = "AIzaSyATsLGEVgG9CJo3MAcOEWVKyopeotdrSMM";
 const BLOG_ID = "7861965689847370736?hl=en-GB";
 const POSTS_URL = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}`;
