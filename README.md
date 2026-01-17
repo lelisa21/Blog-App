@@ -267,3 +267,6 @@ project/
 **Team:** Ethiopian Tech Camp Developers  
 **Technology:** Modern Web Standards (HTML5, CSS3, JavaScript)  
 
+**Ready For:** Backend integration and feature enhancement  
+**Team:** Ethiopian Tech Camp Developers  
+**Technology:** Modern Web Standards (HTML5, CSS3, JavaScript)  
