@@ -1,11 +1,524 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETC - Ethiopian Tech Camp | Connect, Learn, Build with Ethiopian Developers</title>
+    <meta name="description" content="ETC connects Ethiopian students and developers with technology resources, mentorship, and community. Join Ethiopia's fastest-growing tech platform for learning and collaboration." />
+    <meta name="keywords" content="Ethiopian developers, Ethiopian tech, coding Ethiopia, programming Ethiopia, tech mentorship Ethiopia, Ethiopian software developers, Addis Ababa tech" />
+    <meta name="author" content="ETC - Ethiopian Tech Camp" />
+
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="assets/icons/etc-favicon.ico" />
 </head>
-<body>
-    
+<body >
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <i class="fas fa-bullhorn"></i>
+            <span> New: Weekly Coding Challenges for Ethiopian Developers - Join Now!</span>
+            <a href="#challenges" class="announcement-link">Explore →</a>
+        </div>
+    </div>
+
+    <nav class="nav-link">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-animation">
+                    <div class="logo-circle circle-1"></div>
+                    <div class="logo-circle circle-2"></div>
+                    <div class="logo-circle circle-3"></div>
+                </div>
+                <img src="assets/images/logo.png" alt="ETC" width="60">
+            </a>
+
+            <div class="nav-link">
+                <a href="index.html" class="nav-item active" data-tooltip="Home"> <i class="fas fa-home"></i> <span class="nav-label">Home</span> </a>
+
+                <div class="nav-item dropdown">
+                    <a href="articles.html" class="nav-link" data-tooltip="Browse Articles"> <i class="fas fa-newspaper"></i> <span class="nav-label">Articles</span> </a>
+                    <div class="dropdown-menu">
+                        <a href="articles.html?category=ai"><i class="fas fa-brain"></i> AI & ML</a>
+                        <a href="articles.html?category=web"><i class="fas fa-code"></i> Web Dev</a>
+                        <a href="articles.html?category=mobile"><i class="fas fa-mobile"></i> Mobile</a>
+                        <a href="articles.html?category=data"><i class="fas fa-chart-bar"></i> Data Science</a>
+                        <a href="articles.html?category=cybersecurity"><i class="fas fa-shield-alt"></i> Cybersecurity</a>
+                    </div>
+                </div>
+
+                <a href="resources.html" class="nav-item" data-tooltip="Resources"> <i class="fas fa-cube"></i> <span class="nav-label">Resources</span> </a>
+                <a href="community.html" class="nav-item" data-tooltip="Community"> <i class="fas fa-users"></i> <span class="nav-label">Community</span> </a>
+
+                <div class="nav-item nav-dropdown">
+                    <a href="#" class="nav-item" data-tooltip="More"> <i class="fas fa-ellipsis-h"></i> <span class="nav-label">More</span> </a>
+                    <div class="dropdown-content">
+                        <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                        <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                    </div>
+                </div>
+
+                <div class="theme-switch">
+                    <button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button>
+                </div>
+
+                <div class="user-profile">
+                    <button class="profile-btn">
+                        <div class="avatar"> <i class="far fa-user"></i> <span class="status-indicator online"></span> </div>
+                        <span class="user-name">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="profile-menu">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="profile.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="profile.html"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                    </div>
+                </div>
+
+                <a href="post.html" class="write-btn"> <i class="fas fa-pen"></i> <span>Write</span> </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="search-overlay">
+        <div class="search-container">
+            <input type="text" placeholder="Search articles, tutorials, developers..." class="search-input" />
+            <div class="search-suggestions">
+                <div class="suggestion-category">
+                    <h4>Popular Searches</h4>
+                    <a href="#">React Tutorial</a>
+                    <a href="#">Python Ethiopia</a>
+                    <a href="#">Addis Ababa Tech</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge"> <i class="fas fa-star"></i> <span>Featured Community</span> </div>
+                <h1 class="hero-title"> Welcome to Ethiopian <span class="gradient-text">Tech Camp Your Feature Hub</span> </h1>
+                <p class="hero-subtitle"> Where innovation meets collaboration. Connect, learn, and build with Ethiopia's brightest tech minds. </p>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <div> <span class="stat-number">2,500+</span> <span class="stat-label">Students</span> </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-code"></i>
+                        <div> <span class="stat-number">1,200+</span> <span class="stat-label">Developers</span> </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <div> <span class="stat-number">350+</span> <span class="stat-label">Projects</span> </div>
+                    </div>
+                </div>
+
+                <div class="community-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-code-branch"></i></div>
+                        <div class="stat-info"> <span class="stat-number">850+</span> <span class="stat-label">GitHub Repos</span> </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="stat-info"> <span class="stat-number">120+</span> <span class="stat-label">Mentors</span> </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="stat-info"> <span class="stat-number">45+</span> <span class="stat-label">Universities</span> </div>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#explore" class="btn-primary"> <i class="fas fa-rocket"></i> <span>Explore Content</span> </a>
+                    <a href="post.html" class="btn-secondary"> <i class="fas fa-pen"></i> <span>Share Knowledge</span> </a>
+                </div>               
+            </div>
+            <div class="hero-bg">
+                <div class="inner"><img src="./assets/images/hero.png" alt="ETC"></div>
+            </div>
+        </section>
+
+        <section class="categories-section" id="explore">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-compass"></i> <span>Explore Tech Categories</span> </h2>
+                <p class="section-subtitle"> Browse articles and resources by technology </p>
+            </div>
+            <div class="categories-grid">
+                <a href="articles.html?category=ai" class="category-card ai-card">
+                    <div class="category-icon"> <i class="fas fa-brain"></i> </div>
+                    <div class="category-content">
+                        <h3>AI & Machine Learning</h3>
+                        <p>42 articles on AI development and ML algorithms</p>
+                        <span class="category-tag">Trending</span>
+                    </div>
+                </a>
+                <a href="articles.html?category=web" class="category-card web-card">
+                    <div class="category-icon"> <i class="fas fa-code"></i> </div>
+                    <div class="category-content">
+                        <h3>Web Development</h3>
+                        <p>Frontend, backend, and full-stack development guides</p>
+                        <span class="category-tag">Popular</span>
+                    </div>
+                </a>
+                <a href="articles.html?category=mobile" class="category-card mobile-card">
+                    <div class="category-icon"> <i class="fas fa-mobile-alt"></i> </div>
+                    <div class="category-content">
+                        <h3>Mobile Development</h3>
+                        <p>iOS, Android, and cross-platform mobile apps</p>
+                        <span class="category-tag">Growing</span>
+                    </div>
+                </a>
+                <a href="articles.html?category=data" class="category-card data-card">
+                    <div class="category-icon"> <i class="fas fa-chart-bar"></i> </div>
+                    <div class="category-content">
+                        <h3>Data Science</h3>
+                        <p>Data analysis, visualization, and big data</p>
+                        <span class="category-tag">New</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="recent-articles">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-newspaper"></i> <span>Recent Articles</span> </h2>
+                <a href="articles.html" class="view-all">View All →</a>
+            </div>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-meta"> <span class="article-category">Data Science</span> <span class="article-date">2 hours ago</span> </div>
+                    <h3>Ethiopian Economic Data Analysis with Python</h3>
+                    <p>Learn how to analyze Ethiopian economic data using pandas and matplotlib. Real datasets from NBE included.</p>
+                    <div class="article-author">
+                        <div class="author-avatar" style="background-color: #1E8449;">B</div>
+                        <div> <span class="author-name">Birhane Alemayehu</span> <span class="author-title">Data Scientist, Awash Bank</span> </div>
+                    </div>
+                    <div class="article-stats"> <span><i class="fas fa-eye"></i> 1,245</span> <span><i class="far fa-comment"></i> 34</span> <span><i class="fas fa-share"></i> 12</span> </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-meta"> <span class="article-category">Mobile Dev</span> <span class="article-date">2 days ago</span> </div>
+                    <h3>Building Amharic Keyboard Apps with Flutter</h3>
+                    <p>Complete guide to creating Amharic keyboard applications for Android & iOS using Flutter and localization.</p>
+                    <div class="article-author">
+                        <div class="author-avatar" style="background-color: #F1C40F;">S</div>
+                        <div> <span class="author-name">Selam Gebremdhin</span> <span class="author-title">Flutter Developer, Bahir Dar</span> </div>
+                    </div>
+                    <div class="article-stats"> <span><i class="fas fa-eye"></i> 892</span> <span><i class="far fa-comment"></i> 28</span> <span><i class="fas fa-share"></i> 9</span> </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-meta"> <span class="article-category">AI & Machine Learning</span> <span class="article-date">5 days ago</span> </div>
+                    <h3>Ge'ez Text Recognition with TensorFlow</h3>
+                    <p>Implementing OCR for ancient Ge'ez scripts using deep learning. Includes dataset of historical manuscripts.</p>
+                    <div class="article-author">
+                        <div class="author-avatar" style="background-color: #E74C3C;">M</div>
+                        <div> <span class="author-name">Meskele Tadesse</span> <span class="author-title">AI Researcher, AAU</span> </div>
+                    </div>
+                    <div class="article-stats"> <span><i class="fas fa-eye"></i> 1,567</span> <span><i class="far fa-comment"></i> 45</span> <span><i class="fas fa-share"></i> 21</span> </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="tech-showcase">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-bolt"></i> <span>Tech Showcase</span> </h2>
+                <p class="section-subtitle"> Amazing projects by Ethiopian developers </p>
+            </div>
+            <div class="showcase-grid">
+                <div class="showcase-card">
+                    <div class="showcase-visual">
+                        <div class="visual-bg"></div>
+                        <div class="visual-icon"> <i class="fas fa-robot"></i> </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>AI-Powered AgriTech</h3>
+                        <p> Smart farming solution using computer vision for crop disease detection </p>
+                        <div class="tech-stack"> <span class="tech-tag">Python</span> <span class="tech-tag">TensorFlow</span> <span class="tech-tag">OpenCV</span> </div>
+                    </div>
+                </div>
+                <div class="showcase-card">
+                    <div class="showcase-visual">
+                        <div class="visual-bg"></div>
+                        <div class="visual-icon"> <i class="fas fa-mobile-alt"></i> </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>AASTU Campus Lounge Connector</h3>
+                        <p>A platform connecting students with food lounges on campus. It manages and stores orders using a database.</p>
+                        <div class="tech-stack"> <span class="tech-tag">C++</span> <span class="tech-tag">SQLite</span> </div>
+                    </div>
+                </div>
+                <div class="showcase-card">
+                    <div class="showcase-visual">
+                        <div class="visual-bg"></div>
+                        <div class="visual-icon"> <i class="fas fa-chart-network"></i> </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Health Data Platform</h3>
+                        <p>Centralized health data management for Ethiopian clinics</p>
+                        <div class="tech-stack"> <span class="tech-tag">React</span> <span class="tech-tag">Django</span> <span class="tech-tag">PostgreSQL</span> </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="upcoming-events">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-calendar-alt"></i> <span>Upcoming Events</span> </h2>
+                <a href="events.html" class="view-all">View Calendar →</a>
+            </div>
+            <div class="events-list">
+                <div class="event-card">
+                    <div class="event-date"> <span class="date-day">15</span> <span class="date-month">JAN</span> </div>
+                    <div class="event-details">
+                        <h3>Ethiopian AI Meetup - Addis Ababa</h3>
+                        <p><i class="far fa-clock"></i> 6:00 PM EAT</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Ice Addis, Piazza</p>
+                    </div>
+                    <a href="#" class="event-register">Register</a>
+                </div>
+                <div class="event-card">
+                    <div class="event-date"> <span class="date-day">22</span> <span class="date-month">JAN</span> </div>
+                    <div class="event-details">
+                        <h3>Web Dev Workshop - Bahir Dar</h3>
+                        <p><i class="far fa-clock"></i> 2:00 PM EAT</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Bahir Dar Institute of Technology</p>
+                    </div>
+                    <a href="#" class="event-register">Register</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-resources">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-bolt"></i> <span>Quick Resources</span> </h2>
+                <p class="section-subtitle"> Essential tools and guides for Ethiopian developers </p>
+            </div>
+            <div class="resources-grid">
+                <a href="resources.html#templates" class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon"> <i class="fas fa-file-code"></i> </div>
+                        <span class="resource-badge">Free</span>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Code Templates</h3>
+                        <p>Ready-to-use templates for Ethiopian projects</p>
+                    </div>
+                </a>
+                <a href="resources.html#tools" class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon"> <i class="fas fa-tools"></i> </div>
+                        <span class="resource-badge">Essential</span>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Dev Tools</h3>
+                        <p>Curated tools for Ethiopian developers</p>
+                    </div>
+                </a>
+                <a href="articles.html" class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon"> <i class="fas fa-book"></i> </div>
+                        <span class="resource-badge">Updated</span>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Tutorials</h3>
+                        <p>Step-by-step guides for beginners</p>
+                    </div>
+                </a>
+                <a href="community.html" class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon"> <i class="fas fa-users"></i> </div>
+                        <span class="resource-badge">Active</span>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Community</h3>
+                        <p>Connect with fellow developers</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="featured-developers">
+            <div class="section-header">
+                <h2 class="section-title"> <i class="fas fa-user-tie"></i> <span>Featured Developers</span> </h2>
+            </div>
+            <div class="developers-grid">
+                <div class="developer-card">
+                    <div class="developer-header">
+                        <div class="developer-avatar" style="background-color: #1E8449;">A</div>
+                        <span class="verified-badge"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                    <h3>Andenet Hailmariam</h3>
+                    <p class="developer-title">Senior Backend Engineer</p>
+                    <p class="developer-location"><i class="fas fa-map-marker-alt"></i> Addis Ababa</p>
+                    <div class="developer-skills">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">AWS</span>
+                    </div>
+                    <p class="developer-bio">Building scalable fintech solutions for Ethiopian banks</p>
+                    <a href="#profile" class="developer-profile">View Profile →</a>
+                </div>
+                <div class="developer-card">
+                    <div class="developer-header">
+                        <div class="developer-avatar" style="background-color: #F1C40F;">E</div>
+                        <span class="verified-badge"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                    <h3>Elsa Mekonnen</h3>
+                    <p class="developer-title">Frontend Developer</p>
+                    <p class="developer-location"><i class="fas fa-map-marker-alt"></i> Hawassa</p>
+                    <div class="developer-skills">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Next.js</span>
+                    </div>
+                    <p class="developer-bio">Creating accessible digital platforms for Ethiopian startups</p>
+                    <a href="#" class="developer-profile">View Profile →</a>
+                </div>
+                <div class="developer-card">
+                    <div class="developer-header">
+                        <div class="developer-avatar" style="background-color: #E74C3C;">D</div>
+                        <span class="verified-badge"><i class="fas fa-check-circle"></i></span>
+                    </div>
+                    <h3>Dawit Solomon</h3>
+                    <p class="developer-title">DevOps Engineer</p>
+                    <p class="developer-location"><i class="fas fa-map-marker-alt"></i> Mekelle</p>
+                    <div class="developer-skills">
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                    <p class="developer-bio">Automating infrastructure for Ethiopian tech companies</p>
+                    <a href="#" class="developer-profile">View Profile →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="coding-challenges" id="challenges">
+            <div class="challenges-header">
+                <h2 class="section-title"> <i class="fas fa-trophy"></i> <span>Weekly Coding Challenges</span> </h2>
+            </div>
+            <div class="challenges-grid">
+                <div class="challenge-card">
+                    <div class="challenge-difficulty easy">Beginner</div>
+                    <h3>Build a Calculator</h3>
+                    <p>Create a functional calculator using JavaScript</p>
+                    <div class="challenge-stats"> <span><i class="fas fa-users"></i> 245 participants</span> <span><i class="far fa-clock"></i> 3 days left</span> </div>
+                    <button class="challenge-btn">Start Challenge</button>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-difficulty medium">Intermediate</div>
+                    <h3>API Integration</h3>
+                    <p>Connect to Ethiopian weather API</p>
+                    <div class="challenge-stats"> <span><i class="fas fa-users"></i> 189 participants</span> <span><i class="far fa-clock"></i> 5 days left</span> </div>
+                    <button class="challenge-btn">Start Challenge</button>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-difficulty hard">Advanced</div>
+                    <h3>Machine Learning Model</h3>
+                    <p>Build a sentiment analysis model</p>
+                    <div class="challenge-stats"> <span><i class="fas fa-users"></i> 89 participants</span> <span><i class="far fa-clock"></i> 7 days left</span> </div>
+                    <button class="challenge-btn">Start Challenge</button>
+                </div>
+            </div>
+            <a href="#view-all" class="view-all-btn">View All Challenges →</a>
+        </section>
+
+        <section class="newsletter-cta">
+            <div class="newsletter-content">
+                <h2>Stay Updated with Ethiopian Tech</h2>
+                <p>Get weekly articles, job opportunities, and event updates directly to your inbox</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn-primary"> <i class="fas fa-paper-plane"></i> Subscribe </button>
+                </form>
+                <p class="privacy-note"> <small>We respect your privacy. Unsubscribe at any time.</small> </p>
+            </div>
+        </section>
+
+        <section class="community-section">
+            <div class="community-content">
+                <h2 class="section-title">Join the Ethiopian Tech Community</h2>
+                <p class="section-subtitle"> Connect, collaborate, and grow with developers across Ethiopia </p>
+                <div class="community-features">
+                    <div class="community-feature">
+                        <div class="feature-count">50+</div>
+                        <div class="feature-label">Local Meetups</div>
+                    </div>
+                    <div class="community-feature">
+                        <div class="feature-count">200+</div>
+                        <div class="feature-label">Active Discussions</div>
+                    </div>
+                    <div class="community-feature">
+                        <div class="feature-count">1000+</div>
+                        <div class="feature-label">Code Contributions</div>
+                    </div>
+                </div>
+                <div class="community-actions">
+                    <a href="community.html" class="btn-community"> <i class="fas fa-door-open"></i> <span>Join Community</span> </a>
+                    <a href="#explore" class="btn-outline"> <i class="fas fa-compass"></i> <span>Explore More</span> </a>
+                </div>
+            </div>
+            <!-- <div class="community-visual">
+                <div class="avatar-grid">
+                    <div class="avatar-item"> <img src="assets/images/avatar1.svg" alt="Developer" width="40"/> </div>
+                    <div class="avatar-item"> <img src="assets/images/avatar2.svg" alt="Developer" width="40" /> </div>
+                    <div class="avatar-item"> <img src="assets/images/avatar3.svg" alt="Developer" width="40"/> </div>
+                    <div class="avatar-item more">+3.2k</div>
+                </div> -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <span class="footer-logo-mark"><img src="assets/images/logo.png" alt="" width="70"></span>
+                    <div>
+                        <h3>ETC</h3>
+                        <p>Ethiopian Tech Camp</p>
+                    </div>
+                </div>
+                <p class="footer-description"> A community-focused platform for Ethiopian developers to learn, share, and grow. </p>
+                <div class="footer-social">
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Content</h4> <a href="articles.html">Articles</a> <a href="resources.html">Resources</a> <a href="post.html">Write Post</a> <a href="articles.html?category=featured">Featured</a>
+            </div>
+            <div class="footer-section">
+                <h4>Explore</h4> <a href="articles.html?category=webdev">Web Development</a> <a href="articles.html?category=mobile">Mobile Development</a> <a href="articles.html?category=data">Data & AI</a> <a href="articles.html?category=devops">DevOps & Cloud</a>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4> <a href="about.html">About Us</a> <a href="community.html">Community</a> <a href="contact.html">Contact</a> <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p> © 2026 Ethiopian Tech Camp — Built with ❤️ by Ethiopian Developers. </p>
+                <div class="footer-links"> <a href="#">Privacy Policy</a> <a href="#">Terms of Service</a> <a href="#">Cookies</a> </div>
+            </div>
+            <div class="footer-locations">
+                <p> <i class="fas fa-map-marker-alt"></i> Community hubs in Addis Ababa, Jimma, Bahir Dar, Mekelle, Hawassa </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script src="assets/js/index.js" defer></script>
 </body>
 </html>

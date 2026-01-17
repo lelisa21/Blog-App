@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETC Community - Connect with Ethiopian Developers</title>
+    <meta name="description" content="Join Ethiopia's largest tech community. Connect, collaborate, and grow with developers, students, and tech enthusiasts across Ethiopia." />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/community/community.css" />
+    <link rel="stylesheet" href="assets/css/community/collaboration.css" />
+    <link rel="stylesheet" href="assets/css/community/live.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- External libraries: Chart.js for data visualization in member directory -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body>
+   <nav class="nav-link">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-animation">
+                    <div class="logo-circle circle-1"></div>
+                    <div class="logo-circle circle-2"></div>
+                    <div class="logo-circle circle-3"></div>
+                </div>
+                <img src="assets/images/logo.png" alt="ETC" width="60" loading="lazy">
+            </a>
+
+            <div class="theme-switch">
+                    <button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button>
+                </div>
+                
+            <div class="nav-link">
+                <a href="index.html" class="nav-item" data-tooltip="Home">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-label">Home</span>
+                </a>
+                <a href="resources.html" class="nav-item active" data-tooltip="Resources">
+                    <i class="fas fa-cube"></i>
+                    <span class="nav-label">Resources</span>
+                </a>
+                <a href="articles.html" class="nav-item" data-tooltip="Articles">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="nav-label">Articles</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <!-- Community Hero Section: Main landing area showcasing community stats and call-to-action buttons -->
+        <section class="community-hero">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-bolt"></i>
+                        <span>Live Community</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Ethiopian Tech <span class="highlight">Community Hub</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Connect with 5,000+ Ethiopian developers, collaborate on projects, share knowledge, and grow together.
+                    </p>
+                    
+                    <!-- Hero Stats: Display key community metrics (members, projects, meetups) with animated counters -->
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <!-- A.1 Realtime member counter animation -->
+                                <span class="stat-number" id="live-member-count" data-target="5234">5000+</span>
+                                <span class="stat-label">Members</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <span class="stat-number">250+</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Meetups</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hero Actions: Primary call-to-action buttons for joining and exploring the community -->
+                    <div class="hero-actions">
+                        <a href="#join-form" class="btn-primary">
+                            <i class="fas fa-door-open"></i>
+                            <span>Join Community</span>
+                        </a>
+                        <a href="#explore" class="btn-secondary">
+                            <i class="fas fa-compass"></i>
+                            <span>Explore Features</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="avatar-grid" id="live-avatars">
+                        <!-- Avatars loaded via JS for A.2 Currently online indicator -->
+                    </div>
+                    <div class="online-indicator">
+                        <i class="fas fa-circle online"></i>
+                        <!-- A.2 Currently online indicator -->
+                        <span id="online-count">432 developers online now</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- A. Live Activity Dashboard: Displays real-time community metrics, top contributors, and activity heatmap -->
+        <section class="activity-dashboard">
+            <div class="section-header">
+                <h2 class="section-title">Live Community Dashboard</h2>
+                <!-- View Controls: Toggle between live, daily, and weekly activity views -->
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="live">Live View</button>
+                    <button class="view-btn" data-view="daily">Today</button>
+                    <button class="view-btn" data-view="weekly">This Week</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid: Three-column layout displaying contributors, activities, and city heatmap -->
+            <div class="dashboard-grid">
+                <!-- A.4 Top contributors this week -->
+                <div class="dashboard-card contributors-card">
+                    <h3><i class="fas fa-trophy"></i> Top Contributors This Week</h3>
+                    <div class="contributors-list" id="top-contributors">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- A.3 Recent activities feed -->
+                <div class="dashboard-card activities-card">
+                    <h3><i class="fas fa-rss"></i> Recent Community Activity</h3>
+                    <div class="activities-feed" id="activities-feed">
+                        <!-- A.3 Loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- A.5 Ethiopian city activity heatmap -->
+                <div class="dashboard-card heatmap-card">
+                    <h3><i class="fas fa-map"></i> Ethiopian Tech Activity Heatmap</h3>
+                    <div class="heatmap-container">
+                        <div class="heatmap-grid">
+                            <div class="city-dot addis" data-city="addis-ababa" data-activity="high">
+                                <span class="city-name">Addis Ababa</span>
+                            </div>
+                            <div class="city-dot bahirdar" data-city="bahir-dar" data-activity="medium">
+                                <span class="city-name">Bahir Dar</span>
+                            </div>
+                            <div class="city-dot mekelle" data-city="mekelle" data-activity="medium">
+                                <span class="city-name">Mekelle</span>
+                            </div>
+                            <div class="city-dot hawassa" data-city="hawassa" data-activity="low">
+                                <span class="city-name">Hawassa</span>
+                            </div>
+                            <div class="city-dot jimma" data-city="jimma" data-activity="low">
+                                <span class="city-name">Jimma</span>
+                            </div>
+                        </div>
+                        <!-- Heatmap Legend: Visual guide for interpreting city activity levels (high, medium, low) -->
+                        <div class="heatmap-legend">
+                            <span class="legend-item high">High Activity</span>
+                            <span class="legend-item medium">Medium</span>
+                            <span class="legend-item low">Low</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- B. Member Directory: Search and filter Ethiopian developers by skills, location, and availability status -->
+        <section class="member-directory">
+            <div class="section-header">
+                <h2 class="section-title">Find Ethiopian Developers</h2>
+                <!-- B.1 Search members by skill, location, availability -->
+                <div class="member-search">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="member-search" placeholder="Search by name, skill, or location...">
+                    </div>
+                    <div class="search-filters">
+                        <select id="skill-filter">
+                            <option value="">All Skills</option>
+                            <option value="web">Web Development</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="ai">AI/ML</option>
+                            <option value="devops">DevOps</option>
+                        </select>
+                        <select id="city-filter">
+                            <option value="">All Cities</option>
+                            <option value="addis">Addis Ababa</option>
+                            <option value="bahirdar">Bahir Dar</option>
+                            <option value="mekelle">Mekelle</option>
+                            <option value="hawassa">Hawassa</option>
+                        </select>
+                        <select id="availability-filter">
+                            <option value="">All Status</option>
+                            <option value="online">Online</option>
+                            <option value="available">Available</option>
+                            <option value="busy">Busy</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="directory-content">
+                <!-- B.2 Ethiopian developer skill visualization -->
+                <div class="skills-visualization">
+                    <h3><i class="fas fa-chart-bar"></i> Community Skills Distribution</h3>
+                    <canvas id="skills-chart"></canvas>
+                </div>
+                
+                <!-- B.3 Mentor/mentee matching system -->
+                <div class="matching-system">
+                    <h3><i class="fas fa-handshake"></i> Mentor-Mentee Matching</h3>
+                    <div class="matching-options">
+                        <div class="match-role">
+                            <h4>I want to be a:</h4>
+                            <div class="role-buttons">
+                                <button class="role-btn active" data-role="mentor">Mentor</button>
+                                <button class="role-btn" data-role="mentee">Mentee</button>
+                                <button class="role-btn" data-role="both">Both</button>
+                            </div>
+                        </div>
+                        <div class="match-filters">
+                            <select id="match-skill">
+                                <option value="">Select Skill Area</option>
+                                <option value="web">Web Development</option>
+                                <option value="mobile">Mobile Development</option>
+                            </select>
+                            <button id="find-match" class="btn-primary">Find Match</button>
+                        </div>
+                    </div>
+                    <div class="match-results" id="match-results">
+                        <!-- B.3 Results loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- B.4 Availability status display -->
+                <div class="availability-section">
+                    <h3><i class="fas fa-user-clock"></i> Set Your Availability</h3>
+                    <div class="availability-options">
+                        <div class="status-option" data-status="online">
+                            <div class="status-indicator online"></div>
+                            <span>Online</span>
+                        </div>
+                        <div class="status-option" data-status="away">
+                            <div class="status-indicator away"></div>
+                            <span>Away</span>
+                        </div>
+                        <div class="status-option" data-status="busy">
+                            <div class="status-indicator busy"></div>
+                            <span>Do Not Disturb</span>
+                        </div>
+                    </div>
+                    <!-- B.5 Ethiopian timezone display -->
+                    <div class="timezone-display">
+                        <i class="fas fa-clock"></i>
+                        <span>Current Ethiopian Time: </span>
+                        <span id="ethiopian-time">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- C. Discussion Forums: Community discussion threads organized by categories (jobs, projects, help, announcements) -->
+        <section class="discussion-forums">
+            <div class="section-header">
+                <h2 class="section-title">Community Discussions</h2>
+                <a href="#new-thread" class="btn-primary"><i class="fas fa-plus"></i> New Discussion</a>
+            </div>
+            
+            <div class="forums-container">
+                <!-- C.1 Categories: Filter discussion threads by topic (all, jobs, projects, help, announcements) -->
+                <div class="forum-categories">
+                    <div class="category active" data-category="all">
+                        <i class="fas fa-comments"></i>
+                        <span>All Discussions</span>
+                        <span class="count">1.2k</span>
+                    </div>
+                    <div class="category" data-category="jobs">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Jobs & Careers</span>
+                        <span class="count">345</span>
+                    </div>
+                    <div class="category" data-category="projects">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Project Collaboration</span>
+                        <span class="count">289</span>
+                    </div>
+                    <div class="category" data-category="help">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Technical Help</span>
+                        <span class="count">456</span>
+                    </div>
+                    <div class="category" data-category="announcements">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Announcements</span>
+                        <span class="count">78</span>
+                    </div>
+                    </div>
+                    <div class="forum-threads" id="forum-threads">
+                      <!-- C.2 Threaded comments with voting will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- C.5 Ethiopian tech FAQ section -->
+                <div class="faq-section">
+                    <h3><i class="fas fa-book"></i> Ethiopian Tech FAQ</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">How to start freelancing in Ethiopia?</div>
+                            <div class="faq-answer">Check our resources section for guides on payment methods, taxes, and finding clients locally.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Best internet providers in Addis?</div>
+                            <div class="faq-answer">Community-rated: Ethio Telecom 4G, Safaricom, and private fiber providers. See reviews.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- D. Project Collaboration: Team matching, open source projects showcase, and skill-based collaboration tools -->
+        <section class="project-collaboration">
+            <div class="section-header">
+                <h2 class="section-title">Collaborate on Projects</h2>
+                <div class="project-actions">
+                    <a href="#new-project" class="btn-primary"><i class="fas fa-plus"></i> Start Project</a>
+                    <a href="#find-team" class="btn-secondary"><i class="fas fa-search"></i> Find Team</a>
+                </div>
+            </div>
+            
+            <div class="projects-container">
+                <!-- D.1 "Looking for team members" board -->
+                <div class="team-board">
+                    <h3><i class="fas fa-user-plus"></i> Looking for Team Members</h3>
+                    <div class="team-listings" id="team-listings">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- D.2 Ethiopian opensource projects showcase -->
+                <div class="opensource-showcase">
+                    <h3><i class="fas fa-code-branch"></i> Featured Open Source Projects</h3>
+                    <div class="opensource-projects" id="opensource-projects">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- D.3 Skill-based team matching -->
+                <div class="team-matching">
+                    <h3><i class="fas fa-users-cog"></i> Team Matching System</h3>
+                    <div class="matching-form">
+                        <select id="project-type">
+                            <option value="">Select Project Type</option>
+                            <option value="opensource">Open Source</option>
+                            <option value="startup">Startup</option>
+                            <option value="freelance">Freelance</option>
+                        </select>
+                        <div class="skill-tags" id="team-skill-tags">
+                            <span class="skill-tag" data-skill="react">React</span>
+                            <span class="skill-tag" data-skill="node">Node.js</span>
+                            <span class="skill-tag" data-skill="python">Python</span>
+                        </div>
+                        <button id="find-team-match" class="btn-primary">Find Team Match</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- E. Learning Groups: Study groups by technology, university groups, and accountability partner matching -->
+        <section class="learning-groups">
+            <h2 class="section-title">Learning & Study Groups</h2>
+            
+            <div class="groups-container">
+                <!-- E.1 Study groups by technology -->
+                <div class="study-groups">
+                    <h3><i class="fas fa-graduation-cap"></i> Study Groups</h3>
+                    <div class="groups-grid">
+                        <div class="group-card" data-tech="react">
+                            <div class="group-icon">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <h4>React & Frontend</h4>
+                            <p>45 members • Weekly meetings</p>
+                            <div class="group-level">Beginner-Advanced</div>
+                            <button class="btn-group">Join Group</button>
+                        </div>
+                        <div class="group-card" data-tech="python">
+                            <div class="group-icon">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4>Python & Data Science</h4>
+                            <p>68 members • Project-based</p>
+                            <div class="group-level">Intermediate</div>
+                            <button class="btn-group">Join Group</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- E.2 Ethiopian university student groups -->
+                <div class="university-groups">
+                    <h3><i class="fas fa-university"></i> University Groups</h3>
+                    <div class="uni-list">
+                        <div class="uni-item">
+                            <span class="uni-name">AAiT Tech Club</span>
+                            <span class="uni-members">320 members</span>
+                        </div>
+                        <div class="uni-item">
+                            <span class="uni-name">Bahir Dar University</span>
+                            <span class="uni-members">245 members</span>
+                        </div>
+                        <div class="uni-item">
+                            <span class="uni-name">Mekelle University</span>
+                            <span class="uni-members">198 members</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- E.5 Accountability partners matching -->
+                <div class="accountability-partners">
+                    <h3><i class="fas fa-handshake"></i> Accountability Partners</h3>
+                    <p>Find someone to keep you accountable for your learning goals</p>
+                    <button id="find-partner" class="btn-primary">Find a Partner</button>
+                    <div class="partners-list" id="partners-list">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- F. Gamification System: Leaderboards, Ethiopian-themed badges, and points system to encourage community engagement -->
+        <section class="gamification-system">
+            <div class="section-header">
+                <h2 class="section-title">Community Achievements</h2>
+                <a href="#leaderboard" class="btn-secondary">View Full Leaderboard</a>
+            </div>
+            
+            <div class="gamification-content">
+                <!-- F.3 Leaderboards: Rankings of top community members with time period filters -->
+                <div class="leaderboards">
+                    <!-- Leaderboard Tabs: Switch between weekly, monthly, and all-time rankings -->
+                    <div class="leaderboard-tabs">
+                        <button class="lb-tab active" data-period="weekly">Weekly</button>
+                        <button class="lb-tab" data-period="monthly">Monthly</button>
+                        <button class="lb-tab" data-period="alltime">All Time</button>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboard-list">
+                        <!-- F.3 Loaded via JS -->
+                    </div>
+                </div>
+                
+                <!-- F.2 Ethiopian themed badges -->
+                <div class="badges-showcase">
+                    <h3><i class="fas fa-medal"></i> Ethiopian Themed Badges</h3>
+                    <div class="badges-grid">
+                        <div class="badge" data-badge="coffee-master">
+                            <div class="badge-icon">
+                                <i class="fas fa-mug-hot"></i>
+                            </div>
+                            <span class="badge-name">Coffee Master</span>
+                            <span class="badge-desc">Host 10+ meetings</span>
+                        </div>
+                        <div class="badge" data-badge="simien-explorer">
+                            <div class="badge-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <span class="badge-name">Simien Explorer</span>
+                            <span class="badge-desc">Explore all features</span>
+                        </div>
+                        <div class="badge" data-badge="axum-contributor">
+                            <div class="badge-icon">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <span class="badge-name">Axum Contributor</span>
+                            <span class="badge-desc">50+ contributions</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- F.1 Points system -->
+                <div class="points-system">
+                    <h3><i class="fas fa-star"></i> Your Points</h3>
+                    <div class="points-display">
+                        <div class="total-points">
+                            <span class="points-number" id="user-points">1,245</span>
+                            <span class="points-label">Total Points</span>
+                        </div>
+                        <div class="points-breakdown">
+                            <div class="points-source">
+                                <span>Forum Posts</span>
+                                <span>450 pts</span>
+                            </div>
+                            <div class="points-source">
+                                <span>Project Contributions</span>
+                                <span>795 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- G. Networking Features: Virtual coffee matching, interest-based groups, and job referral system -->
+        <section class="networking-features">
+            <h2 class="section-title">Networking & Connections</h2>
+            
+            <div class="networking-container">
+                <!-- G.1 Virtual coffee matching -->
+                <div class="coffee-matching">
+                    <h3><i class="fas fa-coffee"></i> Virtual Coffee Matches</h3>
+                    <p>Get randomly matched with another community member for a 15-minute virtual coffee chat</p>
+                    <button id="find-coffee-match" class="btn-primary">
+                        <i class="fas fa-random"></i> Find Coffee Match
+                    </button>
+                    <div class="match-result" id="coffee-match-result">
+                        <!-- G.1 Result displayed here -->
+                    </div>
+                </div>
+                
+                <!-- G.2 Interest based groups -->
+                <div class="interest-groups">
+                    <h3><i class="fas fa-hashtag"></i> Interest Groups</h3>
+                    <div class="interest-tags">
+                        <span class="interest-tag">#AI-Ethiopia</span>
+                        <span class="interest-tag">#Web3-Africa</span>
+                        <span class="interest-tag">#EdTech</span>
+                        <span class="interest-tag">#AgriTech</span>
+                        <span class="interest-tag">#RemoteWork</span>
+                    </div>
+                </div>
+                
+                <!-- G.5 Job referral system -->
+                <div class="job-referral">
+                    <h3><i class="fas fa-briefcase"></i> Job Referral System</h3>
+                    <div class="referral-options">
+                        <button class="referral-btn" data-action="request">Request Referral</button>
+                        <button class="referral-btn" data-action="offer">Offer Referral</button>
+                    </div>
+                    <div class="referral-board" id="referral-board">
+                        <!-- G.5 Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- H. Community Resources: Shared documents, internet provider reviews, coworking spaces, and policy updates -->
+        <section class="community-resources">
+            <h2 class="section-title">Ethiopian Tech Resources</h2>
+            
+            <div class="resources-grid">
+                <!-- H.1 Shared Ethiopian tech documents -->
+                <div class="resource-card">
+                    <h3><i class="fas fa-file-alt"></i> Shared Documents</h3>
+                    <ul class="documents-list">
+                        <li><a href="#"><i class="fas fa-download"></i> Ethiopian Dev Salary Survey 2025</a></li>
+                        <li><a href="#"><i class="fas fa-download"></i> Local Payment Integration Guide</a></li>
+                    </ul>
+                </div>
+                
+                <!-- H.2 Local internet provider reviews -->
+                <div class="resource-card">
+                    <h3><i class="fas fa-wifi"></i> Internet Provider Reviews</h3>
+                    <div class="provider-ratings">
+                        <div class="provider">
+                            <span class="provider-name">Ethio Telecom 4G</span>
+                            <div class="rating">4.2 ★</div>
+                        </div>
+                        <div class="provider">
+                            <span class="provider-name">Safaricom Ethiopia</span>
+                            <div class="rating">4.5 ★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- H.3 Ethiopian coworking spaces directory -->
+                <div class="resource-card">
+                    <h3><i class="fas fa-building"></i> Coworking Spaces</h3>
+                    <div class="coworking-list">
+                        <div class="space-item">
+                            <span class="space-name">Iceaddis (Addis)</span>
+                            <span class="space-price">From 500 ETB/day</span>
+                        </div>
+                        <div class="space-item">
+                            <span class="space-name">Blue Space (Bahir Dar)</span>
+                            <span class="space-price">From 300 ETB/day</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- H.5 Ethiopian government tech policies updates -->
+                <div class="resource-card">
+                    <h3><i class="fas fa-newspaper"></i> Policy Updates</h3>
+                    <div class="policy-updates" id="policy-updates">
+                        <!-- H.5 Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- I. Realtime Features: Live chat rooms, code pairing sessions, and Ethiopian tech news feed -->
+        <section class="realtime-features">
+            <div class="section-header">
+                <h2 class="section-title">Live Community Features</h2>
+                <!-- Realtime Status Indicator: Shows current live activity status with animated pulse -->
+                <div class="realtime-status">
+                    <i class="fas fa-circle live"></i>
+                    <span>Live Now</span>
+                </div>
+            </div>
+            
+            <div class="realtime-container">
+                <!-- I.1 Live chat rooms by topic -->
+                <div class="live-chat">
+                    <h3><i class="fas fa-comments"></i> Live Chat Rooms</h3>
+                    <div class="chat-rooms">
+                        <div class="chat-room active" data-room="general">
+                            <div class="room-status online"></div>
+                            <span class="room-name">General Chat</span>
+                            <span class="room-count">243 online</span>
+                        </div>
+                        <div class="chat-room" data-room="help">
+                            <div class="room-status online"></div>
+                            <span class="room-name">Help & Support</span>
+                            <span class="room-count">89 online</span>
+                        </div>
+                    </div>
+                    <div class="chat-container" id="chat-container">
+                        <!-- I.1 Chat messages go here -->
+                    </div>
+                </div>
+                
+                <!-- I.3 Code pairing sessions -->
+                <div class="code-pairing">
+                    <h3><i class="fas fa-code"></i> Live Code Pairing</h3>
+                    <div class="pairing-sessions" id="pairing-sessions">
+                        <!-- I.3 Loaded via JS -->
+                    </div>
+                    <button id="start-pairing" class="btn-primary">
+                        <i class="fas fa-video"></i> Start Pairing Session
+                    </button>
+                </div>
+                
+                <!-- I.4 Ethiopian tech news feed -->
+                <div class="tech-news">
+                    <h3><i class="fas fa-newspaper"></i> Ethiopian Tech News</h3>
+                    <div class="news-feed" id="news-feed">
+                        <!-- I.4 Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Join CTA: Registration form for new community members with skill and location selection -->
+        <section class="join-cta" id="join-form">
+            <div class="join-container">
+                <h2>Ready to Join the Community?</h2>
+                <p>Connect with thousands of Ethiopian developers, share knowledge, collaborate on projects, and grow your career.</p>
+                <form class="join-form" id="community-join-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your email address" required>
+                        <input type="text" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="">Primary Skill</option>
+                            <option value="web">Web Development</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="ai">AI/ML</option>
+                        </select>
+                        <select required>
+                            <option value="">Location in Ethiopia</option>
+                            <option value="addis">Addis Ababa</option>
+                            <option value="bahirdar">Bahir Dar</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-join">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Create Free Account</span>
+                    </button>
+                </form>
+                <div class="join-features">
+                    <span><i class="fas fa-check"></i> Free forever</span>
+                    <span><i class="fas fa-check"></i> Open to all skill levels</span>
+                    <span><i class="fas fa-check"></i> Connect with 5000+ developers</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+    </footer>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/community.js"></script>
+</html>

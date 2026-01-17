@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Building for Ethiopia: Optimizing Web Performance — TechBlog Ethiopia
+    </title>
+    <meta
+      name="description"
+      content="A comprehensive guide to building high-performance web applications optimized for Ethiopian internet conditions"
+    />
+    <link rel="icon" href="assets/icons/favicon-32.png" />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/post.css" />
+    <link rel="stylesheet" href="assets/css/postAdds.css">
+
+    <!-- External Libraries -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+      integrity="sha512-QFhU0kq3toGpcxtNnGqV3ZzVY1mmrO6Dhz0UuyJLTQrhkxwqHioi8d0OyvNDgJhkjP5buxGNQHqmyA0CxLm5BQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Post-specific CSS -->
+    <link rel="stylesheet" href="assets/css/post-enhanced.css" />
+  </head>
+  <body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-container">
+      <div class="reading-progress-bar" id="readingProgress"></div>
+    </div>
+
+    <!-- Reading Time Display -->
+    <div class="reading-time-display">
+      <i class="fas fa-clock"></i>
+      <span id="readingTime">~7 min read</span>
+      <span id="readingSpeed">(Average speed)</span>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="index.html">ETC-Ethiopian Tech Community </a>
+        <nav class="main-nav" aria-label="Main Navigation">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="articles.html" class="active">Articles</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="post-container">
+      <div class="post-grid">
+        <!-- Main Article -->
+        <article class="post-article">
+          <!-- Hero Section -->
+          <header class="post-hero">
+            <span class="eyebrow">Advanced Web Development</span>
+            <h1 class="post-title">
+              Building for Ethiopia: Optimizing Web Performance in Low-Bandwidth
+              Environments
+            </h1>
+
+            <div class="post-meta">
+              <span class="author">
+                <div class="author-avatar">AK</div>
+                By <strong>Akila Kibrom</strong>
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                Dec 18, 2025
+              </span>
+              <span class="reading-time">
+                <i class="far fa-eye"></i>
+                2.4K views
+              </span>
+              <span class="category">
+                <i class="fas fa-tag"></i>
+                Performance, Ethiopia, Web Dev
+              </span>
+            </div>
+
+            <!-- Reading Controls -->
+            <div class="post-controls">
+              <div class="text-size-controls">
+                <span class="text-size-label">Text Size:</span>
+                <div class="size-buttons">
+                  <button class="size-btn" data-size="small">A-</button>
+                  <button class="size-btn active" data-size="medium">A</button>
+                  <button class="size-btn" data-size="large">A+</button>
+                </div>
+              </div>
+
+              <div class="audio-controls">
+                <button class="read-aloud-btn">
+                  <i class="fas fa-volume-up"></i>
+                  Read Aloud
+                </button>
+
+                <label class="accent-toggle">
+                  <span>Ethiopian Accent</span>
+                  <div class="toggle-switch">
+                    <input type="checkbox" id="ethiopian-accent" />
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+
+                <label class="accent-toggle">
+                  <span>Amharic</span>
+                  <div class="toggle-switch">
+                    <input type="checkbox" id="amharic-toggle" />
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </header>
+
+          <!-- Article Body -->
+          <div class="post-body">
+            <!-- Introduction -->
+            <section id="introduction" class="post-section">
+              <h2>Introduction</h2>
+              <p class="lead">
+                In Ethiopia's evolving digital landscape, web performance
+                optimization isn't just a technical concern—it's a user
+                experience necessity. With average mobile internet speeds of 2-4
+                Mbps and data costs that remain high relative to income, every
+                kilobyte matters.
+              </p>
+              <p>
+                This comprehensive guide explores practical strategies for
+                building fast, efficient web applications that work reliably
+                across Ethiopia's diverse connectivity conditions, from Addis
+                Ababa's 4G networks to rural areas with intermittent 2G
+                connections.
+              </p>
+            </section>
+
+            <!-- Ethiopian Context Section -->
+            <section class="ethiopian-context">
+              <div class="context-header">
+                <h3>🇪🇹 Ethiopian Context</h3>
+                <div class="speed-indicator">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>Avg. Mobile Speed: 3.2 Mbps</span>
+                </div>
+              </div>
+              <p>
+                <strong>Local Considerations:</strong> Ethiopia's internet
+                infrastructure presents unique challenges and opportunities.
+                Most users access the web via mobile devices on limited data
+                plans, making performance optimization critical for adoption and
+                retention.
+              </p>
+              <div class="context-details">
+                <p>
+                  <strong>🌐 Network Diversity:</strong> Users experience
+                  everything from 4G/LTE in urban centers to 2G/EDGE in rural
+                  areas, requiring adaptive loading strategies.
+                </p>
+                <p>
+                  <strong>📱 Device Landscape:</strong> Dominated by mid-range
+                  Android devices with limited RAM and processing power.
+                </p>
+                <p>
+                  <strong>💸 Data Economics:</strong> With data costs averaging
+                  0.50 USD/GB, efficient data usage directly impacts
+                  accessibility.
+                </p>
+              </div>
+            </section>
+
+                    <!-- Post Creation Form (Add this section before footer) -->
+        <section class="create-post-section" id="createPostSection">
+            <div class="create-post-header">
+                <h2><i class="fas fa-pen-alt"></i> Create New Post</h2>
+                <p>Share your knowledge with the Ethiopian tech community</p>
+            </div>
+
+            <form id="createPostForm" class="create-post-form glass">
+                <!-- Title -->
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="postTitleInput"
+                        placeholder="Article Title (e.g., Optimizing React for Ethiopian Networks)"
+                        maxlength="120"
+                        required
+                    >
+                    <div class="char-counter" id="titleCounter">0/120</div>
+                </div>
+
+                <!-- Content -->
+                <div class="form-group">
+                    <textarea 
+                        id="postContentInput"
+                        rows="10"
+                        placeholder="Write your article here... You can use Markdown for formatting. Include Ethiopian context where relevant."
+                        required
+                    ></textarea>
+                    <div class="editor-tools">
+                        <button type="button" class="editor-btn" data-format="bold">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button type="button" class="editor-btn" data-format="italic">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button type="button" class="editor-btn" data-format="code">
+                            <i class="fas fa-code"></i>
+                        </button>
+                        <button type="button" class="editor-btn" data-format="link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                        <button type="button" class="editor-btn" data-format="image">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button type="button" class="editor-btn" data-format="amharic">
+                            <i class="fas fa-flag-et"></i> አማርኛ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ethiopian Context -->
+                <div class="ethiopian-context-box">
+                    <div class="context-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Ethiopian Context Suggestions</h4>
+                    </div>
+                    <div class="context-suggestions">
+                        <button type="button" class="suggestion-btn" data-suggestion="internet">
+                            <i class="fas fa-wifi"></i>
+                            <span>Add internet speed consideration</span>
+                        </button>
+                        <button type="button" class="suggestion-btn" data-suggestion="provider">
+                            <i class="fas fa-server"></i>
+                            <span>Mention local provider (HahuCloud/Chapa)</span>
+                        </button>
+                        <button type="button" class="suggestion-btn" data-suggestion="amharic">
+                            <i class="fas fa-language"></i>
+                            <span>Add Amharic translation</span>
+                        </button>
+                        <button type="button" class="suggestion-btn" data-suggestion="mobile">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Optimize for mobile devices</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tags & Category -->
+                <div class="post-meta-fields">
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="postTagsInput"
+                            placeholder="Tags (comma separated): ethiopia, web-dev, performance"
+                        >
+                        <div class="tag-preview" id="tagPreview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="postCategoryInput">
+                            <option value="">Select Category</option>
+                            <option value="web-dev">Web Development</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="ai-ml">AI & ML</option>
+                            <option value="devops">DevOps</option>
+                            <option value="career">Career</option>
+                            <option value="startups">Startups</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div class="post-preview glass">
+                    <h4>Preview</h4>
+                    <div class="preview-content" id="postPreview">
+                        <p class="preview-placeholder">Your post preview will appear here...</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="post-actions">
+                    <button type="button" class="btn btn-secondary" id="saveDraftBtn">
+                        <i class="fas fa-save"></i> Save Draft
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="previewPostBtn">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Publish Post
+                    </button>
+                </div>
+            </form>
+        </section>
+            <!-- Core Strategies -->
+            <section id="strategies" class="post-section">
+              <h2>Core Optimization Strategies</h2>
+              <p>
+                Building for Ethiopia requires a multi-layered approach that
+                prioritizes user experience under constraints.
+              </p>
+
+              <!-- Enhanced Code Block Example -->
+              <div class="code-block-container">
+                <div class="code-header">
+                  <span class="language-badge"
+                    >JavaScript + Ethiopian Context</span
+                  >
+                  <div class="code-actions">
+                    <button class="code-btn copy-btn" title="Copy code">
+                      <i class="far fa-copy"></i> Copy
+                    </button>
+                    <button class="code-btn run-btn" title="Run code">
+                      <i class="fas fa-play"></i> Run
+                    </button>
+                    <button class="code-btn download-btn" title="Download">
+                      <i class="fas fa-download"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="code-content">
+                  <div class="line-numbers">
+                    1<br />2<br />3<br />4<br />5<br />6<br />7<br />8<br />9<br />10<br />11<br />12<br />13<br />14<br />15<br />16<br />17<br />18<br />19<br />20
+                  </div>
+                  <pre><code class="language-javascript">// Ethiopian Web Performance Optimizer
+class EthiopianPerformanceOptimizer {
+  constructor() {
+    this.networkSpeed = this.detectNetworkSpeed();
+    this.deviceType = this.detectDeviceType();
+    this.userLocation = 'ET'; // Ethiopian context
+  }
+
+  // አገር አቀፍ ኔትወርክ ፍጥነት መገምገም
+  detectNetworkSpeed() {
+    const connection = navigator.connection || navigator.mozConnection;
+    if (connection) {
+      // For Ethiopia: consider 2G as < 100kbps, 3G as 100kbps-2Mbps
+      return connection.downlink < 0.1 ? '2G' : 
+             connection.downlink < 2 ? '3G' : '4G+';
+    }
+    return 'unknown';
+  }
+
+  optimizeImages(images) {
+    // Ethiopian strategy: use WebP with JPEG fallback
+    // ለኢትዮጵያ የተስተካከለ የምስል ስትራቴጂ
+    if (this.networkSpeed === '2G') {
+      return images.map(img => ({
+        ...img,
+        format: 'webp',
+        quality: 60, // Lower quality for 2G
+        lazy: true
+      }));
+    }
+    return images;
+  }
+}</code></pre>
+                </div>
+              </div>
+
+              <p>
+                This code demonstrates adaptive optimization based on network
+                conditions, crucial for Ethiopian users who frequently switch
+                between different network types throughout the day.
+              </p>
+            </section>
+
+            <!-- Image Optimization -->
+            <section id="image-optimization" class="post-section">
+              <h2>Image Optimization for Ethiopian Networks</h2>
+              <p>
+                Images typically account for 60-70% of page weight. Here's our
+                recommended approach:
+              </p>
+
+              <div class="comparison-table">
+                <h3>Image Strategy Comparison</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Strategy</th>
+                      <th>File Size</th>
+                      <th>Ethiopian Context</th>
+                      <th>Recommendation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Original JPEG</td>
+                      <td>2-5 MB</td>
+                      <td>❌ Too large for mobile data</td>
+                      <td>Never use</td>
+                    </tr>
+                    <tr>
+                      <td>Optimized WebP</td>
+                      <td>200-500 KB</td>
+                      <td>✅ Good for 3G/4G</td>
+                      <td>Primary format</td>
+                    </tr>
+                    <tr>
+                      <td>Lazy Loading</td>
+                      <td>Varies</td>
+                      <td>✅ Essential for all networks</td>
+                      <td>Always implement</td>
+                    </tr>
+                    <tr>
+                      <td>Responsive Images</td>
+                      <td>50-800 KB</td>
+                      <td>✅ Perfect for device variety</td>
+                      <td>Required</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- Interactive Quiz -->
+            <section id="quiz-section" class="post-section">
+              <h2>Test Your Knowledge</h2>
+              <div class="quiz-container">
+                <div class="quiz-question">
+                  What is the MOST effective image optimization strategy for
+                  Ethiopian users on 2G networks?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="true">
+                    <span class="option-label">A</span>
+                    <span class="option-text"
+                      >WebP format with lazy loading and 60% quality</span
+                    >
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    <span class="option-label">B</span>
+                    <span class="option-text"
+                      >High-resolution PNG for clarity</span
+                    >
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    <span class="option-label">C</span>
+                    <span class="option-text"
+                      >Base64 encoded images in CSS</span
+                    >
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    <span class="option-label">D</span>
+                    <span class="option-text">Animated GIF for engagement</span>
+                  </div>
+                </div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <button class="submit-quiz-btn">Check Answer</button>
+              </div>
+            </section>
+
+            <!-- Code Playground -->
+            <section id="playground" class="post-section">
+              <h2>Try It Yourself: Ethiopian Performance Tester</h2>
+              <div class="playground">
+                <div class="playground-header">
+                  <div class="playground-tabs">
+                    <button class="playground-tab active">HTML</button>
+                    <button class="playground-tab">CSS</button>
+                    <button class="playground-tab">JavaScript</button>
+                  </div>
+                  <div class="playground-actions">
+                    <button class="code-btn">
+                      <i class="fas fa-redo"></i> Reset
+                    </button>
+                  </div>
+                </div>
+                <div class="playground-content">
+                  <div class="editor-container">
+                    <textarea class="playground-editor" id="htmlEditor">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="am"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Ethiopian Optimized Page&lt;/title&gt;
+  &lt;style&gt;
+    /* Ethiopian-optimized styles */
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .optimized-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;ለኢትዮጵያ የተመቻቸ ድር ገጽ&lt;/h1&gt;
+  &lt;p&gt;ይህ ገጽ ለኢትዮጵያውያን ተጠቃሚዎች ተመችቶ የተሰራ ነው።&lt;/p&gt;
+  
+  &lt;!-- Ethiopian-optimized image --&gt;
+  &lt;img 
+    src="https://via.placeholder.com/800x450/0ea5a4/ffffff?text=Optimized+Image" 
+    alt="ኢትዮጵያ ብልህ ምስል"
+    class="optimized-image"
+    loading="lazy"
+  &gt;
+  
+  &lt;script&gt;
+    // Ethiopian performance monitoring
+    if ('connection' in navigator) {
+      const conn = navigator.connection;
+      console.log(`የኔትወርክ ፍጥነት: ${conn.downlink} Mbps`);
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea
+                    >
+                  </div>
+                  <div class="preview-container">
+                    <iframe class="preview-frame" id="previewFrame"></iframe>
+                  </div>
+                </div>
+                <button class="run-btn" id="runPlayground">
+                  <i class="fas fa-play"></i> Run Code
+                </button>
+              </div>
+            </section>
+
+            <!-- Deployment Guide -->
+            <section id="deployment" class="post-section">
+              <h2>Ethiopian Deployment Guide</h2>
+              <div class="deployment-steps">
+                <div class="step">
+                  <div class="step-number">1</div>
+                  <div class="step-content">
+                    <h3>Local CDN Setup</h3>
+                    <p>
+                      Use Ethiopian-based CDN providers or set up local caching
+                      servers in Addis Ababa to reduce latency.
+                    </p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <div class="step-content">
+                    <h3>Ethio Telecom Optimization</h3>
+                    <p>
+                      Configure your application to work efficiently with Ethio
+                      Telecom's specific network configurations and limitations.
+                    </p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <div class="step-content">
+                    <h3>Progressive Enhancement</h3>
+                    <p>
+                      Ensure core functionality works on 2G, with enhancements
+                      for better networks.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Article Footer -->
+          <footer class="post-footer">
+            <!-- Engagement Section -->
+            <div class="engagement-section">
+              <div class="engagement-buttons">
+                <button class="engagement-btn like-btn" id="likeBtn">
+                  <i class="far fa-heart"></i>
+                  <span class="like-count">248</span> Likes
+                </button>
+                <button class="engagement-btn bookmark-btn" id="bookmarkBtn">
+                  <i class="far fa-bookmark"></i>
+                  Bookmark
+                </button>
+              </div>
+
+              <div class="share-section">
+                <span class="share-label">Share:</span>
+                <div class="share-buttons">
+                  <button class="share-btn twitter" title="Share on Twitter">
+                    <i class="fab fa-twitter"></i>
+                  </button>
+                  <button class="share-btn linkedin" title="Share on LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                  </button>
+                  <button class="share-btn telegram" title="Share on Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                  </button>
+                </div>
+                <button class="copy-link-btn" id="copyLinkBtn">
+                  <i class="far fa-copy"></i>
+                  Copy Link 🇪🇹
+                </button>
+                <button
+                  class="print-btn"
+                  onclick="window.print()"
+                  title="Print optimized version"
+                >
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Article Navigation -->
+            <nav class="article-navigation">
+              <a href="article-prev.html" class="prev-article">
+                <span class="nav-label">Previous Article</span>
+                <span class="nav-title"
+                  >Mobile-First Design for Ethiopian Users</span
+                >
+              </a>
+              <a href="article-next.html" class="next-article">
+                <span class="nav-label">Next Article</span>
+                <span class="nav-title"
+                  >Ethiopian E-commerce Performance Guide</span
+                >
+              </a>
+            </nav>
+
+            <!-- Tags -->
+            <div class="article-tags">
+              <span class="tags-label">Tags:</span>
+              <a href="#" class="tag">#EthiopiaTech</a>
+              <a href="#" class="tag">#WebPerformance</a>
+              <a href="#" class="tag">#LowBandwidth</a>
+              <a href="#" class="tag">#Frontend</a>
+              <a href="#" class="tag">#ኢትዮጵያ</a>
+            </div>
+
+            <!-- Author Bio -->
+            <div class="author-bio">
+              <div class="author-bio-image">
+                <div class="author-avatar large">AK</div>
+              </div>
+              <div class="author-bio-content">
+                <h3>About Akila Kibrom</h3>
+                <p>
+                  Senior Web Performance Engineer with 8 years of experience
+                  optimizing applications for African markets. Based in Addis
+                  Ababa, focusing on solutions tailored to Ethiopia's unique
+                  digital infrastructure.
+                </p>
+                <div class="author-links">
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fab fa-github"></i></a>
+                  <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="post-sidebar">
+          <!-- Table of Contents -->
+          <div class="toc-container">
+            <div class="toc-header">
+              <h3>Table of Contents</h3>
+              <button class="toc-toggle" id="tocToggle">
+                <i class="fas fa-bars"></i>
+              </button>
+            </div>
+            <div class="toc-content" id="tocContent">
+              <nav class="toc-list">
+                <div class="toc-item">
+                  <a href="#introduction" class="toc-link active">
+                    <span>Introduction</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 100%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+                <div class="toc-item">
+                  <a href="#strategies" class="toc-link">
+                    <span>Core Strategies</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 75%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+                <div class="toc-item">
+                  <a href="#image-optimization" class="toc-link">
+                    <span>Image Optimization</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 50%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+                <div class="toc-item">
+                  <a href="#quiz-section" class="toc-link">
+                    <span>Test Your Knowledge</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 30%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+                <div class="toc-item">
+                  <a href="#playground" class="toc-link">
+                    <span>Try It Yourself</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 20%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+                <div class="toc-item">
+                  <a href="#deployment" class="toc-link">
+                    <span>Deployment Guide</span>
+                    <div class="section-progress">
+                      <div
+                        class="section-progress-bar"
+                        style="width: 10%"
+                      ></div>
+                    </div>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Related Articles -->
+          <div class="related-content">
+            <h3>Related Articles</h3>
+            <div class="related-grid">
+              <article class="related-card">
+                <span class="related-tag">Mobile Development</span>
+                <h4 class="related-title">Ethiopian Mobile App Optimization</h4>
+                <p class="related-description">
+                  Learn how to optimize mobile applications for Ethiopian
+                  network conditions and device limitations.
+                </p>
+                <div class="related-meta">
+                  <span class="related-author">By Selam T.</span>
+                  <span class="related-date">Dec 10, 2025</span>
+                </div>
+              </article>
+
+              <article class="related-card">
+                <span class="related-tag">APIs</span>
+                <h4 class="related-title">Building Ethiopian APIs</h4>
+                <p class="related-description">
+                  Designing RESTful APIs optimized for low-bandwidth connections
+                  in Ethiopia.
+                </p>
+                <div class="related-meta">
+                  <span class="related-author">By Dawit M.</span>
+                  <span class="related-date">Nov 28, 2025</span>
+                </div>
+              </article>
+
+              <article class="related-card">
+                <span class="related-tag">Case Study</span>
+                <h4 class="related-title">Ethio Telecom App Redesign</h4>
+                <p class="related-description">
+                  Case study on improving performance for 2 million Ethiopian
+                  users.
+                </p>
+                <div class="related-meta">
+                  <span class="related-author">By Team ETC</span>
+                  <span class="related-date">Nov 15, 2025</span>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Ethiopian Resources -->
+          <div class="resources-widget">
+            <h3>Ethiopian Tech Resources</h3>
+            <ul class="resources-list">
+              <li>
+                <a href="#">
+                  <i class="fas fa-bolt"></i>
+                  Ethio Telecom Speed Test
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fas fa-server"></i>
+                  Ethiopian CDN Providers
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fas fa-mobile-alt"></i>
+                  Device Market Share 2025
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fas fa-chart-line"></i>
+                  Internet Penetration Data
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">TechBlog Ethiopia</div>
+          <p class="footer-tagline">
+            Empowering Ethiopian developers with context-aware solutions
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Explore</h4>
+            <ul>
+              <li><a href="articles.html">All Articles</a></li>
+              <li><a href="topics.html">Topics</a></li>
+              <li><a href="authors.html">Authors</a></li>
+              <li><a href="newsletter.html">Newsletter</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Community</h4>
+            <ul>
+              <li><a href="forum.html">Forum</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="jobs.html">Jobs</a></li>
+              <li><a href="contributors.html">Contribute</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Connect</h4>
+            <ul>
+              <li><a href="https://twitter.com/ETC_Ethiopia">Twitter</a></li>
+              <li><a href="https://github.com/ETC-Ethiopia">GitHub</a></li>
+              <li><a href="https://t.me/ETC_Ethiopia">Telegram</a></li>
+              <li><a href="mailto:contact@techblog.et">Email</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 TechBlog Ethiopia. All content available under Creative Commons
+          BY-NC-SA 4.0
+        </p>
+        <p class="footer-location">🇪🇹 Based in Addis Ababa, Ethiopia</p>
+      </div>
+    </footer>
+
+    <!-- External Scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+      integrity="sha512-+m3v3dKqg0kRZ6GJgqz+Q8iZQeSnn0k3y8a1JJ1f0sQ2Qp7c9e8M1bZQ0x4n7K3G2YkZJ6n/9u6K5bG2p1e3w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"
+      integrity="sha512-/x1mX6u0z9Wc2hY9wMZ+z6a0x8jv5Xz6pJp9yQ1b0Zq3w2nK5d1e6b9o7c0p3x2vY5K3l2H1m6Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Post-specific Scripts -->
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/theme.js" defer></script>
+    <script src="assets/js/post.js" defer></script>
+  </body>
+</html>
