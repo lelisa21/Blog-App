@@ -32,7 +32,7 @@ The Ethiopian Tech Community Platform is a comprehensive website connecting deve
 
 <h2 id = "live-features">Live Features</h2>
 
-### ** Currently Working:**
+### **Currently Working:**
 - **Complete Navigation System** - Seamless movement between all 8 pages
 - **Responsive Design** - Optimized for mobile, tablet, and desktop
 - **Theme Switching** - Light and dark modes with persistent preferences
@@ -262,10 +262,6 @@ project/
 - Ethiopian context is integrated throughout
 
 ---
-
-**Ready For:** Backend integration and feature enhancement  
-**Team:** Ethiopian Tech Camp Developers  
-**Technology:** Modern Web Standards (HTML5, CSS3, JavaScript)  
 
 **Ready For:** Backend integration and feature enhancement  
 **Team:** Ethiopian Tech Camp Developers  
