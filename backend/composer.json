@@ -1,0 +1,11 @@
+{
+    "name": "techblog/backend",
+    "description": "Backend skeleton for the TechBlog project.",
+    "type": "project",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
