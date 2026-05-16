@@ -1,14 +1,9 @@
 {
     "name": "techblog/backend",
-    "description": "Backend skeleton for the TechBlog project.",
+    "description": "Simple beginner-friendly PHP backend for TechBlog.",
     "type": "project",
     "require": {
         "php": "^8.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
     },
     "scripts": {
         "serve": "php -S localhost:8000 -t public",

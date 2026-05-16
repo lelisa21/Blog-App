@@ -1,6 +1,6 @@
 # TechBlog Backend
 
-This backend is intentionally simple so beginners can work on their own files without learning a framework first.
+This backend is intentionally very simple so beginners can work on their own files without learning a framework first.
 
 ## How It Works
 
@@ -25,6 +25,12 @@ This backend is intentionally simple so beginners can work on their own files wi
   Person 5 works here.
 - `src/Controllers/ResourceController.php`
   Person 6 works here.
+
+## Keep It Simple
+
+- The main files to work on are `routes/api.php` and the controller files.
+- There is no framework and no advanced middleware flow in the current version.
+- If you are just starting, ignore anything outside `routes/`, `public/`, and `src/Controllers/`.
 
 ## Endpoint Note
 
@@ -55,6 +61,17 @@ public function index(): array
 1. Create the database from `migrations/database.sql`.
 2. Update values in `.env` if needed.
 3. Start the server with `php -S localhost:8000 -t public`.
+
+## Files You Can Ignore For Now
+
+- `config/`
+  These are only placeholders for later.
+- `src/Models/`
+  Use them later if you want to organize database queries.
+- `src/Services/`
+  Optional helpers, not required to make endpoints work.
+- `.env`
+  Only change this when you need database or app settings.
 
 ## Current Team Split
 
