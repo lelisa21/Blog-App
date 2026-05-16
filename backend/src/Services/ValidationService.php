@@ -6,8 +6,21 @@ namespace App\Services;
 
 class ValidationService
 {
-    public function validate(array $data, array $rules): bool
+    public function validate(array $data, array $rules): array
     {
-        return !empty($rules) || !empty($data) || $data === [];
+        $errors = [];
+
+        foreach ($rules as $field => $fieldRules) {
+            foreach ($fieldRules as $rule) {
+                if ($rule === 'required' && (!array_key_exists($field, $data) || $data[$field] === '')) {
+                    $errors[$field][] = 'This field is required.';
+                }
+            }
+        }
+
+        return [
+            'valid' => $errors === [],
+            'errors' => $errors,
+        ];
     }
 }
