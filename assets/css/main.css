@@ -380,6 +380,96 @@
     margin-top: 1.5rem;
 }
 
+.auth-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(8, 12, 24, 0.72);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+}
+
+.auth-modal.show {
+    display: flex;
+}
+
+.auth-modal-card {
+    position: relative;
+    width: min(100%, 440px);
+    padding: 32px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(19, 32, 62, 0.96), rgba(9, 16, 31, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.auth-modal-header h2 {
+    margin-bottom: 8px;
+}
+
+.auth-modal-header p {
+    color: rgba(255, 255, 255, 0.78);
+    margin-bottom: 20px;
+}
+
+.auth-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    color: #fff;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.auth-tab {
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    background: #2ecc71;
+    color: #08111f;
+    border-color: transparent;
+}
+
+.auth-form {
+    display: grid;
+    gap: 12px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+.auth-form input::placeholder {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.auth-form button {
+    margin-top: 4px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .community-stats {
@@ -396,6 +486,9 @@
     }
     .newsletter-form {
         flex-direction: column;
+    }
+    .auth-modal-card {
+        padding: 24px 20px;
     }
     .section-header {
         flex-direction: column;

@@ -1,11 +1,4 @@
-/**
- * index.js - Homepage-specific functionality
- * Handles hero section, stats, featured articles, categories, newsletter, and coding challenges
- */
 
-/**
- * HomepageController - Manages all homepage-specific functionality
- */
 class HomepageController {
   constructor() {
     this.init();
@@ -14,11 +7,11 @@ class HomepageController {
   init() {
     this.initHeroSection();
     this.initStatsCounters();
-    this.initFeaturedCarousel();
     this.initCategoryCards();
     this.initQuickResources();
     this.initNewsletterForm();
     this.initCodingChallenges();
+    this.initFeaturedCarousel();
   }
 
   /**
@@ -57,10 +50,36 @@ class HomepageController {
     if (statNumbers.length === 0) return;
 
     statNumbers.forEach((stat) => {
-      // Display the value immediately (no animation per user request)
-      const originalText = stat.textContent;
-      stat.textContent = originalText;
+      stat.textContent = stat.textContent;
     });
+
+    this.loadLiveStats();
+  }
+
+  async loadLiveStats() {
+    if (!window.ETCApi) return;
+
+    try {
+      const response = await ETCApi.request("/api/stats");
+      const stats = response.data?.stats || {};
+
+      const mapping = {
+        students: '[data-stat="students"]',
+        developers: '[data-stat="developers"]',
+        projects: '[data-stat="projects"]',
+        github_repos: '[data-stat="github_repos"]',
+        mentors: '[data-stat="mentors"]',
+        universities: '[data-stat="universities"]',
+      };
+
+      Object.entries(mapping).forEach(([key, selector]) => {
+        const element = document.querySelector(selector);
+        if (!element || typeof stats[key] === "undefined") return;
+        element.textContent = `${AppUtils.formatNumber(stats[key])}+`;
+      });
+    } catch (error) {
+      console.warn("Unable to load live site stats", error);
+    }
   }
 
   /**
@@ -159,24 +178,18 @@ class HomepageController {
         '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
 
       try {
-        // Store in localStorage
-        const subscribers = JSON.parse(
-          localStorage.getItem("newsletter_subscribers") || "[]"
-        );
-        if (!subscribers.includes(email)) {
-          subscribers.push(email);
-          localStorage.setItem(
-            "newsletter_subscribers",
-            JSON.stringify(subscribers)
-          );
+        if (!window.ETCApi) {
+          throw new Error("API client is not available.");
         }
 
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await ETCApi.request("/api/newsletter/subscribe", {
+          method: "POST",
+          body: { email },
+        });
 
         this.showFormMessage(
           newsletterForm,
-          "Successfully subscribed! Check your email.",
+          "Successfully subscribed. Welcome to ETC updates.",
           "success"
         );
         emailInput.value = "";
@@ -190,7 +203,7 @@ class HomepageController {
       } catch (error) {
         this.showFormMessage(
           newsletterForm,
-          "Subscription failed. Please try again.",
+          error?.payload?.message || "Subscription failed. Please try again.",
           "error"
         );
         console.error("Newsletter subscription error:", error);

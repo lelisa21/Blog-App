@@ -37,6 +37,20 @@ CREATE TABLE user_sessions (
     INDEX idx_expires (expires_at)
 );
 
+CREATE TABLE user_settings (
+    user_id INT PRIMARY KEY,
+    email_notifications BOOLEAN DEFAULT TRUE,
+    push_notifications BOOLEAN DEFAULT TRUE,
+    two_factor_auth BOOLEAN DEFAULT FALSE,
+    theme ENUM('dark', 'light', 'auto') DEFAULT 'dark',
+    font_size ENUM('small', 'medium', 'large') DEFAULT 'medium',
+    language VARCHAR(10) DEFAULT 'en',
+    profile_visibility ENUM('public', 'community', 'private') DEFAULT 'community',
+    activity_visibility BOOLEAN DEFAULT TRUE,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Newsletter subscribers table
 CREATE TABLE newsletter_subscribers (
     id INT PRIMARY KEY AUTO_INCREMENT,

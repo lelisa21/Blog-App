@@ -1,12 +1,13 @@
 {
     "name": "techblog/backend",
-    "description": "Simple beginner-friendly PHP backend for TechBlog.",
+    "description": "PHP backend for TechBlog.",
     "type": "project",
     "require": {
         "php": "^8.1"
     },
     "scripts": {
-        "serve": "php -S localhost:8000 -t public",
+        "setup": "php scripts/setup.php",
+        "serve": "php -S localhost:8000 router.php",
         "test": "php tests/Test.php"
     }
 }

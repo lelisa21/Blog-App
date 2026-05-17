@@ -69,14 +69,16 @@
 
                 <div class="user-profile">
                     <button class="profile-btn">
-                        <div class="avatar"> <i class="far fa-user"></i> <span class="status-indicator online"></span> </div>
-                        <span class="user-name">User</span>
+                        <div class="avatar"> <i class="far fa-user"></i> <span class="status-indicator"></span> </div>
+                        <span class="user-name">Sign In</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="profile-menu">
                         <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
                         <a href="profile.html"><i class="fas fa-cog"></i> Settings</a>
-                        <a href="profile.html"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                        <a href="#" data-auth-action="open-login"><i class="fas fa-right-to-bracket"></i> Login</a>
+                        <a href="#" data-auth-action="open-register"><i class="fas fa-user-plus"></i> Create Account</a>
+                        <a href="#" data-auth-action="logout" style="display: none;"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                     </div>
                 </div>
 
@@ -109,30 +111,30 @@
                 <div class="hero-stats">
                     <div class="stat-card">
                         <i class="fas fa-user-graduate"></i>
-                        <div> <span class="stat-number">2,500+</span> <span class="stat-label">Students</span> </div>
+                        <div> <span class="stat-number" data-stat="students">2,500+</span> <span class="stat-label">Students</span> </div>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-code"></i>
-                        <div> <span class="stat-number">1,200+</span> <span class="stat-label">Developers</span> </div>
+                        <div> <span class="stat-number" data-stat="developers">1,200+</span> <span class="stat-label">Developers</span> </div>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-project-diagram"></i>
-                        <div> <span class="stat-number">350+</span> <span class="stat-label">Projects</span> </div>
+                        <div> <span class="stat-number" data-stat="projects">350+</span> <span class="stat-label">Projects</span> </div>
                     </div>
                 </div>
 
                 <div class="community-stats">
                     <div class="stat-item">
                         <div class="stat-icon"><i class="fas fa-code-branch"></i></div>
-                        <div class="stat-info"> <span class="stat-number">850+</span> <span class="stat-label">GitHub Repos</span> </div>
+                        <div class="stat-info"> <span class="stat-number" data-stat="github_repos">850+</span> <span class="stat-label">GitHub Repos</span> </div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-                        <div class="stat-info"> <span class="stat-number">120+</span> <span class="stat-label">Mentors</span> </div>
+                        <div class="stat-info"> <span class="stat-number" data-stat="mentors">120+</span> <span class="stat-label">Mentors</span> </div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
-                        <div class="stat-info"> <span class="stat-number">45+</span> <span class="stat-label">Universities</span> </div>
+                        <div class="stat-info"> <span class="stat-number" data-stat="universities">45+</span> <span class="stat-label">Universities</span> </div>
                     </div>
                 </div>
 
@@ -515,6 +517,40 @@
         </div>
     </footer>
 
+    <div class="auth-modal" id="authModal" aria-hidden="true">
+        <div class="auth-modal-card">
+            <button class="auth-close" type="button" data-auth-close aria-label="Close authentication dialog">&times;</button>
+            <div class="auth-modal-header">
+                <h2>Welcome to ETC</h2>
+                <p>Sign in to manage your session, join the newsletter, and connect with the community.</p>
+            </div>
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" data-auth-tab="login">Login</button>
+                <button type="button" class="auth-tab" data-auth-tab="register">Create Account</button>
+            </div>
+
+            <section data-auth-panel="login">
+                <form id="loginForm" class="auth-form">
+                    <input type="email" name="email" placeholder="Email address" required>
+                    <input type="password" name="password" placeholder="Password" required minlength="8">
+                    <button type="submit" class="btn-primary"> <i class="fas fa-right-to-bracket"></i> Login </button>
+                </form>
+            </section>
+
+            <section data-auth-panel="register" hidden>
+                <form id="registerForm" class="auth-form">
+                    <input type="text" name="full_name" placeholder="Full name" required>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="email" name="email" placeholder="Email address" required>
+                    <input type="password" name="password" placeholder="Password" required minlength="8">
+                    <input type="text" name="location" placeholder="Location">
+                    <button type="submit" class="btn-primary"> <i class="fas fa-user-plus"></i> Create Account </button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="assets/js/api.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/app.js"></script>
     <script src="assets/js/main.js"></script>

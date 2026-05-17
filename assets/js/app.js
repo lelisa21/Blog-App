@@ -312,6 +312,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add loading states to buttons
   document.querySelectorAll('button[type="submit"]').forEach((button) => {
     button.addEventListener("click", function () {
+      if (
+        this.closest("#loginForm") ||
+        this.closest("#registerForm") ||
+        this.form?.dataset?.managedSubmit === "true"
+      ) {
+        return;
+      }
+
       if (this.form && this.form.checkValidity()) {
         const originalHTML = this.innerHTML;
         this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';

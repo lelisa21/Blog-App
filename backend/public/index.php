@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../src/Helpers/Response.php';
-require_once __DIR__ . '/../src/Controllers/AuthController.php';
-require_once __DIR__ . '/../src/Controllers/ArticleController.php';
-require_once __DIR__ . '/../src/Controllers/CommentController.php';
-require_once __DIR__ . '/../src/Controllers/CommunityController.php';
-require_once __DIR__ . '/../src/Controllers/EventController.php';
-require_once __DIR__ . '/../src/Controllers/ResourceController.php';
-
 use App\Controllers\ArticleController;
 use App\Controllers\AuthController;
 use App\Controllers\CommentController;
@@ -18,11 +10,36 @@ use App\Controllers\EventController;
 use App\Controllers\ResourceController;
 use App\Helpers\Response;
 
+$autoloadBase = realpath(__DIR__ . '/../src');
+spl_autoload_register(static function (string $class) use ($autoloadBase): void {
+    $prefix = 'App\\';
+    if (!str_starts_with($class, $prefix) || $autoloadBase === false) {
+        return;
+    }
+
+    $relative = substr($class, strlen($prefix));
+    $path = $autoloadBase . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $relative) . '.php';
+
+    if (is_file($path)) {
+        require_once $path;
+    }
+});
+
 $routes = require __DIR__ . '/../routes/api.php';
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $query = $_GET;
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+
+if ($method === 'OPTIONS') {
+    http_response_code(204);
+    return;
+}
+
 $match = findRoute($routes, $method, $path);
 
 if ($match === null) {
@@ -33,14 +50,21 @@ if ($match === null) {
     return;
 }
 
-[$controllerClass, $action] = $match['handler'];
-$controller = new $controllerClass();
-$result = $controller->$action($match['params'], $query);
+try {
+    [$controllerClass, $action] = $match['handler'];
+    $controller = new $controllerClass();
+    $result = $controller->$action($match['params'], $query);
 
-$status = $result['status'] ?? 200;
-unset($result['status']);
+    $status = $result['status'] ?? 200;
+    unset($result['status']);
 
-Response::json($result, $status);
+    Response::json($result, $status);
+} catch (Throwable $exception) {
+    Response::json([
+        'success' => false,
+        'message' => $exception->getMessage(),
+    ], 500);
+}
 
 function findRoute(array $routes, string $method, string $path): ?array
 {

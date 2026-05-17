@@ -19,6 +19,10 @@ return [
     'POST /api/auth/refresh' => [AuthController::class, 'refresh'],
     'GET /api/auth/me' => [AuthController::class, 'me'],
     'PUT /api/auth/profile' => [AuthController::class, 'updateProfile'],
+    'GET /api/auth/settings' => [AuthController::class, 'settings'],
+    'PUT /api/auth/settings' => [AuthController::class, 'updateSettings'],
+    'POST /api/newsletter/subscribe' => [AuthController::class, 'subscribeNewsletter'],
+    'GET /api/stats' => [AuthController::class, 'siteStats'],
 
     // Person 2: Articles
     'GET /api/articles' => [ArticleController::class, 'index'],
