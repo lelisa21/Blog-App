@@ -1,4 +1,97 @@
-<!DOCTYPE html>
+<?php
+declare(strict_types=1);
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+// DB Connection (your techblog schema)
+function db(): PDO {
+    static $pdo = null;
+    if ($pdo) return $pdo;
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=techblog;charset=utf8mb4', 'root', '', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+    return $pdo;
+}
+function jsonOut($d, $c=200){ http_response_code($c); header('Content-Type: application/json'); echo json_encode($d); exit; }
+function auth(): int { return empty($_SESSION['user_id']) ? jsonOut(['error'=>'auth'],401) : (int)$_SESSION['user_id']; }
+function input(){ $r=file_get_contents('php://input'); return $r?json_decode($r,true):[]; }
+
+// API Router
+if (!empty($_GET['api'])) {
+    try {
+        $pdo = db();
+        switch ($_GET['api']) {
+            case 'members':
+                $w=["u.is_active=1"]; $p=[];
+                if (!empty($_GET['search'])) { $w[]="(u.full_name LIKE :s OR u.username LIKE :s OR u.location LIKE :s)"; $p[':s']='%'.$_GET['search'].'%'; }
+                if (!empty($_GET['location'])) { $w[]="u.location=:l"; $p[':l']=$_GET['location']; }
+                if (!empty($_GET['availability'])) { $w[]="u.availability_status=:a"; $p[':a']=$_GET['availability']; }
+                $join='';
+                if (!empty($_GET['skill'])) { $join="LEFT JOIN user_skills us ON us.user_id=u.id"; $w[]="(us.skill_name=:sk OR u.skill_level=:sk)"; $p[':sk']=$_GET['skill']; }
+                $stmt=$pdo->prepare("SELECT DISTINCT u.id,u.username,u.full_name,u.location,u.avatar,u.bio,u.availability_status,u.mentor_role,u.skill_level,u.last_seen_at FROM users u $join WHERE ".implode(' AND ',$w)." ORDER BY u.last_seen_at DESC LIMIT 50");
+                $stmt->execute($p);
+                $dist=$pdo->query("SELECT skill_name as skill,COUNT(*)as c FROM user_skills GROUP BY skill_name ORDER BY c DESC LIMIT 8")->fetchAll();
+                jsonOut(['members'=>$stmt->fetchAll(),'skills_distribution'=>$dist]);
+
+            case 'profile':
+                $uid=auth();
+                $row=$pdo->prepare("SELECT id,username,email,full_name,avatar,bio,location,skill_level,availability_status,mentor_role,last_seen_at FROM users WHERE id=:id")->execute([':id'=>$uid])->fetch();
+                $skills=$pdo->prepare("SELECT skill_name FROM user_skills WHERE user_id=:id")->execute([':id'=>$uid])->fetchAll(PDO::FETCH_COLUMN);
+                jsonOut(['profile'=>$row,'skills'=>$skills]);
+
+            case 'profile_update':
+                $uid=auth(); $d=input();
+                $pdo->prepare("UPDATE users SET full_name=:fn,bio=:b,location=:loc,skill_level=:sl WHERE id=:id")->execute([':fn'=>$d['full_name']??'',':b'=>$d['bio']??'',':loc'=>$d['location']??'',':sl'=>$d['skill_level']??'beginner',':id'=>$uid]);
+                if (!empty($d['skills']) && is_array($d['skills'])) {
+                    $pdo->prepare("DELETE FROM user_skills WHERE user_id=:id")->execute([':id'=>$uid]);
+                    $ins=$pdo->prepare("INSERT INTO user_skills(user_id,skill_name,proficiency_level)VALUES(:uid,:sk,'intermediate')");
+                    foreach ($d['skills'] as $s) if (trim($s)) $ins->execute([':uid'=>$uid,':sk'=>trim($s)]);
+                }
+                jsonOut(['ok'=>true]);
+
+            case 'availability':
+                $uid=auth(); $d=input();
+                if (!in_array($d['status']??'', ['online','away','busy'])) jsonOut(['error'=>'bad status'],422);
+                $pdo->prepare("UPDATE users SET availability_status=:s,last_seen_at=NOW() WHERE id=:id")->execute([':s'=>$d['status'],':id'=>$uid]);
+                jsonOut(['ok'=>true]);
+
+            case 'threads':
+                $cat=$_GET['category']??'general';
+                $sql="SELECT t.*,u.full_name,u.avatar FROM forum_topics t JOIN users u ON t.author_id=u.id".($cat==='all'?'':' WHERE t.category=:cat')." ORDER BY t.is_pinned DESC,t.created_at DESC LIMIT 50";
+                $stmt=$pdo->prepare($sql);
+                $stmt->execute($cat==='all'?[]:[':cat'=>$cat]);
+                jsonOut(['threads'=>$stmt->fetchAll()]);
+
+            case 'thread_detail':
+                $id=(int)($_GET['id']??0);
+                $topic=$pdo->prepare("SELECT t.*,u.full_name,u.avatar FROM forum_topics t JOIN users u ON t.author_id=u.id WHERE t.id=:id")->execute([':id'=>$id])->fetch();
+                if (!$topic) jsonOut(['error'=>'not found'],404);
+                $replies=$pdo->prepare("SELECT r.*,u.full_name,u.avatar FROM forum_replies r JOIN users u ON r.user_id=u.id WHERE r.topic_id=:id ORDER BY r.created_at ASC")->execute([':id'=>$id])->fetchAll();
+                jsonOut(['topic'=>$topic,'replies'=>$replies]);
+
+            case 'thread_create':
+                $uid=auth(); $d=input();
+                $slug=strtolower(preg_replace('/[^a-z0-9]+/','-',$d['title']??''));
+                $pdo->prepare("INSERT INTO forum_topics(title,content,author_id,category,slug)VALUES(:t,:c,:a,:cat,:s)")->execute([':t'=>$d['title']??'',':c'=>$d['content']??'',':a'=>$uid,':cat'=>$d['category']??'general',':s'=>$slug]);
+                jsonOut(['ok'=>true,'id'=>$pdo->lastInsertId()]);
+
+            case 'reply_create':
+                $uid=auth(); $d=input();
+                $pdo->prepare("INSERT INTO forum_replies(topic_id,user_id,content)VALUES(:tid,:uid,:c)")->execute([':tid'=>$d['topic_id']??0,':uid'=>$uid,':c'=>$d['content']??'']);
+                jsonOut(['ok'=>true]);
+
+            case 'match':
+                $uid=auth(); $d=input(); $sk=$d['skill']??'';
+                $stmt=$pdo->prepare("SELECT DISTINCT u.id,u.full_name,u.avatar,u.bio,u.location,u.mentor_role FROM users u JOIN user_skills us ON us.user_id=u.id WHERE us.skill_name=:sk AND u.id!=:uid AND u.is_active=1 LIMIT 10");
+                $stmt->execute([':sk'=>$sk,':uid'=>$uid]);
+                jsonOut(['matches'=>$stmt->fetchAll()]);
+        }
+        jsonOut(['error'=>'unknown'],404);
+    } catch (Throwable $e) {
+        jsonOut(['error'=>$e->getMessage()],500);
+    }
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -706,9 +799,291 @@
     <!-- Footer -->
     <footer class="site-footer">
     </footer>
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/theme.js"></script>
-    <script src="assets/js/community.js"></script>
+    
+    <!-- API-Connected Community JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🇪🇹 Ethiopian Tech Community - Initializing...');
+        window.API_BASE = 'community.php?api=';
+        
+        initLiveDashboard();
+        initMemberDirectory();
+        initDiscussionForums();
+        initProjectCollaboration();
+        initLearningGroups();
+        initGamification();
+        initNetworkingFeatures();
+        initRealtimeFeatures();
+        initCommunityResources();
+        
+        updateEthiopianTime();
+        setInterval(updateEthiopianTime, 1000);
+    });
+
+    // Live Dashboard
+    function initLiveDashboard() {
+        fetch(`${window.API_BASE}members&limit=1`)
+            .then(r=>r.json())
+            .then(d=>{
+                const count = d.members ? d.members.length : 5000;
+                animateCounter(document.getElementById('live-member-count'), 0, count, 2000);
+            }).catch(()=>{});
+            
+        updateOnlineUsers();
+        setInterval(updateOnlineUsers, 30000);
+        loadActivitiesFeed();
+        setInterval(loadActivitiesFeed, 60000);
+        loadTopContributors();
+        initCityHeatmap();
+    }
+
+    function animateCounter(el,start,end,dur){
+        if(!el)return;let t=null;
+        const s=(x)=>{if(!t)t=x;const p=Math.min((x-t)/dur,1);el.textContent=Math.floor(p*(end-start)+start).toLocaleString();if(p<1)requestAnimationFrame(s);};
+        requestAnimationFrame(s);
+    }
+
+    function updateOnlineUsers(){
+        const c=Math.floor(Math.random()*200)+400;
+        const el=document.getElementById('online-count');
+        if(el)el.textContent=`${c} developers online now`;
+        updateLiveAvatars(c);
+    }
+
+    function updateLiveAvatars(count){
+        const grid=document.getElementById('live-avatars');
+        if(!grid)return;
+        grid.innerHTML='';
+        const colors=['#7efff5','#ffd166','#784fb6','#ff5e6c','#9ef01a'];
+        for(let i=0;i<Math.min(12,Math.floor(count/40));i++){
+            const a=document.createElement('div');
+            a.className='avatar';
+            a.style.cssText=`width:40px;height:40px;border-radius:50%;background:${colors[i%colors.length]};display:flex;align-items:center;justify-content:center;color:#000;font-weight:bold;font-size:14px;`;
+            a.textContent='ET';
+            grid.appendChild(a);
+        }
+    }
+
+    function loadActivitiesFeed(){
+        const feed=document.getElementById('activities-feed');
+        if(!feed)return;
+        const acts=[{user:'Selam G.',action:'started a new React project',time:'2 min ago'},{user:'Dawit M.',action:'joined the Python study group',time:'5 min ago'},{user:'Amina K.',action:'shared a job opportunity',time:'12 min ago'}];
+        feed.innerHTML=acts.map(a=>`<div class="activity-item" style="padding:10px;border-bottom:1px solid var(--color-border);animation:fadeIn 0.3s ease;"><strong style="color:var(--color-primary);">${a.user}</strong><span style="color:var(--color-text);"> ${a.action}</span><small style="color:var(--color-text-muted);float:right;">${a.time}</small></div>`).join('');
+    }
+
+    function loadTopContributors(){
+        const c=document.getElementById('top-contributors');
+        if(!c)return;
+        const list=[{name:'Elias Z.',points:1250},{name:'Beti T.',points:980},{name:'Kaleb M.',points:875}];
+        c.innerHTML=list.map((p,i)=>`<div class="contributor" style="display:flex;align-items:center;padding:10px;background:${i<3?'rgba(126,255,245,0.1)':'transparent'};border-radius:8px;margin:5px 0;"><div style="width:30px;height:30px;border-radius:50%;background:var(--color-primary);color:var(--color-bg);display:flex;align-items:center;justify-content:center;font-weight:bold;margin-right:10px;">${i+1}</div><div style="flex:1;"><div style="font-weight:bold;color:var(--color-text);">${p.name}</div></div><div style="background:var(--color-primary);color:var(--color-bg);padding:4px 8px;border-radius:12px;font-size:12px;font-weight:bold;">${p.points} pts</div></div>`).join('');
+    }
+
+    function initCityHeatmap(){
+        document.querySelectorAll('.city-dot').forEach(d=>{
+            d.addEventListener('mouseenter',function(){this.style.transform='scale(1.2)';this.style.transition='transform 0.3s ease';});
+            d.addEventListener('mouseleave',function(){this.style.transform='scale(1)';});
+            d.addEventListener('click',function(){alert(`🏙️ ${this.dataset.city}\n\n📊 1000+ developers\n• 50+ active projects\n• Weekly meetups`);});
+        });
+    }
+
+    // Member Directory - LIVE API
+    function initMemberDirectory(){
+        loadMembers();
+        ['member-search','skill-filter','city-filter','availability-filter'].forEach(id=>{
+            document.getElementById(id)?.addEventListener('change',loadMembers);
+            document.getElementById(id)?.addEventListener('input',debounce(loadMembers,300));
+        });
+        initSkillsChart();
+        initMatchingSystem();
+        initAvailabilityStatus();
+    }
+
+    async function loadMembers(){
+        const s=document.getElementById('member-search')?.value||'';
+        const sk=document.getElementById('skill-filter')?.value||'';
+        const loc=document.getElementById('city-filter')?.value||'';
+        const av=document.getElementById('availability-filter')?.value||'';
+        try{
+            const r=await fetch(`${window.API_BASE}members&search=${encodeURIComponent(s)}&skill=${encodeURIComponent(sk)}&location=${encodeURIComponent(loc)}&availability=${encodeURIComponent(av)}`);
+            const d=await r.json();
+            renderMembers(d.members||[]);
+            if(d.skills_distribution)updateSkillsChart(d.skills_distribution);
+        }catch(e){console.error(e);}
+    }
+
+    function renderMembers(members){
+        const container=document.getElementById('members-list');
+        if(!container){
+            const dir=document.querySelector('.directory-content');
+            if(!dir)return;
+            const div=document.createElement('div');div.id='members-list';div.style='margin-top:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;';
+            dir.appendChild(div);
+        }
+        const el=document.getElementById('members-list');
+        if(!members.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);">No members found</div>';return;}
+        el.innerHTML=members.map(m=>`<div style="background:var(--color-surface);padding:20px;border-radius:12px;border:1px solid var(--color-border);"><div style="display:flex;align-items:center;gap:15px;margin-bottom:15px;"><img src="${m.avatar||'assets/images/default-avatar.png'}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;"><div><h4 style="margin:0;color:var(--color-text);">${m.full_name||m.username}</h4><div style="color:var(--color-text-muted);font-size:14px;">@${m.username}</div></div></div><div style="margin-bottom:10px;"><span style="display:inline-block;padding:4px 8px;background:rgba(126,255,245,0.1);color:var(--color-primary);border-radius:12px;font-size:12px;">${m.skill_level||'Developer'}</span><span style="display:inline-block;padding:4px 8px;background:${m.availability_status==='online'?'rgba(0,255,0,0.2)':'rgba(128,128,128,0.2)'};color:${m.availability_status==='online'?'#0f0':'#888'};border-radius:12px;font-size:12px;margin-left:5px;"><i class="fas fa-circle" style="font-size:8px;"></i> ${m.availability_status}</span></div><p style="color:var(--color-text-muted);font-size:14px;margin:0;line-height:1.4;">${m.bio||'No bio'}</p></div>`).join('');
+    }
+
+    let skillsChart;
+    function initSkillsChart(){
+        const c=document.getElementById('skills-chart');
+        if(!c)return;
+        const ctx=c.getContext('2d');
+        skillsChart=new Chart(ctx,{type:'bar',data:{labels:[],datasets:[{label:'Developers',data:[],backgroundColor:'rgba(126,255,245,0.7)',borderColor:'rgb(126,255,245)',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'var(--color-text)'}}},scales:{y:{beginAtZero:true,ticks:{color:'var(--color-text-muted)'},grid:{color:'var(--color-border)'}},x:{ticks:{color:'var(--color-text)'},grid:{display:false}}}});
+    }
+
+    function updateSkillsChart(dist){
+        if(!skillsChart||!dist)return;
+        skillsChart.data.labels=dist.map(x=>x.skill);
+        skillsChart.data.datasets[0].data=dist.map(x=>x.c);
+        skillsChart.update();
+    }
+
+    function initMatchingSystem(){
+        document.querySelectorAll('.role-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.role-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
+        document.getElementById('find-match')?.addEventListener('click',async function(){
+            const skill=document.getElementById('match-skill')?.value;
+            if(!skill)return alert('Select skill');
+            this.disabled=true;this.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+            try{
+                const r=await fetch(`${window.API_BASE}match`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({skill})});
+                const d=await r.json();
+                const res=document.getElementById('match-results');
+                res.innerHTML=(d.matches||[]).map(m=>`<div style="padding:15px;background:var(--color-surface);border-radius:8px;margin:10px 0;border-left:4px solid var(--color-primary);"><div style="display:flex;justify-content:space-between;align-items:center;"><div><h4 style="margin:0;color:var(--color-text);">${m.full_name}</h4><div style="color:var(--color-text-muted);font-size:14px;">${m.location||'Ethiopia'} • ${m.mentor_role}</div></div><button onclick="alert('Request sent to ${m.full_name}')" style="padding:8px 16px;background:var(--color-primary);color:var(--color-bg);border:none;border-radius:6px;cursor:pointer;">Connect</button></div></div>`).join('');
+            }catch(e){alert('Error');}
+            finally{this.disabled=false;this.innerHTML='Find Match';}
+        });
+    }
+
+    function initAvailabilityStatus(){
+        document.querySelectorAll('.status-option').forEach(o=>o.addEventListener('click',async function(){
+            const s=this.dataset.status;
+            document.querySelectorAll('.status-option').forEach(x=>x.style.opacity='0.5');this.style.opacity='1';
+            try{await fetch(`${window.API_BASE}availability`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:s})});}catch(e){}
+        }));
+    }
+
+    // Forums - LIVE API
+    function initDiscussionForums(){
+        loadForumThreads('all');
+        document.querySelectorAll('.category').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('.category').forEach(x=>x.classList.remove('active'));this.classList.add('active');loadForumThreads(this.dataset.category);}));
+        initFAQ();
+    }
+
+    async function loadForumThreads(cat){
+        const container=document.getElementById('forum-threads');
+        if(!container)return;
+        container.innerHTML='<div style="padding:40px;text-align:center;color:var(--color-text-muted);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        try{
+            const r=await fetch(`${window.API_BASE}threads&category=${encodeURIComponent(cat)}`);
+            const d=await r.json();
+            if(!d.threads||!d.threads.length){container.innerHTML='<div style="padding:40px;text-align:center;color:var(--color-text-muted);">No discussions yet</div>';return;}
+            container.innerHTML=d.threads.map(t=>`<div style="padding:20px;background:var(--color-surface);border-radius:8px;margin:10px 0;border:1px solid var(--color-border);"><div style="display:flex;gap:15px;"><img src="${t.avatar||'default-avatar.png'}" style="width:40px;height:40px;border-radius:50%;"><div style="flex:1;"><h4 style="margin:0 0 8px 0;color:var(--color-text);">${t.title}</h4><div style="color:var(--color-text-muted);font-size:14px;">By <strong>${t.full_name}</strong> • ${new Date(t.created_at).toLocaleDateString()} <span style="margin-left:15px;padding:2px 8px;background:rgba(126,255,245,0.1);color:var(--color-primary);border-radius:12px;font-size:12px;">${t.category}</span></div></div></div></div>`).join('');
+        }catch(e){container.innerHTML='<div style="padding:40px;text-align:center;color:var(--color-text-muted);">Failed to load</div>';}
+    }
+
+    function initFAQ(){
+        document.querySelectorAll('.faq-item').forEach(i=>{
+            const q=i.querySelector('.faq-question'),a=i.querySelector('.faq-answer');
+            a.style.display='none';
+            q.addEventListener('click',()=>{a.style.display=a.style.display==='none'?'block':'none';q.style.fontWeight=a.style.display==='none'?'normal':'bold';});
+        });
+    }
+
+    // Project Collaboration
+    function initProjectCollaboration(){
+        loadTeamListings();loadOpenSourceProjects();initTeamMatching();
+    }
+
+    function loadTeamListings(){
+        const c=document.getElementById('team-listings');
+        if(!c)return;
+        const list=[{title:'E-commerce Platform',skills:['React','Node.js'],members:2,needed:3},{title:'Mobile Health App',skills:['Flutter','Firebase'],members:1,needed:2}];
+        c.innerHTML=list.map(l=>`<div style="padding:15px;background:var(--color-surface);border-radius:8px;margin:10px 0;border-left:4px solid var(--color-primary);"><h4 style="margin:0 0 10px 0;color:var(--color-text);">${l.title}</h4><div style="margin-bottom:10px;">${l.skills.map(s=>`<span style="display:inline-block;padding:4px 8px;background:rgba(126,255,245,0.1);color:var(--color-primary);border-radius:12px;font-size:12px;margin-right:5px;">${s}</span>`).join('')}</div><div style="display:flex;justify-content:space-between;align-items:center;"><div style="color:var(--color-text-muted);font-size:14px;">${l.members} members • Need ${l.needed}</div><button class="join-team" style="padding:6px 12px;background:var(--color-primary);color:var(--color-bg);border:none;border-radius:6px;cursor:pointer;font-size:14px;">Join</button></div></div>`).join('');
+        c.querySelectorAll('.join-team').forEach(b=>b.addEventListener('click',()=>alert('Request sent!')));
+    }
+
+    function loadOpenSourceProjects(){
+        const c=document.getElementById('opensource-projects');
+        if(!c)return;
+        const p=[{name:'EthioCalendar.js',desc:'Ethiopian calendar library',stars:245},{name:'AmharicNLP',desc:'NLP toolkit',stars:189}];
+        c.innerHTML=p.map(x=>`<div style="padding:15px;background:var(--color-surface);border-radius:8px;margin:10px 0;"><div style="display:flex;justify-content:space-between;"><div><h4 style="margin:0 0 5px 0;color:var(--color-text);">${x.name}</h4><p style="margin:0;color:var(--color-text-muted);font-size:14px;">${x.desc}</p></div><div style="color:var(--color-primary);font-weight:bold;"><i class="fas fa-star"></i> ${x.stars}</div></div><button style="margin-top:10px;padding:8px 16px;width:100%;background:rgba(126,255,245,0.1);color:var(--color-primary);border:1px solid var(--color-primary);border-radius:6px;cursor:pointer;">Contribute</button></div>`).join('');
+    }
+
+    function initTeamMatching(){/* placeholder */}
+
+    // Learning Groups
+    function initLearningGroups(){
+        document.querySelectorAll('.btn-group').forEach(b=>b.addEventListener('click',function(){alert(`Joined!`);this.textContent='Joined ✓';this.disabled=true;}));
+        document.getElementById('find-partner')?.addEventListener('click',()=>{
+            const list=document.getElementById('partners-list');
+            if(!list)return;
+            list.innerHTML=[{name:'Alex M.',goal:'Learn React'}].map(p=>`<div style="padding:15px;background:var(--color-surface);border-radius:8px;margin:10px 0;"><div style="display:flex;justify-content:space-between;"><div><h4 style="margin:0;color:var(--color-text);">${p.name}</h4><div style="color:var(--color-text-muted);font-size:14px;">${p.goal}</div></div><button style="padding:6px 12px;background:var(--color-primary);color:var(--color-bg);border:none;border-radius:6px;cursor:pointer;">Connect</button></div></div>`).join('');
+        });
+    }
+
+    // Gamification
+    function initGamification(){updateUserPoints();initBadges();loadLeaderboards();}
+    function updateUserPoints(){const el=document.getElementById('user-points');if(el)el.textContent=(1245+Math.floor(Math.random()*100)).toLocaleString();}
+    function initBadges(){document.querySelectorAll('.badge').forEach(b=>{b.addEventListener('mouseenter',()=>b.style.transform='translateY(-5px)');b.addEventListener('mouseleave',()=>b.style.transform='translateY(0)');b.addEventListener('click',()=>alert(b.querySelector('.badge-name').textContent));});}
+    function loadLeaderboards(){
+        const c=document.getElementById('leaderboard-list');
+        if(!c)return;
+        const data=[{rank:1,name:'Elias Z.',points:450},{rank:2,name:'Beti T.',points:380}];
+        c.innerHTML=data.map(e=>`<div style="display:flex;align-items:center;padding:12px;background:${e.rank===1?'rgba(126,255,245,0.1)':'transparent'};border-radius:8px;margin:5px 0;border-left:${e.rank<=3?'4px solid var(--color-primary)':'none'};"><div style="width:30px;height:30px;border-radius:50%;background:${e.rank===1?'gold':e.rank===2?'silver':'#cd7f32'};color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;margin-right:15px;">${e.rank}</div><div style="flex:1;"><div style="font-weight:bold;color:var(--color-text);">${e.name}</div></div><div style="background:var(--color-primary);color:var(--color-bg);padding:6px 12px;border-radius:20px;font-weight:bold;">${e.points} pts</div></div>`).join('');
+        document.querySelectorAll('.lb-tab').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.lb-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
+    }
+
+    // Networking
+    function initNetworkingFeatures(){
+        document.getElementById('find-coffee-match')?.addEventListener('click',function(){
+            const res=document.getElementById('coffee-match-result');
+            this.innerHTML='<i class="fas fa-spinner fa-spin"></i>';this.disabled=true;
+            setTimeout(()=>{
+                res.innerHTML=`<div style="padding:20px;background:var(--color-surface);border-radius:8px;margin-top:15px;border:2px solid var(--color-primary);text-align:center;"><h4>Daniel T.</h4><p>Backend Engineer • Bahir Dar</p><button style="padding:10px 20px;background:var(--color-primary);color:var(--color-bg);border:none;border-radius:6px;cursor:pointer;">Start Chat</button></div>`;
+                this.innerHTML='<i class="fas fa-random"></i> Find Coffee Match';this.disabled=false;
+            },1500);
+        });
+        initJobReferralSystem();
+    }
+
+    function initJobReferralSystem(){/* placeholder */}
+
+    // Resources
+    function initCommunityResources(){
+        const p=document.getElementById('policy-updates');
+        if(p)p.innerHTML=[{t:'New Digital Strategy',d:'Nov 15, 2025'}].map(x=>`<div style="padding:10px;border-bottom:1px solid var(--color-border);"><div style="font-weight:bold;color:var(--color-text);">${x.t}</div><div style="font-size:12px;color:var(--color-text-muted);">${x.d}</div></div>`).join('');
+    }
+
+    // Realtime
+    function initRealtimeFeatures(){initLiveChat();initCodePairing();initNewsFeed();}
+    function initLiveChat(){
+        const rooms=document.querySelectorAll('.chat-room');
+        const container=document.getElementById('chat-container');
+        rooms.forEach(r=>r.addEventListener('click',function(){rooms.forEach(x=>x.classList.remove('active'));this.classList.add('active');loadChatRoom(this.dataset.room,container);}));
+        if(rooms.length)loadChatRoom(rooms[0].dataset.room,container);
+    }
+
+    function loadChatRoom(room,container){
+        if(!container)return;
+        const msgs=[{user:'Selam',text:'Hello!',time:'14:30'},{user:'Dawit',text:'Hi there',time:'14:32'}];
+        container.innerHTML=`<div style="height:200px;overflow-y:auto;padding:10px;">${msgs.map(m=>`<div style="margin-bottom:15px;"><div style="font-weight:bold;color:var(--color-primary);">${m.user}</div><div style="background:var(--color-surface);padding:8px 12px;border-radius:8px;display:inline-block;">${m.text}</div></div>`).join('')}</div><div style="padding:10px;border-top:1px solid var(--color-border);display:flex;gap:10px;"><input type="text" placeholder="Type..." style="flex:1;padding:8px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border);border-radius:6px;"><button style="padding:8px 16px;background:var(--color-primary);color:var(--color-bg);border:none;border-radius:6px;cursor:pointer;"><i class="fas fa-paper-plane"></i></button></div>`;
+    }
+
+    function initCodePairing(){/* placeholder */}
+    function initNewsFeed(){
+        const f=document.getElementById('news-feed');
+        if(!f)return;
+        f.innerHTML=[{t:'Ethiopia AI Strategy',s:'Tech Africa',time:'2h ago'}].map(n=>`<div style="padding:15px;border-bottom:1px solid var(--color-border);"><div style="font-weight:bold;color:var(--color-text);">${n.t}</div><div style="display:flex;justify-content:space-between;color:var(--color-text-muted);font-size:14px;"><span>${n.s}</span><span>${n.time}</span></div></div>`).join('');
+    }
+
+    function updateEthiopianTime(){
+        const el=document.getElementById('ethiopian-time');
+        if(!el)return;
+        el.textContent=new Date().toLocaleTimeString('en-US',{timeZone:'Africa/Addis_Ababa',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    }
+
+    function debounce(fn,ms){let t;return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);};}
+    </script>
+</body>
 </html>
