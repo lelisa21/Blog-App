@@ -2,6 +2,31 @@
 
 declare(strict_types=1);
 
+// Load .env variables (PHP built-in server does not inherit shell env by default)
+(static function (): void {
+    $envPath = __DIR__ . '/../.env';
+    if (!is_file($envPath)) {
+        return;
+    }
+    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || str_starts_with($line, '#')) {
+            continue;
+        }
+        if (!str_contains($line, '=')) {
+            continue;
+        }
+        [$key, $value] = explode('=', $line, 2);
+        $key = trim($key);
+        $value = trim($value);
+        if ($key !== '' && getenv($key) === false) {
+            putenv("{$key}={$value}");
+            $_ENV[$key] = $value;
+        }
+    }
+})();
+
 use App\Controllers\ArticleController;
 use App\Controllers\AuthController;
 use App\Controllers\CommentController;
@@ -32,8 +57,9 @@ $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $query = $_GET;
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
+header('Access-Control-Max-Age: 86400');
 
 if ($method === 'OPTIONS') {
     http_response_code(204);

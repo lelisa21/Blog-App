@@ -1,0 +1,7 @@
+Options -MultiViews -Indexes
+
+RewriteEngine On
+
+# Redirect all requests to the public directory
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L]

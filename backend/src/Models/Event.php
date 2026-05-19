@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Helpers\Str;
 use App\Support\Database;
 use PDO;
 
@@ -16,92 +17,126 @@ class Event
         $this->db = Database::connection();
     }
 
-    public function all(array $filters = [], ?int $viewerId = null): array
+    public function paginate(array $filters = [], ?int $viewerId = null): array
     {
+        $page = max(1, (int) ($filters['page'] ?? 1));
+        $perPage = max(1, min(50, (int) ($filters['per_page'] ?? 20)));
+        $offset = ($page - 1) * $perPage;
+
+        $where = ['1=1'];
         $params = [];
-        $where = ["e.status <> 'cancelled'"];
+
+        if (!empty($filters['status'])) {
+            $where[] = 'e.status = :status';
+            $params['status'] = (string) $filters['status'];
+        }
 
         if (!empty($filters['city'])) {
             $where[] = 'e.city = :city';
-            $params['city'] = $filters['city'];
+            $params['city'] = (string) $filters['city'];
         }
 
-        $type = $filters['event_type'] ?? $filters['type'] ?? null;
-        if (!empty($type)) {
+        if (!empty($filters['event_type'])) {
             $where[] = 'e.event_type = :event_type';
-            $params['event_type'] = $type;
+            $params['event_type'] = (string) $filters['event_type'];
         }
 
-        if (!empty($filters['start'])) {
-            $where[] = 'e.start_date >= :start_date';
-            $params['start_date'] = $filters['start'];
+        if (!empty($filters['from'])) {
+            $where[] = 'e.start_date >= :from_date';
+            $params['from_date'] = (string) $filters['from'];
         }
 
-        if (!empty($filters['end'])) {
-            $where[] = 'e.start_date <= :end_date';
-            $params['end_date'] = $filters['end'];
+        if (!empty($filters['to'])) {
+            $where[] = 'e.end_date <= :to_date';
+            $params['to_date'] = (string) $filters['to'];
         }
 
-        $viewerSelect = 'NULL AS user_rsvp';
-        if ($viewerId !== null) {
-            $viewerSelect = '(SELECT ea.status FROM event_attendees ea WHERE ea.event_id = e.id AND ea.user_id = :viewer_id LIMIT 1) AS user_rsvp';
-            $params['viewer_id'] = $viewerId;
-        }
+        $whereSql = implode(' AND ', $where);
+        $orderBy = 'e.start_date ASC';
 
-        $sql = "
-            SELECT
-                e.*,
-                u.full_name AS organizer_name,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'going') AS going_count,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'interested') AS interested_count,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'waitlist') AS waitlist_count,
-                {$viewerSelect}
-            FROM events e
-            LEFT JOIN users u ON u.id = e.organizer_id
-            WHERE " . implode(' AND ', $where) . "
-            ORDER BY e.start_date ASC
-        ";
+        $countStatement = $this->db->prepare("SELECT COUNT(*) AS total FROM events e WHERE {$whereSql}");
+        $countStatement->execute($params);
+        $total = (int) ($countStatement->fetch()['total'] ?? 0);
+
+        $sql = "SELECT e.*, u.username AS organizer_username, u.full_name AS organizer_full_name,
+                       (SELECT COUNT(*) FROM event_attendees ea
+                        WHERE ea.event_id = e.id AND ea.status IN ('going', 'interested')) AS attendee_count
+                FROM events e
+                INNER JOIN users u ON u.id = e.organizer_id
+                WHERE {$whereSql}
+                ORDER BY {$orderBy}
+                LIMIT :limit OFFSET :offset";
 
         $statement = $this->db->prepare($sql);
-        $statement->execute($params);
+        foreach ($params as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+        $statement->bindValue('limit', $perPage, PDO::PARAM_INT);
+        $statement->bindValue('offset', $offset, PDO::PARAM_INT);
+        $statement->execute();
 
-        return array_map([$this, 'normalize'], $statement->fetchAll());
+        $events = [];
+        foreach ($statement->fetchAll() ?: [] as $row) {
+            $events[] = $this->formatEvent($row, $viewerId);
+        }
+
+        return [
+            'events' => $events,
+            'pagination' => [
+                'page' => $page,
+                'per_page' => $perPage,
+                'total' => $total,
+                'total_pages' => $perPage > 0 ? (int) ceil($total / $perPage) : 0,
+            ],
+        ];
     }
 
-    public function find(int $id, ?int $viewerId = null): ?array
+    public function calendar(string $from, string $to): array
     {
-        $params = ['id' => $id];
-        $viewerSelect = 'NULL AS user_rsvp';
+        $statement = $this->db->prepare(
+            'SELECT e.id, e.title, e.slug, e.event_type, e.start_date, e.end_date, e.city, e.is_virtual, e.status
+             FROM events e
+             WHERE e.start_date >= :from_date AND e.start_date <= :to_date
+             ORDER BY e.start_date ASC'
+        );
+        $statement->execute(['from_date' => $from, 'to_date' => $to]);
 
-        if ($viewerId !== null) {
-            $viewerSelect = '(SELECT ea.status FROM event_attendees ea WHERE ea.event_id = e.id AND ea.user_id = :viewer_id LIMIT 1) AS user_rsvp';
-            $params['viewer_id'] = $viewerId;
-        }
+        return array_map(static function (array $row): array {
+            return [
+                'id' => (int) $row['id'],
+                'title' => (string) $row['title'],
+                'slug' => (string) $row['slug'],
+                'event_type' => (string) $row['event_type'],
+                'start_date' => $row['start_date'],
+                'end_date' => $row['end_date'],
+                'city' => $row['city'],
+                'is_virtual' => (bool) $row['is_virtual'],
+                'status' => (string) $row['status'],
+            ];
+        }, $statement->fetchAll() ?: []);
+    }
 
-        $sql = "
-            SELECT
-                e.*,
-                u.full_name AS organizer_name,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'going') AS going_count,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'interested') AS interested_count,
-                (SELECT COUNT(*) FROM event_attendees ea WHERE ea.event_id = e.id AND ea.status = 'waitlist') AS waitlist_count,
-                {$viewerSelect}
-            FROM events e
-            LEFT JOIN users u ON u.id = e.organizer_id
-            WHERE e.id = :id
-            LIMIT 1
-        ";
+    public function findById(int $id, ?int $viewerId = null): ?array
+    {
+        $statement = $this->db->prepare(
+            'SELECT e.*, u.username AS organizer_username, u.full_name AS organizer_full_name,
+                    (SELECT COUNT(*) FROM event_attendees ea
+                     WHERE ea.event_id = e.id AND ea.status IN (\'going\', \'interested\')) AS attendee_count
+             FROM events e
+             INNER JOIN users u ON u.id = e.organizer_id
+             WHERE e.id = :id
+             LIMIT 1'
+        );
+        $statement->execute(['id' => $id]);
+        $row = $statement->fetch();
 
-        $statement = $this->db->prepare($sql);
-        $statement->execute($params);
-        $event = $statement->fetch();
-
-        return $event !== false ? $this->normalize($event) : null;
+        return $row !== false ? $this->formatEvent($row, $viewerId) : null;
     }
 
     public function create(array $data): array
     {
-        $data['slug'] = $this->uniqueSlug((string) $data['title']);
+        $title = trim((string) $data['title']);
+        $slug = Str::uniqueSlug($this->db, 'events', 'slug', $title);
 
         $statement = $this->db->prepare(
             'INSERT INTO events (
@@ -116,10 +151,10 @@ class Event
         );
 
         $statement->execute([
-            'title' => $data['title'],
-            'slug' => $data['slug'],
+            'title' => $title,
+            'slug' => $slug,
             'description' => $data['description'] ?? null,
-            'event_type' => $data['event_type'],
+            'event_type' => (string) $data['event_type'],
             'venue_name' => $data['venue_name'] ?? null,
             'city' => $data['city'] ?? null,
             'address' => $data['address'] ?? null,
@@ -127,136 +162,127 @@ class Event
             'longitude' => $data['longitude'] ?? null,
             'is_virtual' => !empty($data['is_virtual']) ? 1 : 0,
             'meeting_link' => $data['meeting_link'] ?? null,
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-            'capacity' => $data['capacity'] ?? 50,
-            'registration_fee' => $data['registration_fee'] ?? 0,
-            'organizer_id' => $data['organizer_id'],
+            'start_date' => (string) $data['start_date'],
+            'end_date' => (string) $data['end_date'],
+            'capacity' => (int) ($data['capacity'] ?? 50),
+            'registration_fee' => (float) ($data['registration_fee'] ?? 0),
+            'organizer_id' => (int) $data['organizer_id'],
             'status' => $data['status'] ?? 'upcoming',
         ]);
 
-        return $this->find((int) $this->db->lastInsertId()) ?? [];
+        return $this->findById((int) $this->db->lastInsertId()) ?? [];
     }
 
     public function update(int $id, array $data): ?array
     {
-        if ($data === []) {
-            return $this->find($id);
+        $current = $this->findById($id);
+        if ($current === null) {
+            return null;
         }
 
-        if (isset($data['title'])) {
-            $data['slug'] = $this->uniqueSlug((string) $data['title'], $id);
-        }
+        $title = trim((string) ($data['title'] ?? $current['title']));
+        $slug = isset($data['title'])
+            ? Str::uniqueSlug($this->db, 'events', 'slug', $title, $id)
+            : $current['slug'];
 
-        $allowed = [
-            'title',
-            'slug',
-            'description',
-            'event_type',
-            'venue_name',
-            'city',
-            'address',
-            'latitude',
-            'longitude',
-            'is_virtual',
-            'meeting_link',
-            'start_date',
-            'end_date',
-            'capacity',
-            'registration_fee',
-            'status',
-        ];
+        $statement = $this->db->prepare(
+            'UPDATE events SET
+                title = :title, slug = :slug, description = :description, event_type = :event_type,
+                venue_name = :venue_name, city = :city, address = :address,
+                latitude = :latitude, longitude = :longitude, is_virtual = :is_virtual,
+                meeting_link = :meeting_link, start_date = :start_date, end_date = :end_date,
+                capacity = :capacity, registration_fee = :registration_fee, status = :status,
+                updated_at = NOW()
+             WHERE id = :id'
+        );
 
-        $sets = [];
-        $params = ['id' => $id];
+        $statement->execute([
+            'id' => $id,
+            'title' => $title,
+            'slug' => $slug,
+            'description' => $data['description'] ?? $current['description'],
+            'event_type' => $data['event_type'] ?? $current['event_type'],
+            'venue_name' => $data['venue_name'] ?? $current['venue_name'],
+            'city' => $data['city'] ?? $current['city'],
+            'address' => $data['address'] ?? $current['address'],
+            'latitude' => $data['latitude'] ?? $current['latitude'],
+            'longitude' => $data['longitude'] ?? $current['longitude'],
+            'is_virtual' => array_key_exists('is_virtual', $data) ? ($data['is_virtual'] ? 1 : 0) : ($current['is_virtual'] ? 1 : 0),
+            'meeting_link' => $data['meeting_link'] ?? $current['meeting_link'],
+            'start_date' => $data['start_date'] ?? $current['start_date'],
+            'end_date' => $data['end_date'] ?? $current['end_date'],
+            'capacity' => (int) ($data['capacity'] ?? $current['capacity']),
+            'registration_fee' => (float) ($data['registration_fee'] ?? $current['registration_fee']),
+            'status' => $data['status'] ?? $current['status'],
+        ]);
 
-        foreach ($allowed as $field) {
-            if (array_key_exists($field, $data)) {
-                $sets[] = "{$field} = :{$field}";
-                $params[$field] = $field === 'is_virtual'
-                    ? (!empty($data[$field]) ? 1 : 0)
-                    : $data[$field];
-            }
-        }
-
-        if ($sets === []) {
-            return $this->find($id);
-        }
-
-        $sql = 'UPDATE events SET ' . implode(', ', $sets) . ', updated_at = NOW() WHERE id = :id';
-        $statement = $this->db->prepare($sql);
-        $statement->execute($params);
-
-        return $this->find($id);
+        return $this->findById($id);
     }
 
     public function delete(int $id): bool
     {
         $statement = $this->db->prepare('DELETE FROM events WHERE id = :id');
-        $statement->execute(['id' => $id]);
 
-        return $statement->rowCount() > 0;
+        return $statement->execute(['id' => $id]);
     }
 
-    public function rsvp(int $eventId, int $userId, string $status): array
+    public function rsvp(int $eventId, int $userId, string $status = 'going'): array
     {
         $statement = $this->db->prepare(
-            'INSERT INTO event_attendees (event_id, user_id, status, registered_at)
-             VALUES (:event_id, :user_id, :status, NOW())
-             ON DUPLICATE KEY UPDATE status = VALUES(status), registered_at = NOW()'
+            'INSERT INTO event_attendees (event_id, user_id, status)
+             VALUES (:event_id, :user_id, :status)
+             ON DUPLICATE KEY UPDATE status = VALUES(status), registered_at = CURRENT_TIMESTAMP'
         );
-
         $statement->execute([
             'event_id' => $eventId,
             'user_id' => $userId,
             'status' => $status,
         ]);
 
-        return $this->find($eventId, $userId) ?? [];
+        return $this->attendeeRecord($eventId, $userId);
     }
 
     public function cancelRsvp(int $eventId, int $userId): bool
     {
         $statement = $this->db->prepare(
-            "UPDATE event_attendees SET status = 'cancelled' WHERE event_id = :event_id AND user_id = :user_id"
+            'UPDATE event_attendees SET status = \'cancelled\' WHERE event_id = :event_id AND user_id = :user_id'
         );
 
-        $statement->execute([
-            'event_id' => $eventId,
-            'user_id' => $userId,
-        ]);
-
-        return $statement->rowCount() > 0;
+        return $statement->execute(['event_id' => $eventId, 'user_id' => $userId]);
     }
 
     public function attendees(int $eventId): array
     {
         $statement = $this->db->prepare(
-            'SELECT u.id, u.username, u.full_name, u.avatar, ea.status, ea.registered_at, ea.checked_in
+            'SELECT ea.*, u.username, u.full_name, u.avatar
              FROM event_attendees ea
              INNER JOIN users u ON u.id = ea.user_id
-             WHERE ea.event_id = :event_id AND ea.status <> "cancelled"
+             WHERE ea.event_id = :event_id AND ea.status != \'cancelled\'
              ORDER BY ea.registered_at ASC'
         );
-
         $statement->execute(['event_id' => $eventId]);
 
-        return $statement->fetchAll();
+        return array_map(static function (array $row): array {
+            return [
+                'user' => [
+                    'id' => (int) $row['user_id'],
+                    'username' => (string) $row['username'],
+                    'full_name' => (string) ($row['full_name'] ?: $row['username']),
+                    'avatar' => (string) ($row['avatar'] ?? 'default-avatar.png'),
+                ],
+                'status' => (string) $row['status'],
+                'registered_at' => $row['registered_at'],
+                'checked_in' => (bool) ($row['checked_in'] ?? false),
+            ];
+        }, $statement->fetchAll() ?: []);
     }
 
     public function setReminder(int $eventId, int $userId, string $reminderTime): array
     {
-        $this->db->prepare('DELETE FROM event_reminders WHERE event_id = :event_id AND user_id = :user_id')
-            ->execute([
-                'event_id' => $eventId,
-                'user_id' => $userId,
-            ]);
-
         $statement = $this->db->prepare(
             'INSERT INTO event_reminders (event_id, user_id, reminder_time)
              VALUES (:event_id, :user_id, :reminder_time)'
         );
-
         $statement->execute([
             'event_id' => $eventId,
             'user_id' => $userId,
@@ -271,74 +297,75 @@ class Event
         ];
     }
 
-    public function firstUserId(): int
+    private function attendeeRecord(int $eventId, int $userId): array
     {
-        $statement = $this->db->query('SELECT id FROM users ORDER BY id ASC LIMIT 1');
-        $user = $statement->fetch();
+        $statement = $this->db->prepare(
+            'SELECT status, registered_at FROM event_attendees
+             WHERE event_id = :event_id AND user_id = :user_id LIMIT 1'
+        );
+        $statement->execute(['event_id' => $eventId, 'user_id' => $userId]);
+        $row = $statement->fetch();
 
-        return $user !== false ? (int) $user['id'] : 1;
+        return [
+            'event_id' => $eventId,
+            'user_id' => $userId,
+            'status' => (string) ($row['status'] ?? 'going'),
+            'registered_at' => $row['registered_at'] ?? null,
+        ];
     }
 
-    private function uniqueSlug(string $title, ?int $ignoreId = null): string
+    private function viewerRsvp(int $eventId, ?int $viewerId): ?array
     {
-        $base = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $title), '-'));
-        $base = $base !== '' ? $base : 'event';
-        $slug = $base;
-        $counter = 2;
-
-        while ($this->slugExists($slug, $ignoreId)) {
-            $slug = $base . '-' . $counter;
-            $counter++;
+        if ($viewerId === null) {
+            return null;
         }
 
-        return $slug;
-    }
+        $statement = $this->db->prepare(
+            'SELECT status, registered_at FROM event_attendees
+             WHERE event_id = :event_id AND user_id = :user_id LIMIT 1'
+        );
+        $statement->execute(['event_id' => $eventId, 'user_id' => $viewerId]);
+        $row = $statement->fetch();
 
-    private function slugExists(string $slug, ?int $ignoreId = null): bool
-    {
-        $sql = 'SELECT id FROM events WHERE slug = :slug';
-        $params = ['slug' => $slug];
-
-        if ($ignoreId !== null) {
-            $sql .= ' AND id <> :id';
-            $params['id'] = $ignoreId;
+        if ($row === false || $row['status'] === 'cancelled') {
+            return null;
         }
 
-        $sql .= ' LIMIT 1';
-        $statement = $this->db->prepare($sql);
-        $statement->execute($params);
-
-        return $statement->fetch() !== false;
+        return [
+            'status' => (string) $row['status'],
+            'registered_at' => $row['registered_at'],
+        ];
     }
 
-    private function normalize(array $event): array
+    private function formatEvent(array $row, ?int $viewerId): array
     {
         return [
-            'id' => (int) $event['id'],
-            'title' => (string) $event['title'],
-            'slug' => (string) $event['slug'],
-            'description' => (string) ($event['description'] ?? ''),
-            'event_type' => (string) $event['event_type'],
-            'venue_name' => (string) ($event['venue_name'] ?? ''),
-            'city' => (string) ($event['city'] ?? ''),
-            'address' => (string) ($event['address'] ?? ''),
-            'latitude' => $event['latitude'] !== null ? (float) $event['latitude'] : null,
-            'longitude' => $event['longitude'] !== null ? (float) $event['longitude'] : null,
-            'is_virtual' => (bool) $event['is_virtual'],
-            'meeting_link' => (string) ($event['meeting_link'] ?? ''),
-            'start_date' => (string) $event['start_date'],
-            'end_date' => (string) $event['end_date'],
-            'capacity' => (int) $event['capacity'],
-            'registration_fee' => (float) $event['registration_fee'],
-            'organizer_id' => (int) $event['organizer_id'],
-            'organizer_name' => (string) ($event['organizer_name'] ?? ''),
-            'status' => (string) $event['status'],
-            'going_count' => (int) ($event['going_count'] ?? 0),
-            'interested_count' => (int) ($event['interested_count'] ?? 0),
-            'waitlist_count' => (int) ($event['waitlist_count'] ?? 0),
-            'user_rsvp' => $event['user_rsvp'] ?? null,
-            'created_at' => $event['created_at'] ?? null,
-            'updated_at' => $event['updated_at'] ?? null,
+            'id' => (int) $row['id'],
+            'title' => (string) $row['title'],
+            'slug' => (string) $row['slug'],
+            'description' => (string) ($row['description'] ?? ''),
+            'event_type' => (string) $row['event_type'],
+            'venue_name' => $row['venue_name'],
+            'city' => $row['city'],
+            'address' => $row['address'],
+            'latitude' => $row['latitude'] !== null ? (float) $row['latitude'] : null,
+            'longitude' => $row['longitude'] !== null ? (float) $row['longitude'] : null,
+            'is_virtual' => (bool) ($row['is_virtual'] ?? false),
+            'meeting_link' => $row['meeting_link'],
+            'start_date' => $row['start_date'],
+            'end_date' => $row['end_date'],
+            'capacity' => (int) ($row['capacity'] ?? 50),
+            'registration_fee' => (float) ($row['registration_fee'] ?? 0),
+            'status' => (string) $row['status'],
+            'attendee_count' => (int) ($row['attendee_count'] ?? 0),
+            'organizer' => [
+                'id' => (int) $row['organizer_id'],
+                'username' => (string) $row['organizer_username'],
+                'full_name' => (string) ($row['organizer_full_name'] ?? $row['organizer_username']),
+            ],
+            'rsvp' => $this->viewerRsvp((int) $row['id'], $viewerId),
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at'],
         ];
     }
 }
