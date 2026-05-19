@@ -823,39 +823,69 @@ function initEventCreationModal() {
     }
 }
 
-function handleEventSubmission(e) {
+async function handleEventSubmission(e) {
     e.preventDefault();
-    
-    const formData = {
-        title: document.getElementById('event-title').value,
-        description: document.getElementById('event-description').value,
-        type: document.getElementById('event-type').value,
-        date: document.getElementById('event-date').value,
-        time: document.getElementById('event-time').value,
-        city: document.getElementById('event-city').value,
-        mode: document.querySelector('input[name="mode"]:checked').value
+
+    const date = document.getElementById('event-date').value;
+    const time = document.getElementById('event-time').value || '09:00';
+    const durationHours = Number(document.getElementById('event-duration')?.value || 2);
+
+    const startDate = new Date(`${date}T${time}:00`);
+    const endDate = new Date(startDate.getTime() + durationHours * 60 * 60 * 1000);
+
+    const modeInput = document.querySelector('input[name="mode"]:checked');
+    const mode = modeInput ? modeInput.value : 'in-person';
+    const isVirtual = mode === 'virtual';
+
+    const payload = {
+        title: document.getElementById('event-title').value.trim(),
+        description: document.getElementById('event-description').value.trim(),
+        event_type: document.getElementById('event-type').value,
+        venue_name: isVirtual ? 'Online' : document.getElementById('event-venue').value.trim(),
+        city: isVirtual ? 'virtual' : document.getElementById('event-city').value,
+        address: isVirtual ? '' : document.getElementById('event-venue').value.trim(),
+        is_virtual: isVirtual,
+        meeting_link: document.getElementById('event-registration-link')?.value.trim() || '',
+        start_date: toMysqlDateTime(startDate),
+        end_date: toMysqlDateTime(endDate),
+        capacity: Number(document.getElementById('event-capacity')?.value || 50),
+        registration_fee: Number(document.getElementById('event-fee')?.value || 0)
     };
-    
-    // Validate required fields
-    if (!formData.title || !formData.description || !formData.type || !formData.date) {
-        showNotification('Please fill in all required fields', 'error');
+
+    if (!payload.title || !payload.description || !payload.event_type || !date || !time) {
+        showNotification('Please fill in all required fields.', 'error');
         return;
     }
-    
-    // Show success message
-    showNotification(`Event "${formData.title}" submitted for review!`, 'success');
-    
-    // Close modal
-    document.getElementById('event-creation-modal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-    
-    // Reset form
-    e.target.reset();
-    
-    // In a real app, send data to backend
-    console.log('Event submitted:', formData);
+
+    try {
+        const response = await ETCApi.request('/api/events', {
+            method: 'POST',
+            headers: ETCAuth ? ETCAuth.authHeaders() : {},
+            body: payload
+        });
+
+        console.log('Event saved:', response);
+
+        showNotification(`Event "${payload.title}" saved successfully!`, 'success');
+
+        document.getElementById('event-creation-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        e.target.reset();
+
+        // Reload page so the new event appears
+        window.location.reload();
+
+    } catch (error) {
+        console.error('Event save failed:', error);
+        showNotification(error.message || 'Could not save event.', 'error');
+    }
 }
 
+function toMysqlDateTime(date) {
+    const pad = number => String(number).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
+}
 // ========== E. EVENT MANAGEMENT ==========
 function initEventManagement() {
     console.log('📋 Initializing Event Management...');
@@ -1117,3 +1147,850 @@ style.textContent = `
 document.head.appendChild(style);
 
 console.log('✅ Ethiopian Tech Events functionality complete!');
+
+
+// ========== BACKEND CONNECTION FOR P-5 EVENTS ==========
+// Add this block at the very bottom of assets/js/events.js
+window.backendEvents = window.backendEvents || [];
+
+document.addEventListener('DOMContentLoaded', function () {
+    setupBackendEventHandlers();
+    syncLocationFieldsForEventMode();
+
+    document.querySelectorAll('input[name="mode"]').forEach(radio => {
+        radio.addEventListener('change', syncLocationFieldsForEventMode);
+    });
+
+    loadEventsFromBackend();
+});
+
+function apiAuthHeaders() {
+    return window.ETCAuth && typeof ETCAuth.authHeaders === 'function'
+        ? ETCAuth.authHeaders()
+        : {};
+}
+
+async function loadEventsFromBackend() {
+    if (!window.ETCApi) {
+        console.warn('ETCApi was not found. Make sure assets/js/api.js loads before events.js.');
+        return;
+    }
+
+    try {
+        const response = await ETCApi.request('/api/events', {
+            headers: apiAuthHeaders(),
+        });
+
+        window.backendEvents = response.data.events || [];
+        renderBackendEventCards(window.backendEvents);
+
+        const activeView = document.querySelector('.view-btn.active')?.dataset.view || 'month';
+        loadCalendarView(activeView);
+    } catch (error) {
+        console.error('Could not load events from backend:', error);
+        showNotification(error.message || 'Could not load events from backend.', 'error');
+    }
+}
+
+function renderBackendEventCards(events) {
+    const container = document.querySelector('.events-container');
+    if (!container) return;
+
+    if (!events.length) {
+        container.innerHTML = `
+            <div class="empty-events-message">
+                <h3>No events found</h3>
+                <p>Create the first event using the Submit an Event button.</p>
+            </div>
+        `;
+        updateEventCount(0);
+        return;
+    }
+
+    container.innerHTML = events.map(event => {
+        const type = event.event_type || 'meetup';
+        const city = event.city || (event.is_virtual ? 'virtual' : 'other');
+        const mode = event.is_virtual ? 'virtual' : 'in-person';
+        const goingCount = Number(event.going_count || 0);
+        const interestedCount = Number(event.interested_count || 0);
+        const mapQuery = [event.venue_name, event.address, cityLabel(city)].filter(Boolean).join(', ');
+        const mapUrl = event.is_virtual && event.meeting_link
+            ? event.meeting_link
+            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery || event.title)}`;
+        const start = parseEventDate(event.start_date);
+        const end = parseEventDate(event.end_date);
+
+        return `
+            <div class="event-card ${escapeHtml(type)}" data-event-id="${event.id}" data-city="${escapeHtml(city)}" data-type="${escapeHtml(type)}" data-tech="${escapeHtml(type)}" data-difficulty="intermediate" data-mode="${mode}">
+                <div class="event-header">
+                    <div class="event-type-badge ${escapeHtml(type)}">${escapeHtml(typeLabel(type))}</div>
+                    <div class="event-countdown" data-date="${toInputDateTime(start)}">
+                        <i class="fas fa-clock"></i> <span class="countdown-timer">Loading...</span>
+                    </div>
+                </div>
+
+                <h3 class="event-title">${escapeHtml(event.title)}</h3>
+                <p class="event-description">${escapeHtml(event.description || '')}</p>
+
+                <div class="event-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>${escapeHtml(formatEventDateRange(start, end))}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="${event.is_virtual ? 'fas fa-video' : 'fas fa-map-marker-alt'}"></i>
+                        <span>${escapeHtml(event.is_virtual ? 'Online Event' : (event.venue_name || cityLabel(city)))}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Capacity: ${Number(event.capacity || 0)} attendees</span>
+                    </div>
+                </div>
+
+                <div class="event-tech-tags">
+                    <span class="tech-tag ${escapeHtml(type)}">${escapeHtml(typeLabel(type))}</span>
+                    <span class="tech-tag">${escapeHtml(cityLabel(city))}</span>
+                </div>
+
+                <div class="event-attendees">
+                    <h4>Attendees <span class="attendee-count">(${goingCount})</span></h4>
+                    <p>${interestedCount} interested</p>
+                </div>
+
+                <div class="event-actions">
+                    <button class="action-btn interested ${event.user_rsvp === 'interested' ? 'active' : ''}" data-rsvp-status="interested">
+                        <i class="${event.user_rsvp === 'interested' ? 'fas' : 'far'} fa-star"></i> Interested${event.user_rsvp === 'interested' ? ' ✓' : ''}
+                    </button>
+                    <button class="action-btn going ${event.user_rsvp === 'going' ? 'active' : ''}" data-rsvp-status="going">
+                        <i class="fas fa-check-circle"></i> Going${event.user_rsvp === 'going' ? ' ✓' : ''}
+                    </button>
+                    <button class="action-btn reminder" data-event-id="${event.id}"><i class="far fa-bell"></i> Reminder</button>
+                    <button class="action-btn edit-event" data-event-id="${event.id}"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn delete-event" data-event-id="${event.id}"><i class="fas fa-trash"></i> Delete</button>
+                    <a href="${escapeHtml(mapUrl)}" target="_blank" class="map-link"><i class="fas fa-map-marked-alt"></i> ${event.is_virtual ? 'Open Link' : 'View Map'}</a>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    updateEventCount(events.length);
+    updateCountdownTimers();
+}
+
+function setupBackendEventHandlers() {
+    document.addEventListener('click', async function (event) {
+        const rsvpButton = event.target.closest('.action-btn.interested, .action-btn.going');
+
+        if (rsvpButton) {
+            await handleEventRSVP(event);
+            return;
+        }
+
+        const reminderButton = event.target.closest('.action-btn.reminder');
+
+        if (reminderButton) {
+            event.preventDefault();
+            await setBackendReminder(reminderButton.dataset.eventId);
+            return;
+        }
+
+        const editButton = event.target.closest('.action-btn.edit-event');
+
+        if (editButton) {
+            event.preventDefault();
+            await quickEditBackendEvent(editButton.dataset.eventId);
+            return;
+        }
+
+        const deleteButton = event.target.closest('.action-btn.delete-event');
+
+        if (deleteButton) {
+            event.preventDefault();
+            await deleteBackendEvent(deleteButton.dataset.eventId);
+        }
+    });
+}
+
+async function handleEventSubmission(e) {
+    e.preventDefault();
+
+    console.log('P-5 form submit started');
+
+    const date = document.getElementById('event-date').value;
+    const time = document.getElementById('event-time').value || '09:00';
+    const durationHours = Number(document.getElementById('event-duration')?.value || 2);
+
+    const mode = document.querySelector('input[name="mode"]:checked')?.value || 'in-person';
+    const isVirtual = mode === 'virtual';
+
+    const rawVenue = document.getElementById('event-venue')?.value || '';
+    const venueName = rawVenue.trim().slice(0, 190);
+
+    const startDate = new Date(`${date}T${time}:00`);
+    const endDate = new Date(startDate.getTime() + durationHours * 60 * 60 * 1000);
+
+    const selectedTech = Array.from(document.querySelectorAll('input[name="tech-stack"]:checked'))
+        .map(input => input.value);
+
+    const payload = {
+        title: document.getElementById('event-title').value.trim(),
+        description: document.getElementById('event-description').value.trim(),
+        event_type: document.getElementById('event-type').value,
+        venue_name: isVirtual ? 'Online' : (venueName || 'TBD Venue'),
+        city: isVirtual ? 'virtual' : document.getElementById('event-city').value,
+        address: isVirtual ? '' : venueName,
+        is_virtual: isVirtual,
+        meeting_link: document.getElementById('event-registration-link')?.value.trim() || '',
+        start_date: toMysqlDateTime(startDate),
+        end_date: toMysqlDateTime(endDate),
+        capacity: Number(document.getElementById('event-capacity')?.value || 50),
+        registration_fee: Number(document.getElementById('event-fee')?.value || 0),
+        tech_stack: selectedTech
+    };
+
+    console.log('P-5 payload:', payload);
+
+    if (!payload.title || !payload.description || !payload.event_type || !date || !time) {
+        showNotification('Please fill in title, description, event type, date, and time.', 'error');
+        return;
+    }
+
+    if (!payload.is_virtual && !payload.city) {
+        showNotification('Please select a city.', 'error');
+        return;
+    }
+
+    try {
+        const response = await ETCApi.request('/api/events', {
+            method: 'POST',
+            headers: apiAuthHeaders(),
+            body: payload
+        });
+
+        console.log('P-5 event saved:', response);
+
+        showNotification(`Event "${payload.title}" saved to the database!`, 'success');
+
+        document.getElementById('event-creation-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+
+        e.target.reset();
+        syncLocationFieldsForEventMode();
+
+        await loadEventsFromBackend();
+
+    } catch (error) {
+        console.error('Event submission failed:', error);
+        showNotification(error.message || 'Could not save event.', 'error');
+    }
+}
+async function handleEventRSVP(event) {
+    event.preventDefault();
+
+    const button = event.target.closest('button');
+    const card = button?.closest('.event-card');
+    const eventId = card?.dataset.eventId;
+    const eventTitle = card?.querySelector('.event-title')?.textContent || 'this event';
+
+    if (!eventId) return;
+
+    const status = button.dataset.rsvpStatus || (button.classList.contains('going') ? 'going' : 'interested');
+    const isCancelling = button.classList.contains('active');
+
+    try {
+        button.disabled = true;
+
+        if (isCancelling) {
+            await ETCApi.request(`/api/events/${eventId}/rsvp`, {
+                method: 'DELETE',
+                headers: apiAuthHeaders(),
+            });
+
+            showNotification(`RSVP cancelled for "${eventTitle}"`, 'success');
+        } else {
+            await ETCApi.request(`/api/events/${eventId}/rsvp`, {
+                method: 'POST',
+                headers: apiAuthHeaders(),
+                body: { status },
+            });
+
+            showNotification(`You are marked as ${status} for "${eventTitle}"`, 'success');
+        }
+
+        await loadEventsFromBackend();
+    } catch (error) {
+        console.error('RSVP failed:', error);
+        showNotification(error.message || 'Could not save RSVP.', 'error');
+    } finally {
+        button.disabled = false;
+    }
+}
+
+async function setBackendReminder(eventId) {
+    const event = window.backendEvents.find(item => String(item.id) === String(eventId));
+
+    if (!event) return;
+
+    const start = parseEventDate(event.start_date);
+    const defaultReminder = new Date(start.getTime() - 24 * 60 * 60 * 1000);
+    const entered = prompt('Reminder time (YYYY-MM-DD HH:MM:SS):', toMysqlDateTime(defaultReminder));
+
+    if (entered === null) return;
+
+    try {
+        await ETCApi.request(`/api/events/${eventId}/reminder`, {
+            method: 'POST',
+            headers: apiAuthHeaders(),
+            body: { reminder_time: entered },
+        });
+
+        showNotification(`Reminder saved for "${event.title}"`, 'success');
+    } catch (error) {
+        console.error('Reminder failed:', error);
+        showNotification(error.message || 'Could not save reminder.', 'error');
+    }
+}
+
+async function quickEditBackendEvent(eventId) {
+    const event = window.backendEvents.find(item => String(item.id) === String(eventId));
+
+    if (!event) return;
+
+    const title = prompt('Event title:', event.title);
+    if (title === null) return;
+
+    const description = prompt('Event description:', event.description || '');
+    if (description === null) return;
+
+    const startDate = prompt('Start date/time (YYYY-MM-DD HH:MM:SS):', event.start_date);
+    if (startDate === null) return;
+
+    const endDate = prompt('End date/time (YYYY-MM-DD HH:MM:SS):', event.end_date);
+    if (endDate === null) return;
+
+    try {
+        await ETCApi.request(`/api/events/${eventId}`, {
+            method: 'PUT',
+            headers: apiAuthHeaders(),
+            body: {
+                title: title.trim(),
+                description: description.trim(),
+                start_date: startDate.trim(),
+                end_date: endDate.trim(),
+            },
+        });
+
+        showNotification('Event updated successfully.', 'success');
+        await loadEventsFromBackend();
+    } catch (error) {
+        console.error('Update failed:', error);
+        showNotification(error.message || 'Could not update event.', 'error');
+    }
+}
+
+async function deleteBackendEvent(eventId) {
+    const event = window.backendEvents.find(item => String(item.id) === String(eventId));
+    const eventTitle = event?.title || 'this event';
+
+    if (!confirm(`Delete "${eventTitle}"?`)) return;
+
+    try {
+        await ETCApi.request(`/api/events/${eventId}`, {
+            method: 'DELETE',
+            headers: apiAuthHeaders(),
+        });
+
+        showNotification('Event deleted successfully.', 'success');
+        await loadEventsFromBackend();
+    } catch (error) {
+        console.error('Delete failed:', error);
+        showNotification(error.message || 'Could not delete event.', 'error');
+    }
+}
+
+function getEventsForDay(day, month, year) {
+    return (window.backendEvents || []).filter(event => {
+        const eventDate = parseEventDate(event.start_date);
+
+        return eventDate.getDate() === day &&
+            eventDate.getMonth() === month &&
+            eventDate.getFullYear() === year;
+    }).map(event => ({
+        ...event,
+        type: event.event_type,
+    }));
+}
+
+function generateWeekView() {
+    const weekGrid = document.querySelector('.week-grid');
+    const currentWeekElement = document.getElementById('current-week');
+
+    if (!weekGrid || !currentWeekElement) return;
+
+    const now = new Date();
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay() + 1);
+
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+
+    currentWeekElement.textContent = `Week of ${weekStart.toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+    weekGrid.innerHTML = '';
+
+    for (let i = 0; i < 7; i++) {
+        const currentDay = new Date(weekStart);
+        currentDay.setDate(weekStart.getDate() + i);
+
+        const events = getEventsForDay(
+            currentDay.getDate(),
+            currentDay.getMonth(),
+            currentDay.getFullYear()
+        );
+
+        const dayElement = document.createElement('div');
+        dayElement.className = 'week-day';
+
+        dayElement.innerHTML = `
+            <div class="week-day-header">
+                <div class="week-day-name">${currentDay.toLocaleDateString('en-US', { weekday: 'short' })}</div>
+                <div class="week-day-date">${currentDay.getDate()}</div>
+            </div>
+            <div class="week-day-events">
+                ${events.map(event => `
+    <span 
+        class="p5-event-dot ${p5Escape(event.event_type || 'meetup')}" 
+        title="${p5Escape(event.title)}"
+    ></span>
+`).join('')} || '<small>No events</small>'}
+            </div>
+        `;
+
+        weekGrid.appendChild(dayElement);
+    }
+}
+
+function generateListView() {
+    const eventsList = document.querySelector('.events-list');
+
+    if (!eventsList) return;
+
+    const events = window.backendEvents || [];
+
+    if (!events.length) {
+        eventsList.innerHTML = '<p>No events found.</p>';
+        return;
+    }
+
+    eventsList.innerHTML = events.map(event => `
+        <div class="list-event ${escapeHtml(event.event_type)}">
+            <div class="list-event-date">${escapeHtml(formatEventDateRange(parseEventDate(event.start_date), parseEventDate(event.end_date)))}</div>
+            <div class="list-event-content">
+                <h4>${escapeHtml(event.title)}</h4>
+                <p>${escapeHtml(event.description || '')}</p>
+                <span class="event-type ${escapeHtml(event.event_type)}">${escapeHtml(typeLabel(event.event_type))}</span>
+                <span class="event-city">${escapeHtml(event.is_virtual ? 'Online' : cityLabel(event.city))}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function loadMoreEvents() {
+    showNotification('All events are loaded from the database.', 'success');
+}
+
+function syncLocationFieldsForEventMode() {
+    const mode = document.querySelector('input[name="mode"]:checked')?.value || 'in-person';
+    const isVirtual = mode === 'virtual';
+    const locationSection = document.getElementById('location-section');
+    const city = document.getElementById('event-city');
+    const venue = document.getElementById('event-venue');
+
+    if (locationSection) {
+        locationSection.style.display = isVirtual ? 'none' : 'block';
+    }
+
+    [city, venue].forEach(field => {
+        if (!field) return;
+
+        field.required = !isVirtual;
+        field.disabled = isVirtual;
+    });
+}
+
+function parseEventDate(value) {
+    return new Date(String(value).replace(' ', 'T'));
+}
+
+function toMysqlDateTime(date) {
+    const pad = number => String(number).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
+}
+
+function toInputDateTime(date) {
+    const pad = number => String(number).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
+}
+
+function formatEventDateRange(start, end) {
+    const datePart = start.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    });
+
+    const startTime = start.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+    });
+
+    const endTime = end.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+    });
+
+    return `${datePart} | ${startTime} - ${endTime}`;
+}
+
+function cityLabel(city) {
+    const labels = {
+        addis: 'Addis Ababa',
+        bahirdar: 'Bahir Dar',
+        mekelle: 'Mekelle',
+        hawassa: 'Hawassa',
+        jimma: 'Jimma',
+        virtual: 'Online',
+        other: 'Other',
+    };
+
+    return labels[city] || city || 'Unknown';
+}
+
+function typeLabel(type) {
+    const labels = {
+        meetup: 'Meetup',
+        workshop: 'Workshop',
+        hackathon: 'Hackathon',
+        conference: 'Conference',
+        virtual: 'Virtual Event',
+    };
+
+    return labels[type] || type || 'Event';
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+
+// ===== FINAL P-5 FORM SUBMIT FIX =====
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('event-submission-form');
+
+    if (!form) {
+        console.error('P-5 ERROR: event-submission-form was not found.');
+        return;
+    }
+
+    // Stop browser HTML validation from blocking our JS request silently
+    form.setAttribute('novalidate', 'novalidate');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        console.log('P-5 submit handler started');
+
+        const date = document.getElementById('event-date')?.value || '';
+        const time = document.getElementById('event-time')?.value || '09:00';
+        const durationHours = Number(document.getElementById('event-duration')?.value || 2);
+
+        const startDate = new Date(`${date}T${time}:00`);
+        const endDate = new Date(startDate.getTime() + durationHours * 60 * 60 * 1000);
+
+        const mode = document.querySelector('input[name="mode"]:checked')?.value || 'in-person';
+        const isVirtual = mode === 'virtual';
+
+        const payload = {
+            title: document.getElementById('event-title')?.value.trim() || '',
+            description: document.getElementById('event-description')?.value.trim() || '',
+            event_type: document.getElementById('event-type')?.value || '',
+            venue_name: isVirtual ? 'Online' : (document.getElementById('event-venue')?.value.trim() || 'TBD Venue'),
+            city: isVirtual ? 'virtual' : (document.getElementById('event-city')?.value || 'addis'),
+            address: isVirtual ? '' : (document.getElementById('event-venue')?.value.trim() || ''),
+            is_virtual: isVirtual,
+            meeting_link: document.getElementById('event-registration-link')?.value.trim() || '',
+            start_date: p5ToMysqlDateTime(startDate),
+            end_date: p5ToMysqlDateTime(endDate),
+            capacity: Number(document.getElementById('event-capacity')?.value || 50),
+            registration_fee: Number(document.getElementById('event-fee')?.value || 0)
+        };
+
+        console.log('P-5 payload:', payload);
+
+        if (!payload.title || !payload.description || !payload.event_type || !date) {
+            alert('Please fill in event title, description, event type, and date.');
+            return;
+        }
+
+        try {
+            const response = await ETCApi.request('/api/events', {
+                method: 'POST',
+                headers: window.ETCAuth ? ETCAuth.authHeaders() : {},
+                body: payload
+            });
+
+            console.log('P-5 event saved:', response);
+            alert('Event saved successfully!');
+
+            document.getElementById('event-creation-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+
+            form.reset();
+
+            if (typeof loadEventsFromBackend === 'function') {
+                await loadEventsFromBackend();
+            } else {
+                window.location.reload();
+            }
+
+        } catch (error) {
+            console.error('P-5 event save failed:', error);
+            alert(error.message || 'Could not save event. Check Console and PHP server.');
+        }
+    }, true);
+});
+
+function p5ToMysqlDateTime(date) {
+    const pad = number => String(number).padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
+}
+
+// ===== P-5 CALENDAR VIEW FIX: MONTH, WEEK, LIST =====
+let p5CalendarDate = new Date();
+
+function initCalendarNavigation() {
+    const prevMonthBtn = document.querySelector('.prev-month');
+    const nextMonthBtn = document.querySelector('.next-month');
+    const prevWeekBtn = document.querySelector('.prev-week');
+    const nextWeekBtn = document.querySelector('.next-week');
+
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => {
+            p5CalendarDate.setMonth(p5CalendarDate.getMonth() - 1);
+            generateMonthCalendar();
+        });
+    }
+
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', () => {
+            p5CalendarDate.setMonth(p5CalendarDate.getMonth() + 1);
+            generateMonthCalendar();
+        });
+    }
+
+    if (prevWeekBtn) {
+        prevWeekBtn.addEventListener('click', () => {
+            p5CalendarDate.setDate(p5CalendarDate.getDate() - 7);
+            generateWeekView();
+        });
+    }
+
+    if (nextWeekBtn) {
+        nextWeekBtn.addEventListener('click', () => {
+            p5CalendarDate.setDate(p5CalendarDate.getDate() + 7);
+            generateWeekView();
+        });
+    }
+}
+
+function generateMonthCalendar() {
+    const calendarGrid = document.querySelector('.calendar-grid');
+    const currentMonthElement = document.getElementById('current-month');
+
+    if (!calendarGrid || !currentMonthElement) return;
+
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const year = p5CalendarDate.getFullYear();
+    const month = p5CalendarDate.getMonth();
+
+    currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+
+    calendarGrid.querySelectorAll('.calendar-day, .calendar-placeholder').forEach(item => item.remove());
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+
+    const startingDay = firstDay.getDay();
+    const startOffset = startingDay === 0 ? 6 : startingDay - 1;
+
+    for (let i = 0; i < startOffset; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty';
+        calendarGrid.appendChild(emptyDay);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDay = new Date(year, month, day);
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+
+        const today = new Date();
+        if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+            dayElement.classList.add('today');
+        }
+
+        const events = p5GetEventsForSpecificDate(currentDay);
+
+        dayElement.innerHTML = `
+            <div class="day-number">${day}</div>
+            <div class="day-events">
+                ${events.map(event => `
+                    <span 
+                        class="p5-event-dot ${p5Escape(event.event_type || 'meetup')}" 
+                        title="${p5Escape(event.title)}"
+                    ></span>
+                `).join('')}
+            </div>
+        `;
+
+        calendarGrid.appendChild(dayElement);
+    }
+}
+
+function generateWeekView() {
+    const weekGrid = document.querySelector('.week-grid');
+    const currentWeekElement = document.getElementById('current-week');
+
+    if (!weekGrid || !currentWeekElement) return;
+
+    const weekStart = new Date(p5CalendarDate);
+    const day = weekStart.getDay();
+    const diffToMonday = day === 0 ? -6 : 1 - day;
+    weekStart.setDate(weekStart.getDate() + diffToMonday);
+
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+
+    currentWeekElement.textContent = `Week of ${weekStart.toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+
+    weekGrid.innerHTML = '';
+
+    for (let i = 0; i < 7; i++) {
+        const currentDay = new Date(weekStart);
+        currentDay.setDate(weekStart.getDate() + i);
+
+        const events = p5GetEventsForSpecificDate(currentDay);
+
+        const dayElement = document.createElement('div');
+        dayElement.className = 'week-day';
+
+        dayElement.innerHTML = `
+            <div class="week-day-header">
+                <div class="week-day-name">${currentDay.toLocaleDateString('en-US', { weekday: 'short' })}</div>
+                <div class="week-day-date">${currentDay.getDate()}</div>
+            </div>
+            <div class="week-day-events">
+                ${
+                    events.length
+                        ? events.map(event => `
+                            <div class="week-event ${p5Escape(event.event_type || 'meetup')}">
+                                <strong>${p5Escape(event.title)}</strong><br>
+                                <small>${p5FormatTime(event.start_date)} - ${p5FormatTime(event.end_date)}</small><br>
+                                <small>${p5Escape(event.is_virtual ? 'Online' : event.venue_name || event.city || '')}</small>
+                            </div>
+                        `).join('')
+                        : '<small>No events</small>'
+                }
+            </div>
+        `;
+
+        weekGrid.appendChild(dayElement);
+    }
+}
+
+function generateListView() {
+    const eventsList = document.querySelector('.events-list');
+
+    if (!eventsList) return;
+
+    const events = p5GetBackendEvents();
+
+    if (!events.length) {
+        eventsList.innerHTML = '<p>No events found.</p>';
+        return;
+    }
+
+    eventsList.innerHTML = events.map(event => `
+        <div class="list-event-item">
+            <div class="list-event-date">
+                <span class="list-event-month">${p5ParseDate(event.start_date).toLocaleDateString('en-US', { month: 'short' })}</span>
+                <span class="list-event-day">${p5ParseDate(event.start_date).getDate()}</span>
+            </div>
+            <div class="list-event-info">
+                <h4>${p5Escape(event.title)}</h4>
+                <div class="list-event-details">
+                    <span class="event-type-badge ${p5Escape(event.event_type || 'meetup')}">${p5Escape(event.event_type || 'meetup')}</span>
+                    <span><i class="fas fa-map-marker-alt"></i> ${p5Escape(event.is_virtual ? 'Online' : event.venue_name || event.city || '')}</span>
+                    <span><i class="far fa-clock"></i> ${p5FormatTime(event.start_date)}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function p5GetBackendEvents() {
+    return Array.isArray(window.backendEvents) ? window.backendEvents : [];
+}
+
+function p5GetEventsForSpecificDate(date) {
+    return p5GetBackendEvents().filter(event => {
+        const eventDate = p5ParseDate(event.start_date);
+
+        return (
+            eventDate.getFullYear() === date.getFullYear() &&
+            eventDate.getMonth() === date.getMonth() &&
+            eventDate.getDate() === date.getDate()
+        );
+    });
+}
+
+function p5ParseDate(value) {
+    return new Date(String(value || '').replace(' ', 'T'));
+}
+
+function p5FormatTime(value) {
+    const date = p5ParseDate(value);
+
+    if (isNaN(date.getTime())) return '';
+
+    return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+}
+
+function p5Escape(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
