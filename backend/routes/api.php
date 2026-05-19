@@ -58,10 +58,10 @@ return [
     'POST /api/forum/topics/{id}/replies' => [CommunityController::class, 'storeForumReply'],
     'PUT /api/forum/replies/{id}' => [CommunityController::class, 'updateForumReply'],
 
-    // Person 5: Events
+     // Person 5: Events
     'GET /api/events' => [EventController::class, 'index'],
-    'GET /api/events/{id}' => [EventController::class, 'show'],
     'GET /api/events/calendar' => [EventController::class, 'calendar'],
+    'GET /api/events/{id}' => [EventController::class, 'show'],
     'POST /api/events' => [EventController::class, 'store'],
     'PUT /api/events/{id}' => [EventController::class, 'update'],
     'DELETE /api/events/{id}' => [EventController::class, 'destroy'],
@@ -69,7 +69,6 @@ return [
     'DELETE /api/events/{id}/rsvp' => [EventController::class, 'cancelRsvp'],
     'GET /api/events/{id}/attendees' => [EventController::class, 'attendees'],
     'POST /api/events/{id}/reminder' => [EventController::class, 'setReminder'],
-
     // Person 6: Resources and contact
     'GET /api/resources' => [ResourceController::class, 'index'],
     'GET /api/resources/{id}/download' => [ResourceController::class, 'download'],
