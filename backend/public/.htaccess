@@ -1,0 +1,10 @@
+Options -MultiViews -Indexes
+
+RewriteEngine On
+
+# Allow direct access to real static files (images, css, js)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Route everything else through index.php
+RewriteRule ^ index.php [L]

@@ -6,8 +6,8 @@
         "php": "^8.1"
     },
     "scripts": {
-        "setup": "php scripts/setup.php",
-        "serve": "php -S localhost:8000 router.php",
+        "setup": "php -c php.ini scripts/setup.php",
+        "serve": "php -c php.ini -S localhost:8000 router.php",
         "test": "php tests/Test.php"
     }
 }

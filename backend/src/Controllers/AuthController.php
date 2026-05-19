@@ -194,6 +194,55 @@ class AuthController
         ], 'Profile updated successfully.');
     }
 
+    public function uploadAvatar(array $params = [], array $query = []): array
+    {
+        try {
+            $user = $this->authenticatedUser();
+        } catch (RuntimeException $exception) {
+            return Response::error($exception->getMessage(), 401);
+        }
+
+        if (empty($_FILES['avatar'])) {
+            return Response::error('No avatar file uploaded.', 422);
+        }
+
+        $file = $_FILES['avatar'];
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $mimeType = mime_content_type($file['tmp_name']);
+
+        if (!in_array($mimeType, $allowedMimes, true)) {
+            return Response::error('Avatar must be a JPEG, PNG, GIF, or WEBP image.', 422);
+        }
+
+        if ($file['size'] > 5 * 1024 * 1024) {
+            return Response::error('Avatar must be 5 MB or smaller.', 422);
+        }
+
+        $ext = match ($mimeType) {
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            'image/webp' => 'webp',
+            default => 'jpg',
+        };
+
+        $uploadDir = realpath(__DIR__ . '/../../storage/uploads') . DIRECTORY_SEPARATOR;
+        $filename = 'avatar_' . (int) $user['id'] . '_' . time() . '.' . $ext;
+        $destination = $uploadDir . $filename;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            return Response::error('Failed to save avatar.', 500);
+        }
+
+        $avatarPath = 'storage/uploads/' . $filename;
+        $updated = $this->users()->updateProfile((int) $user['id'], ['avatar' => $avatarPath]);
+
+        return Response::success([
+            'user' => $this->publicUser($updated ?? $user),
+            'avatar' => $avatarPath,
+        ], 'Avatar uploaded successfully.');
+    }
+
     public function settings(array $params = [], array $query = []): array
     {
         try {
