@@ -312,6 +312,15 @@ CREATE TABLE user_learning_progress (
     FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE
 );
 
+-- Static site pages (about, etc.)
+CREATE TABLE site_pages (
+    slug VARCHAR(50) PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    meta_description TEXT,
+    content JSON NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Contact messages table
 CREATE TABLE contact_messages (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -346,6 +355,108 @@ INSERT INTO tags (name, slug) VALUES
 ('python', 'python'),
 ('react', 'react'),
 ('flutter', 'flutter');
+
+-- Downloadable resources and learning-path trackers (uploaded_by = admin user id 1)
+INSERT INTO resources (title, description, type, file_path, download_url, file_size, category, uploaded_by, is_featured) VALUES
+('Ethiopian Tech Templates', 'Contract templates and project proposals for Ethiopian developers.', 'template', 'storage/downloads/ethiopian-tech-templates.html', NULL, 24576, 'downloads', 1, TRUE),
+('Localized Cheatsheets', 'React/Chapa setup and deployment quick-reference guides.', 'cheatsheet', 'storage/downloads/localized-cheatsheets.html', NULL, 18432, 'downloads', 1, TRUE),
+('Offline Tutorials', 'PDF-style guides optimized for slow internet access.', 'ebook', 'storage/downloads/offline-tutorials.html', NULL, 51200, 'downloads', 1, TRUE),
+('Ethiopian Web Developer Path', 'Interactive learning path for web development in Ethiopia.', 'tutorial', NULL, NULL, NULL, 'learning-path-web', 1, FALSE),
+('Mobile App Developer Path', 'Flutter and Android-focused path for the Ethiopian market.', 'tutorial', NULL, NULL, NULL, 'learning-path-mobile', 1, FALSE),
+('AI & Data Science Track', 'Python, ML, and local AI projects learning path.', 'tutorial', NULL, NULL, NULL, 'learning-path-ai', 1, FALSE),
+('Developer Resources Hub', 'Meta resource for rating the resources page.', 'tool', NULL, NULL, NULL, 'hub', 1, TRUE);
+
+-- About page static content
+INSERT INTO site_pages (slug, title, meta_description, content) VALUES
+('about', 'About Ethiopian Tech Community', 'About ETC — mission, values, and team behind this mini project.', JSON_OBJECT(
+    'hero', JSON_OBJECT(
+        'title', 'About Ethiopian Tech Community',
+        'subtitle', 'ETC is a vibrant, volunteer-driven platform dedicated to empowering Ethiopian developers through knowledge sharing, collaboration, and community building in Ethiopia''s fast-growing tech ecosystem.'
+    ),
+    'story', JSON_ARRAY(
+        'Powered by TechBlog Ethiopia, ETC serves as the go-to hub for high-quality tutorials, articles, resources, events, and discussions tailored to Ethiopian developers.',
+        'We bridge local talent with global opportunities, highlight Ethiopian innovations, and support the nation''s Digital Ethiopia 2025 vision by fostering digital skills and inclusive growth.',
+        'Whether you''re a beginner or seasoned pro, ETC welcomes all to learn, share, and connect.'
+    ),
+    'mission', JSON_ARRAY(
+        'Deliver accessible, high-quality content in web dev, mobile, AI, cybersecurity, and emerging tech.',
+        'Connect Ethiopian developers with mentorship, jobs, and global networks.',
+        'Showcase local startups, success stories, and innovations.',
+        'Contribute to building a thriving digital economy in Ethiopia.'
+    ),
+    'values', JSON_ARRAY(
+        JSON_OBJECT('name', 'Inclusivity', 'description', 'Open to all backgrounds, levels, and locations.'),
+        JSON_OBJECT('name', 'Collaboration', 'description', 'Embracing open-source and community-driven progress.'),
+        JSON_OBJECT('name', 'Innovation', 'description', 'Encouraging creative solutions to real-world challenges.'),
+        JSON_OBJECT('name', 'Empowerment', 'description', 'Equipping Ethiopians to excel in tech globally.')
+    ),
+    'team', JSON_ARRAY('Lelisa', 'Ruth', 'Sami', 'Hanif', 'Sefefe', 'Sahleselase'),
+    'image', '/assets/images/Addis Ababa Ethiopia.jpg',
+    'contact', JSON_OBJECT(
+        'email', 'hello@techblogethiopia.com',
+        'telegram', '@ETC_Ethiopia',
+        'discord', 'discord.gg/etc-ethiopia',
+        'location', 'Addis Ababa, Ethiopia'
+    )
+));
+
+-- Sample community members
+INSERT INTO users (username, email, password_hash, full_name, bio, location, skill_level, is_active) VALUES
+('lelisa', 'lelisa@etc.com', '$2y$10$YourHashHere', 'Lelisa Bekele', 'Full-stack developer passionate about Ethiopian startups.', 'Addis Ababa', 'advanced', TRUE),
+('ruth', 'ruth@etc.com', '$2y$10$YourHashHere', 'Ruth Tadesse', 'Mobile engineer building Flutter apps for local businesses.', 'Hawassa', 'intermediate', TRUE),
+('sami', 'sami@etc.com', '$2y$10$YourHashHere', 'Sami Nurhussein', 'Backend developer and open-source contributor.', 'Addis Ababa', 'advanced', TRUE);
+
+INSERT INTO user_skills (user_id, skill_name, proficiency_level) VALUES
+(2, 'PHP', 'expert'),
+(2, 'JavaScript', 'expert'),
+(3, 'Flutter', 'expert'),
+(3, 'Dart', 'intermediate'),
+(4, 'MySQL', 'expert'),
+(4, 'API Design', 'expert');
+
+-- Sample published articles
+INSERT INTO articles (title, slug, excerpt, content, author_id, category_id, reading_time, status, published_at) VALUES
+('Building REST APIs with PHP for Ethiopian Startups', 'building-rest-apis-php-ethiopia',
+ 'Learn how to structure a clean PHP API that works well on modest hosting and slow connections.',
+ '<p>Ethiopian startups need backends that are simple to deploy and maintain. This guide walks through routing, JWT auth, and MySQL patterns used in the TechBlog project.</p>',
+ 1, 1, 6, 'published', NOW()),
+('Flutter Payment Integration with Chapa', 'flutter-chapa-payment-integration',
+ 'Step-by-step guide to accepting payments in Ethiopian Birr using Chapa.',
+ '<p>Mobile apps in Ethiopia increasingly need local payment gateways. We cover sandbox setup, webhook verification, and UX patterns for unreliable networks.</p>',
+ 3, 2, 8, 'published', DATE_SUB(NOW(), INTERVAL 3 DAY)),
+('Intro to Machine Learning with Python', 'intro-machine-learning-python-ethiopia',
+ 'A beginner-friendly path to ML using datasets relevant to East Africa.',
+ '<p>From NumPy basics to a simple crop-yield predictor — practical ML for developers in Addis and beyond.</p>',
+ 4, 3, 10, 'published', DATE_SUB(NOW(), INTERVAL 7 DAY));
+
+INSERT INTO article_tags (article_id, tag_id) VALUES
+(1, 1), (1, 2),
+(2, 2), (2, 5),
+(3, 3);
+
+-- Sample events
+INSERT INTO events (title, slug, description, event_type, venue_name, city, is_virtual, start_date, end_date, capacity, organizer_id, status) VALUES
+('Addis Developer Meetup', 'addis-developer-meetup',
+ 'Monthly in-person meetup for web and mobile developers in Addis Ababa.',
+ 'meetup', 'Iceaddis', 'Addis Ababa', FALSE,
+ DATE_ADD(NOW(), INTERVAL 14 DAY), DATE_ADD(NOW(), INTERVAL 14 DAY) + INTERVAL 3 HOUR, 80, 1, 'upcoming'),
+('ETC Virtual Hackathon 2026', 'etc-virtual-hackathon-2026',
+ '48-hour online hackathon focused on fintech and education tools for Ethiopia.',
+ 'hackathon', NULL, NULL, TRUE,
+ DATE_ADD(NOW(), INTERVAL 30 DAY), DATE_ADD(NOW(), INTERVAL 32 DAY), 200, 2, 'upcoming');
+
+-- Sample forum topics
+INSERT INTO forum_topics (title, slug, content, author_id, category, is_pinned) VALUES
+('Best hosting options for PHP apps in Ethiopia?', 'best-hosting-php-ethiopia',
+ 'Looking for affordable hosting with MySQL support. What are you using for side projects?',
+ 3, 'help', TRUE),
+('Hiring: Junior React developer in Addis', 'hiring-junior-react-addis',
+ 'Our startup is hiring a junior frontend dev. Remote-friendly twice per week.',
+ 2, 'jobs', FALSE);
+
+INSERT INTO forum_replies (topic_id, user_id, content, is_solution) VALUES
+(1, 4, 'I use a VPS with Nginx + PHP-FPM. Works well if you configure OPcache.', TRUE),
+(1, 1, 'Shared hosting is fine for prototypes — migrate when traffic grows.', FALSE);
 
 
 -- Show all tables

@@ -818,7 +818,7 @@
       });
       
       // Load saved theme
-      const savedTheme = utils.loadFromStorage('theme') || 'light';
+      const savedTheme = localStorage.getItem('theme') || 'light';
       document.body.setAttribute('data-theme', savedTheme);
     }
     

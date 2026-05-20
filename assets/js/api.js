@@ -5,21 +5,25 @@
   const AUTH_STORAGE_KEY = "etc_auth_session";
 
   const ETCApi = {
-    getBaseUrl() {
+       getBaseUrl() {
       if (window.APP_CONFIG?.apiBaseUrl) {
         return String(window.APP_CONFIG.apiBaseUrl).replace(/\/$/, "");
+      }
+      if (
+        window.location.hostname === "localhost" || 
+        window.location.hostname === "127.0.0.1" || 
+        window.location.port === "8000"
+      ) {
+        return "http://localhost:8000";
       }
 
       if (window.location.protocol === "file:") {
         return "http://localhost:8000";
       }
 
-      if (window.location.port === "8000") {
-        return window.location.origin;
-      }
-
       return `${window.location.protocol}//${window.location.hostname}:8000`;
     },
+
 
     async request(path, options = {}) {
       const url = `${this.getBaseUrl()}${path}`;

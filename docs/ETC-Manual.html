@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ETC Backend and Frontend Manual</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ETC Backend and Frontend Manual</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#ethiopian-tech-community-etc-backend-frontend-integration-manual"
+id="toc-ethiopian-tech-community-etc-backend-frontend-integration-manual">Ethiopian
+Tech Community (ETC) — Backend &amp; Frontend Integration Manual</a>
+<ul>
+<li><a href="#document-information"
+id="toc-document-information">Document information</a></li>
+<li><a href="#table-of-contents" id="toc-table-of-contents">Table of
+contents</a></li>
+<li><a href="#introduction" id="toc-introduction">1. Introduction</a>
+<ul>
+<li><a href="#purpose-of-the-system" id="toc-purpose-of-the-system">1.1
+Purpose of the system</a></li>
+<li><a href="#design-philosophy" id="toc-design-philosophy">1.2 Design
+philosophy</a></li>
+<li><a href="#team-module-ownership-historical"
+id="toc-team-module-ownership-historical">1.3 Team module ownership
+(historical)</a></li>
+</ul></li>
+<li><a href="#high-level-architecture"
+id="toc-high-level-architecture">2. High-level architecture</a>
+<ul>
+<li><a href="#system-diagram" id="toc-system-diagram">2.1 System
+diagram</a></li>
+<li><a href="#deployment-topology-local-development"
+id="toc-deployment-topology-local-development">2.2 Deployment topology
+(local development)</a></li>
+<li><a href="#cors" id="toc-cors">2.3 CORS</a></li>
+</ul></li>
+<li><a href="#backend-project-structure"
+id="toc-backend-project-structure">3. Backend project structure</a>
+<ul>
+<li><a href="#layer-responsibilities"
+id="toc-layer-responsibilities">3.1 Layer responsibilities</a></li>
+</ul></li>
+<li><a href="#request-lifecycle" id="toc-request-lifecycle">4. Request
+lifecycle</a>
+<ul>
+<li><a href="#step-by-step-flow" id="toc-step-by-step-flow">4.1
+Step-by-step flow</a></li>
+<li><a href="#route-matching-rules" id="toc-route-matching-rules">4.2
+Route matching rules</a></li>
+<li><a href="#autoloading" id="toc-autoloading">4.3 Autoloading</a></li>
+</ul></li>
+<li><a href="#configuration-and-environment"
+id="toc-configuration-and-environment">5. Configuration and
+environment</a>
+<ul>
+<li><a href="#env-file" id="toc-env-file">5.1 <code>.env</code>
+file</a></li>
+<li><a href="#configdatabase.php" id="toc-configdatabase.php">5.2
+<code>config/database.php</code></a></li>
+<li><a href="#php.ini-project-local" id="toc-php.ini-project-local">5.3
+<code>php.ini</code> (project-local)</a></li>
+<li><a href="#setup-script-behavior" id="toc-setup-script-behavior">5.4
+Setup script behavior</a></li>
+</ul></li>
+<li><a href="#database-design" id="toc-database-design">6. Database
+design</a>
+<ul>
+<li><a href="#entity-relationship-overview"
+id="toc-entity-relationship-overview">6.1 Entity relationship
+overview</a></li>
+<li><a href="#core-tables-23" id="toc-core-tables-23">6.2 Core tables
+(23)</a></li>
+<li><a href="#seed-data" id="toc-seed-data">6.3 Seed data</a></li>
+</ul></li>
+<li><a href="#authentication-and-authorization"
+id="toc-authentication-and-authorization">7. Authentication and
+authorization</a>
+<ul>
+<li><a href="#dual-token-model" id="toc-dual-token-model">7.1 Dual-token
+model</a></li>
+<li><a href="#jwt-structure-tokenservice"
+id="toc-jwt-structure-tokenservice">7.2 JWT structure
+(<code>TokenService</code>)</a></li>
+<li><a href="#session-storage" id="toc-session-storage">7.3 Session
+storage</a></li>
+<li><a href="#protected-endpoints" id="toc-protected-endpoints">7.4
+Protected endpoints</a></li>
+<li><a href="#authorization-rules-summary"
+id="toc-authorization-rules-summary">7.5 Authorization rules
+(summary)</a></li>
+</ul></li>
+<li><a href="#api-modules-business-logic"
+id="toc-api-modules-business-logic">8. API modules (business logic)</a>
+<ul>
+<li><a href="#auth-module-authcontroller-user-model"
+id="toc-auth-module-authcontroller-user-model">8.1 Auth module
+(<code>AuthController</code> + <code>User</code> model)</a></li>
+<li><a href="#articles-module-articlecontroller-article-model"
+id="toc-articles-module-articlecontroller-article-model">8.2 Articles
+module (<code>ArticleController</code> + <code>Article</code>
+model)</a></li>
+<li><a href="#comments-module-commentcontroller-comment-model"
+id="toc-comments-module-commentcontroller-comment-model">8.3 Comments
+module (<code>CommentController</code> + <code>Comment</code>
+model)</a></li>
+<li><a href="#community-module-communitycontroller-user-forum"
+id="toc-community-module-communitycontroller-user-forum">8.4 Community
+module (<code>CommunityController</code> + <code>User</code> +
+<code>Forum</code>)</a></li>
+<li><a href="#events-module-eventcontroller-event-model"
+id="toc-events-module-eventcontroller-event-model">8.5 Events module
+(<code>EventController</code> + <code>Event</code> model)</a></li>
+<li><a href="#resources-module-resourcecontroller-resource-model"
+id="toc-resources-module-resourcecontroller-resource-model">8.6
+Resources module (<code>ResourceController</code> +
+<code>Resource</code> model)</a></li>
+</ul></li>
+<li><a href="#complete-api-reference" id="toc-complete-api-reference">9.
+Complete API reference</a>
+<ul>
+<li><a href="#auth-general" id="toc-auth-general">9.1 Auth &amp;
+general</a></li>
+<li><a href="#articles" id="toc-articles">9.2 Articles</a></li>
+<li><a href="#comments-interactions" id="toc-comments-interactions">9.3
+Comments &amp; interactions</a></li>
+<li><a href="#community" id="toc-community">9.4 Community</a></li>
+<li><a href="#events" id="toc-events">9.5 Events</a></li>
+<li><a href="#resources-contact" id="toc-resources-contact">9.6
+Resources &amp; contact</a></li>
+</ul></li>
+<li><a href="#response-format-and-errors"
+id="toc-response-format-and-errors">10. Response format and errors</a>
+<ul>
+<li><a href="#success-envelope" id="toc-success-envelope">10.1 Success
+envelope</a></li>
+<li><a href="#error-envelope" id="toc-error-envelope">10.2 Error
+envelope</a></li>
+<li><a href="#example-login-from-curl"
+id="toc-example-login-from-curl">10.3 Example: login from curl</a></li>
+</ul></li>
+<li><a href="#frontend-architecture" id="toc-frontend-architecture">11.
+Frontend architecture</a>
+<ul>
+<li><a href="#structure" id="toc-structure">11.1 Structure</a></li>
+<li><a href="#page-load-pattern" id="toc-page-load-pattern">11.2 Page
+load pattern</a></li>
+</ul></li>
+<li><a href="#frontendbackend-integration"
+id="toc-frontendbackend-integration">12. Frontend–backend
+integration</a>
+<ul>
+<li><a href="#etcapi-http-client-assetsjsapi.js"
+id="toc-etcapi-http-client-assetsjsapi.js">12.1 <code>ETCApi</code> —
+HTTP client (<code>assets/js/api.js</code>)</a></li>
+<li><a href="#etcauth-session-management"
+id="toc-etcauth-session-management">12.2 <code>ETCAuth</code> — session
+management</a></li>
+<li><a href="#auth-ui-assetsjsmain.js"
+id="toc-auth-ui-assetsjsmain.js">12.3 Auth UI
+(<code>assets/js/main.js</code>)</a></li>
+<li><a href="#integration-sequence-diagram"
+id="toc-integration-sequence-diagram">12.4 Integration sequence
+diagram</a></li>
+</ul></li>
+<li><a href="#page-by-page-integration-map"
+id="toc-page-by-page-integration-map">13. Page-by-page integration
+map</a>
+<ul>
+<li><a href="#recommended-next-integration-steps"
+id="toc-recommended-next-integration-steps">13.1 Recommended next
+integration steps</a></li>
+<li><a href="#optional-global-api-base-url"
+id="toc-optional-global-api-base-url">13.2 Optional global API base
+URL</a></li>
+</ul></li>
+<li><a href="#installation-and-operations"
+id="toc-installation-and-operations">14. Installation and operations</a>
+<ul>
+<li><a href="#requirements" id="toc-requirements">14.1
+Requirements</a></li>
+<li><a href="#first-time-setup" id="toc-first-time-setup">14.2
+First-time setup</a></li>
+<li><a href="#run-api-server" id="toc-run-api-server">14.3 Run API
+server</a></li>
+<li><a href="#run-frontend" id="toc-run-frontend">14.4 Run
+frontend</a></li>
+<li><a href="#default-credentials" id="toc-default-credentials">14.5
+Default credentials</a></li>
+</ul></li>
+<li><a href="#development-testing-and-troubleshooting"
+id="toc-development-testing-and-troubleshooting">15. Development,
+testing, and troubleshooting</a>
+<ul>
+<li><a href="#composer-scripts" id="toc-composer-scripts">15.1 Composer
+scripts</a></li>
+<li><a href="#smoke-tests-teststest.php"
+id="toc-smoke-tests-teststest.php">15.2 Smoke tests
+(<code>tests/Test.php</code>)</a></li>
+<li><a href="#common-issues" id="toc-common-issues">15.3 Common
+issues</a></li>
+<li><a href="#security-notes-for-production"
+id="toc-security-notes-for-production">15.4 Security notes for
+production</a></li>
+<li><a href="#logging" id="toc-logging">15.5 Logging</a></li>
+</ul></li>
+<li><a href="#appendix" id="toc-appendix">16. Appendix</a>
+<ul>
+<li><a href="#file-reference-controllers"
+id="toc-file-reference-controllers">16.1 File reference —
+controllers</a></li>
+<li><a href="#learning-path-configuration"
+id="toc-learning-path-configuration">16.2 Learning path
+configuration</a></li>
+<li><a href="#downloadable-files" id="toc-downloadable-files">16.3
+Downloadable files</a></li>
+<li><a href="#glossary" id="toc-glossary">16.4 Glossary</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="ethiopian-tech-community-etc-backend-frontend-integration-manual">Ethiopian
+Tech Community (ETC) — Backend &amp; Frontend Integration Manual</h1>
+<p><strong>Project:</strong> TechBlog / Blog-App<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Stack:</strong> PHP 8.1+ · MySQL · Vanilla
+HTML/CSS/JavaScript<br />
+<strong>API base URL (development):</strong>
+<code>http://localhost:8000</code></p>
+<hr />
+<h2 id="document-information">Document information</h2>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audience</td>
+<td>Developers, reviewers, and maintainers of the ETC platform</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Backend architecture, REST API, database, and how the static
+frontend connects</td>
+</tr>
+<tr>
+<td>Estimated length</td>
+<td>~15 pages (printed)</td>
+</tr>
+<tr>
+<td>Repository layout</td>
+<td><code>Blog-App/</code> (frontend) + <code>Blog-App/backend/</code>
+(API)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="table-of-contents">Table of contents</h2>
+<ol type="1">
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-high-level-architecture">High-level
+architecture</a></li>
+<li><a href="#3-backend-project-structure">Backend project
+structure</a></li>
+<li><a href="#4-request-lifecycle">Request lifecycle</a></li>
+<li><a href="#5-configuration-and-environment">Configuration and
+environment</a></li>
+<li><a href="#6-database-design">Database design</a></li>
+<li><a href="#7-authentication-and-authorization">Authentication and
+authorization</a></li>
+<li><a href="#8-api-modules-business-logic">API modules (business
+logic)</a></li>
+<li><a href="#9-complete-api-reference">Complete API reference</a></li>
+<li><a href="#10-response-format-and-errors">Response format and
+errors</a></li>
+<li><a href="#11-frontend-architecture">Frontend architecture</a></li>
+<li><a href="#12-frontendbackend-integration">Frontend–backend
+integration</a></li>
+<li><a href="#13-page-by-page-integration-map">Page-by-page integration
+map</a></li>
+<li><a href="#14-installation-and-operations">Installation and
+operations</a></li>
+<li><a href="#15-development-testing-and-troubleshooting">Development,
+testing, and troubleshooting</a></li>
+<li><a href="#16-appendix">Appendix</a></li>
+</ol>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<h3 id="purpose-of-the-system">1.1 Purpose of the system</h3>
+<p>The <strong>Ethiopian Tech Community (ETC)</strong> application is a
+community platform for Ethiopian developers. It provides:</p>
+<ul>
+<li>Blog-style <strong>articles</strong> and categories</li>
+<li><strong>Community</strong> features (member directory, forum,
+mentorship)</li>
+<li><strong>Events</strong> (meetups, hackathons, RSVP)</li>
+<li><strong>Resources</strong> (downloads, learning paths, ratings)</li>
+<li><strong>User accounts</strong> with profiles and settings</li>
+<li>Static pages: <strong>About</strong>, <strong>Contact</strong>, home
+<strong>stats</strong></li>
+</ul>
+<p>The <strong>backend</strong> is a custom PHP REST API backed by
+<strong>MySQL</strong>. The <strong>frontend</strong> is a multi-page
+static site (HTML + JavaScript) that talks to the API over HTTP using
+<code>fetch()</code>.</p>
+<h3 id="design-philosophy">1.2 Design philosophy</h3>
+<p>The backend intentionally avoids heavy frameworks (no
+Laravel/Symfony). Instead it uses:</p>
+<ul>
+<li>A <strong>single front controller</strong>
+(<code>public/index.php</code>)</li>
+<li>A <strong>route table</strong> (<code>routes/api.php</code>)</li>
+<li><strong>Thin controllers</strong> that validate input and call
+<strong>models</strong></li>
+<li><strong>PDO</strong> for database access</li>
+<li><strong>JWT</strong> for stateless API auth plus <strong>server-side
+sessions</strong> for refresh/logout</li>
+</ul>
+<p>This keeps the project easy to deploy on shared hosting or
+XAMPP-style environments common in student and local projects.</p>
+<h3 id="team-module-ownership-historical">1.3 Team module ownership
+(historical)</h3>
+<p>Routes were originally split across team members (“Person 1–6”). The
+codebase now implements all modules:</p>
+<table>
+<thead>
+<tr>
+<th>Person</th>
+<th>Module</th>
+<th>Controller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Auth, newsletter, stats</td>
+<td><code>AuthController</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Articles, categories, tags</td>
+<td><code>ArticleController</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Comments, likes, bookmarks</td>
+<td><code>CommentController</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Community, forum, mentorship</td>
+<td><code>CommunityController</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Events, RSVP, reminders</td>
+<td><code>EventController</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Resources, contact, about</td>
+<td><code>ResourceController</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="high-level-architecture">2. High-level architecture</h2>
+<h3 id="system-diagram">2.1 System diagram</h3>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Browser[&quot;User browser&quot;]
+        HTML[&quot;HTML pages\nindex, articles, community...&quot;]
+        JS[&quot;JavaScript\napi.js, main.js, index.js...&quot;]
+        LS[&quot;localStorage\netc_auth_session&quot;]
+    end
+
+    subgraph Backend[&quot;PHP backend :8000&quot;]
+        Router[&quot;router.php&quot;]
+        Index[&quot;public/index.php&quot;]
+        Routes[&quot;routes/api.php&quot;]
+        Ctrl[&quot;Controllers&quot;]
+        Models[&quot;Models&quot;]
+        DB[(MySQL techblog)]
+    end
+
+    HTML --&gt; JS
+    JS --&gt;|HTTP JSON| Router
+    Router --&gt; Index
+    Index --&gt; Routes
+    Routes --&gt; Ctrl
+    Ctrl --&gt; Models
+    Models --&gt; DB
+    JS &lt;--&gt; LS</code></pre>
+<h3 id="deployment-topology-local-development">2.2 Deployment topology
+(local development)</h3>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 41%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Component</th>
+<th>URL / path</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PHP built-in server</td>
+<td><code>http://localhost:8000</code></td>
+<td>Serves API <strong>and</strong> can serve static files via
+router</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>127.0.0.1:3306</code></td>
+<td>Database <code>techblog</code></td>
+</tr>
+<tr>
+<td>Frontend HTML</td>
+<td><code>Blog-App/*.html</code></td>
+<td>Opened via Live Server, file://, or same host</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important:</strong> <code>assets/js/api.js</code> assumes the
+API is on <strong>port 8000</strong>. If the frontend is opened from
+another port (e.g. Live Server on 5500), requests still go to
+<code>http://localhost:8000</code> unless you set
+<code>window.APP_CONFIG.apiBaseUrl</code>.</p>
+<h3 id="cors">2.3 CORS</h3>
+<p><code>public/index.php</code> sends:</p>
+<pre><code>Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Content-Type, Authorization
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS</code></pre>
+<p><code>OPTIONS</code> requests return <code>204</code> with no body.
+This allows the static frontend on a different origin/port to call the
+API during development.</p>
+<hr />
+<h2 id="backend-project-structure">3. Backend project structure</h2>
+<pre><code>Blog-App/backend/
+├── .env                    # Environment variables (not committed with secrets in production)
+├── composer.json           # PHP scripts: setup, serve, test
+├── php.ini                 # Local PHP config (extension_dir, timezone)
+├── router.php              # Dev server entry: static files + API
+├── setup.cmd / serve.cmd   # Windows helpers
+├── config/
+│   ├── database.php        # PDO settings from env
+│   ├── jwt.php             # JWT secret, issuer, TTL
+│   ├── mail.php            # Mail from address
+│   └── learning_paths.php  # Learning path definitions (slug, steps, category)
+├── migrations/
+│   └── database.sql        # Full schema + seed data
+├── public/
+│   └── index.php           # Front controller
+├── routes/
+│   └── api.php             # Route map (method + path → controller action)
+├── scripts/
+│   └── setup.php           # Creates DB, runs migration safely
+├── src/
+│   ├── Controllers/        # HTTP handlers
+│   │   └── Concerns/
+│   │       └── AuthenticatesRequests.php
+│   ├── Models/             # Database queries
+│   ├── Services/           # Mail, JWT, validation, cache
+│   ├── Helpers/            # Response, Security, Str
+│   └── Support/            # Database singleton, Request
+├── storage/downloads/      # HTML files served as downloadable resources
+└── tests/
+    └── Test.php            # Smoke tests (no DB required)</code></pre>
+<h3 id="layer-responsibilities">3.1 Layer responsibilities</h3>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 50%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Responsibility</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Router</strong> (<code>router.php</code>)</td>
+<td>Serve real files under <code>/public</code> or
+<code>/storage</code>; else delegate to API</td>
+<td><code>GET /storage/downloads/foo.html</code></td>
+</tr>
+<tr>
+<td><strong>Front controller</strong></td>
+<td>Autoload, match route, invoke controller, JSON output</td>
+<td><code>findRoute()</code> in <code>index.php</code></td>
+</tr>
+<tr>
+<td><strong>Controller</strong></td>
+<td>HTTP semantics, auth checks, validation</td>
+<td><code>ArticleController::store()</code></td>
+</tr>
+<tr>
+<td><strong>Model</strong></td>
+<td>SQL, formatting records</td>
+<td><code>Article::paginate()</code></td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td>Cross-cutting utilities</td>
+<td><code>TokenService::decode()</code></td>
+</tr>
+<tr>
+<td><strong>Helper</strong></td>
+<td>Pure functions / response builders</td>
+<td><code>Response::success()</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="request-lifecycle">4. Request lifecycle</h2>
+<h3 id="step-by-step-flow">4.1 Step-by-step flow</h3>
+<ol type="1">
+<li>Developer runs:
+<code>php -c php.ini -S localhost:8000 router.php</code> (via
+<code>serve.cmd</code>).</li>
+<li>Browser requests
+e.g. <code>GET http://localhost:8000/api/articles</code>.</li>
+<li><code>router.php</code> checks if the path is a physical file in
+<code>public/</code> or <code>storage/</code>; if not, loads
+<code>public/index.php</code>.</li>
+<li><code>index.php</code> registers a PSR-4-style autoloader for
+classes under <code>App\</code> → <code>src/</code>.</li>
+<li>Route table is loaded from <code>routes/api.php</code>.</li>
+<li><code>findRoute()</code> matches method + path; captures
+<code>{id}</code>, <code>{slug}</code> parameters.</li>
+<li>Controller is instantiated; action method is called:
+<code>$controller-&gt;$action($params, $_GET)</code>.</li>
+<li>Action returns an <strong>array</strong> (not raw JSON);
+<code>index.php</code> extracts <code>status</code>, calls
+<code>Response::json()</code>.</li>
+<li>Uncaught exceptions become <code>500</code> JSON with
+<code>message</code>.</li>
+</ol>
+<h3 id="route-matching-rules">4.2 Route matching rules</h3>
+<ul>
+<li>Routes are defined as
+<code>'METHOD /path' =&gt; [ControllerClass::class, 'methodName']</code>.</li>
+<li><strong>Order matters:</strong> static segments must appear
+<strong>before</strong> parameterized routes.
+<ul>
+<li>Correct: <code>GET /api/articles/search</code> before
+<code>GET /api/articles/{id}</code>.</li>
+<li>Wrong: <code>{id}</code> would capture <code>search</code> as an
+id.</li>
+</ul></li>
+<li>Path parameters use regex <code>(?P&lt;name&gt;[^/]+)</code>.</li>
+</ul>
+<h3 id="autoloading">4.3 Autoloading</h3>
+<p>Classes in namespace <code>App\</code> map to <code>src/</code>:</p>
+<ul>
+<li><code>App\Controllers\ArticleController</code> →
+<code>src/Controllers/ArticleController.php</code></li>
+<li><code>App\Models\User</code> → <code>src/Models/User.php</code></li>
+</ul>
+<p>Controllers manually <code>require_once</code>
+<code>Response.php</code> for historical reasons; other classes
+autoload.</p>
+<hr />
+<h2 id="configuration-and-environment">5. Configuration and
+environment</h2>
+<h3 id="env-file">5.1 <code>.env</code> file</h3>
+<p>Loaded by <code>scripts/setup.php</code> and at runtime via
+<code>getenv()</code> in config files.</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 32%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APP_NAME</code></td>
+<td>Application name</td>
+<td><code>TechBlog</code></td>
+</tr>
+<tr>
+<td><code>APP_ENV</code></td>
+<td>Environment</td>
+<td><code>local</code></td>
+</tr>
+<tr>
+<td><code>APP_DEBUG</code></td>
+<td>Verbose errors (display in php.ini too)</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>APP_URL</code></td>
+<td>Base URL for download links</td>
+<td><code>http://localhost</code></td>
+</tr>
+<tr>
+<td><code>DB_HOST</code></td>
+<td>MySQL host</td>
+<td><code>127.0.0.1</code></td>
+</tr>
+<tr>
+<td><code>DB_PORT</code></td>
+<td>MySQL port</td>
+<td><code>3306</code></td>
+</tr>
+<tr>
+<td><code>DB_NAME</code></td>
+<td>Database name</td>
+<td><code>techblog</code></td>
+</tr>
+<tr>
+<td><code>DB_USER</code> / <code>DB_PASS</code></td>
+<td>Credentials</td>
+<td><code>root</code> / empty</td>
+</tr>
+<tr>
+<td><code>JWT_SECRET</code></td>
+<td>HMAC key for JWT</td>
+<td>long random string</td>
+</tr>
+<tr>
+<td><code>JWT_ISSUER</code> / <code>JWT_AUDIENCE</code></td>
+<td>Token validation</td>
+<td><code>techblog-api</code> / <code>techblog-client</code></td>
+</tr>
+<tr>
+<td><code>JWT_TTL</code></td>
+<td>Access token lifetime (seconds)</td>
+<td><code>3600</code></td>
+</tr>
+<tr>
+<td><code>MAIL_*</code></td>
+<td>Mail settings</td>
+<td>Mailtrap, etc.</td>
+</tr>
+<tr>
+<td><code>CONTACT_NOTIFY_EMAIL</code></td>
+<td>Admin inbox for contact form</td>
+<td><code>admin@etc.com</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="configdatabase.php">5.2 <code>config/database.php</code></h3>
+<p>Returns a PHP array consumed by
+<code>App\Support\Database::connection()</code>:</p>
+<ul>
+<li>Single <strong>PDO</strong> instance (singleton)</li>
+<li><code>ERRMODE_EXCEPTION</code>, <code>FETCH_ASSOC</code>,
+<code>utf8mb4</code></li>
+</ul>
+<h3 id="php.ini-project-local">5.3 <code>php.ini</code>
+(project-local)</h3>
+<p>Used by <code>setup.cmd</code> and <code>serve.cmd</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">extension_dir</span><span class="ot">=</span><span class="st">&quot;C:\php\ext&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">extension</span><span class="ot">=</span><span class="st">pdo_mysql</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">extension</span><span class="ot">=</span><span class="st">mysqli</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">extension</span><span class="ot">=</span><span class="st">openssl</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">extension</span><span class="ot">=</span><span class="st">mbstring</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">date.timezone</span><span class="ot">=</span><span class="st">Africa/Addis_Ababa</span></span></code></pre></div>
+<p>Adjust <code>extension_dir</code> if PHP is installed elsewhere.</p>
+<h3 id="setup-script-behavior">5.4 Setup script behavior</h3>
+<p><code>scripts/setup.php</code>:</p>
+<ol type="1">
+<li>Creates database if missing.</li>
+<li>Parses <code>migrations/database.sql</code>
+statement-by-statement.</li>
+<li><strong>Skips</strong> destructive/diagnostic statements:
+<code>DROP DATABASE</code>, <code>CREATE DATABASE</code>,
+<code>USE</code>, <code>SHOW TABLES</code>, diagnostic
+<code>SELECT</code> counts.</li>
+<li>Converts <code>CREATE TABLE</code> →
+<code>CREATE TABLE IF NOT EXISTS</code>.</li>
+<li>Converts <code>INSERT</code> → <code>INSERT IGNORE</code>
+(re-runnable seeds).</li>
+<li>Replaces placeholder admin hash <code>$2y$10$YourHashHere</code>
+with <code>password_hash('admin123')</code>.</li>
+</ol>
+<hr />
+<h2 id="database-design">6. Database design</h2>
+<h3 id="entity-relationship-overview">6.1 Entity relationship
+overview</h3>
+<pre class="mermaid"><code>erDiagram
+    users ||--o{ articles : writes
+    users ||--o{ comments : posts
+    users ||--o{ forum_topics : creates
+    users ||--o{ events : organizes
+    users ||--o{ user_sessions : has
+    users ||--o| user_settings : has
+    articles }o--|| categories : belongs_to
+    articles ||--o{ article_tags : tagged
+    tags ||--o{ article_tags : used_in
+    articles ||--o{ comments : has
+    articles ||--o{ article_likes : liked_by
+    articles ||--o{ bookmarks : bookmarked_by
+    forum_topics ||--o{ forum_replies : has
+    events ||--o{ event_attendees : rsvp
+    events ||--o{ event_reminders : reminds
+    resources ||--o{ resource_ratings : rated
+    users ||--o{ user_learning_progress : tracks</code></pre>
+<h3 id="core-tables-23">6.2 Core tables (23)</h3>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>users</code></td>
+<td>Accounts (username, email, password_hash, profile fields)</td>
+</tr>
+<tr>
+<td><code>user_sessions</code></td>
+<td>Hashed session tokens, expiry, IP, user agent</td>
+</tr>
+<tr>
+<td><code>user_settings</code></td>
+<td>Notifications, theme, visibility</td>
+</tr>
+<tr>
+<td><code>newsletter_subscribers</code></td>
+<td>Email list</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td>Article categories</td>
+</tr>
+<tr>
+<td><code>articles</code></td>
+<td>Blog posts (slug, content, status, views)</td>
+</tr>
+<tr>
+<td><code>tags</code> / <code>article_tags</code></td>
+<td>Many-to-many tagging</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>Nested comments on articles</td>
+</tr>
+<tr>
+<td><code>article_likes</code> / <code>bookmarks</code></td>
+<td>User interactions</td>
+</tr>
+<tr>
+<td><code>forum_topics</code> / <code>forum_replies</code></td>
+<td>Discussion board</td>
+</tr>
+<tr>
+<td><code>user_skills</code></td>
+<td>Skills on profiles</td>
+</tr>
+<tr>
+<td><code>mentorship_requests</code></td>
+<td>Mentor/mentee requests</td>
+</tr>
+<tr>
+<td><code>events</code></td>
+<td>Event metadata</td>
+</tr>
+<tr>
+<td><code>event_attendees</code></td>
+<td>RSVP status</td>
+</tr>
+<tr>
+<td><code>event_reminders</code></td>
+<td>Scheduled reminders</td>
+</tr>
+<tr>
+<td><code>resources</code></td>
+<td>Downloads and learning-path trackers</td>
+</tr>
+<tr>
+<td><code>resource_ratings</code></td>
+<td>1–5 star ratings</td>
+</tr>
+<tr>
+<td><code>user_learning_progress</code></td>
+<td>Per-user path progress %</td>
+</tr>
+<tr>
+<td><code>site_pages</code></td>
+<td>JSON content for static pages (about)</td>
+</tr>
+<tr>
+<td><code>contact_messages</code></td>
+<td>Contact form submissions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="seed-data">6.3 Seed data</h3>
+<p>After setup, the database includes:</p>
+<ul>
+<li>Admin user: <code>admin@etc.com</code> / <code>admin123</code></li>
+<li>Sample users: lelisa, ruth, sami</li>
+<li>Categories: Web, Mobile, AI, DevOps</li>
+<li>Tags: php, javascript, python, react, flutter</li>
+<li>3 published articles, 2 events, 2 forum topics</li>
+<li>7 resources + about page JSON</li>
+</ul>
+<hr />
+<h2 id="authentication-and-authorization">7. Authentication and
+authorization</h2>
+<h3 id="dual-token-model">7.1 Dual-token model</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Token</th>
+<th>Storage</th>
+<th>Lifetime</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access token (JWT)</strong></td>
+<td>Browser <code>localStorage</code></td>
+<td><code>JWT_TTL</code> (default 1 hour)</td>
+<td>Sent as <code>Authorization: Bearer ...</code> on protected
+routes</td>
+</tr>
+<tr>
+<td><strong>Session token</strong></td>
+<td>Browser <code>localStorage</code> + DB
+<code>user_sessions</code></td>
+<td>30 days</td>
+<td>Refresh session, logout</td>
+</tr>
+</tbody>
+</table>
+<h3 id="jwt-structure-tokenservice">7.2 JWT structure
+(<code>TokenService</code>)</h3>
+<ul>
+<li>Algorithm: <strong>HS256</strong></li>
+<li>Payload claims: <code>iss</code>, <code>aud</code>, <code>sub</code>
+(user id), <code>email</code>, <code>username</code>, <code>iat</code>,
+<code>exp</code></li>
+<li>Validated on decode: signature, issuer, audience, expiry</li>
+</ul>
+<h3 id="session-storage">7.3 Session storage</h3>
+<p>On login/register, <code>AuthController::issueTokens()</code>:</p>
+<ol type="1">
+<li>Generates random 32-byte hex <code>session_token</code>.</li>
+<li>Stores <strong>SHA-256 hash</strong> in <code>user_sessions</code>
+(not plaintext).</li>
+<li>Returns both tokens to the client.</li>
+</ol>
+<p>Logout deletes the session row by hashed token.</p>
+<h3 id="protected-endpoints">7.4 Protected endpoints</h3>
+<p>Controllers use trait <code>AuthenticatesRequests</code>:</p>
+<ul>
+<li><code>requireUser()</code> — Bearer JWT required; returns user
+row</li>
+<li><code>optionalUser()</code> — JWT if present, else null</li>
+<li><code>requireAdmin()</code> — user email must be
+<code>admin@etc.com</code></li>
+<li><code>isAdmin($user)</code> — same check for resource ownership
+rules</li>
+</ul>
+<p><code>AuthController</code> has its own
+<code>authenticatedUser()</code> (same logic).</p>
+<h3 id="authorization-rules-summary">7.5 Authorization rules
+(summary)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create article</td>
+<td>Logged in; non-admin → forced <code>draft</code></td>
+</tr>
+<tr>
+<td>Edit/delete article</td>
+<td>Author or admin</td>
+</tr>
+<tr>
+<td>Edit/delete comment</td>
+<td>Author or admin</td>
+</tr>
+<tr>
+<td>Edit forum reply</td>
+<td>Author or admin</td>
+</tr>
+<tr>
+<td>Edit/delete event</td>
+<td>Organizer or admin</td>
+</tr>
+<tr>
+<td>Rate resource / save progress</td>
+<td>Logged in</td>
+</tr>
+<tr>
+<td>View contact messages</td>
+<td>Admin only</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="api-modules-business-logic">8. API modules (business logic)</h2>
+<h3 id="auth-module-authcontroller-user-model">8.1 Auth module
+(<code>AuthController</code> + <code>User</code> model)</h3>
+<p><strong>Endpoints:</strong> register, login, logout, refresh, me,
+profile, settings, newsletter, stats, health.</p>
+<p><strong>Register flow:</strong></p>
+<ol type="1">
+<li>Validate username, email, password (min 8 chars).</li>
+<li>Check uniqueness.</li>
+<li><code>Security::hash()</code> password (bcrypt).</li>
+<li>Insert user, issue tokens, send welcome email.</li>
+</ol>
+<p><strong>Login flow:</strong></p>
+<ol type="1">
+<li>Find by email, <code>password_verify()</code>.</li>
+<li>Check <code>is_active</code>.</li>
+<li>Update <code>last_login</code>, issue tokens.</li>
+</ol>
+<p><strong>Stats (<code>GET /api/stats</code>):</strong> counts from DB
+(students, developers, articles, newsletter, mentors, forum topics,
+events).</p>
+<h3 id="articles-module-articlecontroller-article-model">8.2 Articles
+module (<code>ArticleController</code> + <code>Article</code>
+model)</h3>
+<ul>
+<li><strong>List</strong> with pagination, filters: category, tag,
+author, sort, reading time, full-text search
+(<code>MATCH...AGAINST</code>).</li>
+<li><strong>Show</strong> by id or slug; increments
+<code>views</code>.</li>
+<li><strong>CRUD</strong> with slug auto-generation
+(<code>Str::uniqueSlug()</code>).</li>
+<li><strong>Tags</strong> synced via <code>article_tags</code> junction
+table.</li>
+<li><strong>Categories/tags</strong> listing endpoints for filters.</li>
+</ul>
+<p>Published articles only for public unless admin uses
+<code>?include_drafts=1</code>.</p>
+<h3 id="comments-module-commentcontroller-comment-model">8.3 Comments
+module (<code>CommentController</code> + <code>Comment</code>
+model)</h3>
+<ul>
+<li>Threaded comments (<code>parent_id</code>) returned as a tree.</li>
+<li>Like/unlike article (junction table
+<code>article_likes</code>).</li>
+<li>Bookmark/remove bookmark.</li>
+<li>Comment like increments <code>comments.likes</code> column.</li>
+</ul>
+<h3 id="community-module-communitycontroller-user-forum">8.4 Community
+module (<code>CommunityController</code> + <code>User</code> +
+<code>Forum</code>)</h3>
+<ul>
+<li><strong>listUsers</strong> — paginated public directory
+(<code>GET /api/users</code>).</li>
+<li><strong>searchUsers</strong> — <code>?q=</code> search.</li>
+<li><strong>showUser</strong> — profile + skills + article count.</li>
+<li><strong>Mentorship</strong> — create request, list matches for
+current user.</li>
+<li><strong>Forum</strong> — topics by category, replies, create
+topic/reply, mark solution on reply update.</li>
+</ul>
+<h3 id="events-module-eventcontroller-event-model">8.5 Events module
+(<code>EventController</code> + <code>Event</code> model)</h3>
+<ul>
+<li>List/filter by status, city, type, date range.</li>
+<li><strong>Calendar</strong> endpoint returns lightweight events
+between <code>from</code> and <code>to</code>.</li>
+<li>CRUD for organizers; RSVP with status
+<code>interested|going|waitlist</code>.</li>
+<li>Attendees list; reminders stored in
+<code>event_reminders</code>.</li>
+</ul>
+<h3 id="resources-module-resourcecontroller-resource-model">8.6
+Resources module (<code>ResourceController</code> +
+<code>Resource</code> model)</h3>
+<ul>
+<li>List resources with filters (<code>type</code>,
+<code>category</code>, <code>featured</code>,
+<code>scope=downloads|library</code>).</li>
+<li><strong>Download</strong> — increments counter, returns file URL
+under <code>storage/downloads/</code>.</li>
+<li><strong>Rate</strong> — 1–5 stars, updates
+<code>average_rating</code>.</li>
+<li><strong>Learning paths</strong> — merges
+<code>config/learning_paths.php</code> with DB progress per user.</li>
+<li><strong>Contact</strong> — validates form, saves to DB, emails admin
++ confirmation.</li>
+<li><strong>About</strong> — loads JSON from <code>site_pages</code>
+where <code>slug='about'</code>.</li>
+</ul>
+<hr />
+<h2 id="complete-api-reference">9. Complete API reference</h2>
+<p>All paths are prefixed with <code>http://localhost:8000</code> in
+development.</p>
+<h3 id="auth-general">9.1 Auth &amp; general</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/health</code></td>
+<td>No</td>
+<td>Service health check</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/register</code></td>
+<td>No</td>
+<td>Create account</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/login</code></td>
+<td>No</td>
+<td>Login</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/logout</code></td>
+<td>No*</td>
+<td>End session (*body: session_token)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/refresh</code></td>
+<td>No*</td>
+<td>Refresh tokens (*session_token)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/auth/me</code></td>
+<td>Bearer</td>
+<td>Current user</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/auth/profile</code></td>
+<td>Bearer</td>
+<td>Update profile</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/auth/settings</code></td>
+<td>Bearer</td>
+<td>Get settings</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/auth/settings</code></td>
+<td>Bearer</td>
+<td>Update settings</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/newsletter/subscribe</code></td>
+<td>No</td>
+<td>Subscribe email</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/stats</code></td>
+<td>No</td>
+<td>Public statistics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="articles">9.2 Articles</h3>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/articles</code></td>
+<td>Optional</td>
+<td>List (<code>page</code>, <code>per_page</code>,
+<code>category</code>, <code>tag</code>, <code>sort</code>)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/articles/search</code></td>
+<td>No</td>
+<td>Search <code>?q=</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/articles/{id}</code></td>
+<td>Optional</td>
+<td>Single article</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/articles/slug/{slug}</code></td>
+<td>Optional</td>
+<td>By slug</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/categories</code></td>
+<td>No</td>
+<td>All categories</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/tags</code></td>
+<td>No</td>
+<td>All tags</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/articles</code></td>
+<td>Bearer</td>
+<td>Create</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/articles/{id}</code></td>
+<td>Bearer</td>
+<td>Update</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/articles/{id}</code></td>
+<td>Bearer</td>
+<td>Delete</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comments-interactions">9.3 Comments &amp; interactions</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/articles/{id}/comments</code></td>
+<td>No</td>
+<td>List comments</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/articles/{id}/comments</code></td>
+<td>Bearer</td>
+<td>Add comment</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/comments/{id}</code></td>
+<td>Bearer</td>
+<td>Edit comment</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/comments/{id}</code></td>
+<td>Bearer</td>
+<td>Delete comment</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/articles/{id}/like</code></td>
+<td>Bearer</td>
+<td>Like article</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/articles/{id}/like</code></td>
+<td>Bearer</td>
+<td>Unlike</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/articles/{id}/bookmark</code></td>
+<td>Bearer</td>
+<td>Bookmark</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/articles/{id}/bookmark</code></td>
+<td>Bearer</td>
+<td>Remove bookmark</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/comments/{id}/like</code></td>
+<td>No</td>
+<td>Increment comment likes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="community">9.4 Community</h3>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/users</code></td>
+<td>No</td>
+<td>List members</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/users/search</code></td>
+<td>No</td>
+<td>Search <code>?q=</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/users/{id}</code></td>
+<td>No</td>
+<td>Public profile</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/mentorship/request</code></td>
+<td>Bearer</td>
+<td>Request mentor</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/mentorship/matches</code></td>
+<td>Bearer</td>
+<td>My mentorship rows</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/forum/topics</code></td>
+<td>No</td>
+<td>List topics</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/forum/topics</code></td>
+<td>Bearer</td>
+<td>Create topic</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/forum/topics/{id}/replies</code></td>
+<td>No</td>
+<td>Topic + replies</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/forum/topics/{id}/replies</code></td>
+<td>Bearer</td>
+<td>Post reply</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/forum/replies/{id}</code></td>
+<td>Bearer</td>
+<td>Edit reply / mark solution</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">9.5 Events</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/events</code></td>
+<td>Optional</td>
+<td>List events</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/events/calendar</code></td>
+<td>No</td>
+<td>Calendar range <code>?from=&amp;to=</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/events/{id}</code></td>
+<td>Optional</td>
+<td>Event detail</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/events</code></td>
+<td>Bearer</td>
+<td>Create</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/events/{id}</code></td>
+<td>Bearer</td>
+<td>Update</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/events/{id}</code></td>
+<td>Bearer</td>
+<td>Delete</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/events/{id}/rsvp</code></td>
+<td>Bearer</td>
+<td>RSVP</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/events/{id}/rsvp</code></td>
+<td>Bearer</td>
+<td>Cancel RSVP</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/events/{id}/attendees</code></td>
+<td>No</td>
+<td>Attendee list</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/events/{id}/reminder</code></td>
+<td>Bearer</td>
+<td>Set reminder</td>
+</tr>
+</tbody>
+</table>
+<h3 id="resources-contact">9.6 Resources &amp; contact</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Auth</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/about</code></td>
+<td>No</td>
+<td>About page JSON</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/resources</code></td>
+<td>No</td>
+<td>List resources</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/resources/learning-paths</code></td>
+<td>Optional</td>
+<td>Paths + progress</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/resources/progress</code></td>
+<td>Bearer</td>
+<td>Save learning progress</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/resources/{id}/download</code></td>
+<td>No</td>
+<td>Download metadata + URL</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/resources/{id}/rate</code></td>
+<td>Bearer</td>
+<td>Rate resource</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/contact</code></td>
+<td>No</td>
+<td>Submit contact form</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/contact/messages</code></td>
+<td>Admin</td>
+<td>List messages</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="response-format-and-errors">10. Response format and errors</h2>
+<h3 id="success-envelope">10.1 Success envelope</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;success&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Articles loaded.&quot;</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;articles&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;pagination&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;page&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">&quot;per_page&quot;</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span> <span class="dt">&quot;total&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span> <span class="dt">&quot;total_pages&quot;</span><span class="fu">:</span> <span class="dv">1</span> <span class="fu">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Controllers return a PHP array; <code>index.php</code> adds HTTP
+status from <code>$result['status']</code> (default 200) then unsets it
+before JSON encoding.</p>
+<h3 id="error-envelope">10.2 Error envelope</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;success&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Registration failed.&quot;</span><span class="fu">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Email is already registered.&quot;</span><span class="ot">]</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Common HTTP status codes: <code>401</code> unauthorized,
+<code>403</code> forbidden, <code>404</code> not found, <code>422</code>
+validation, <code>500</code> server error.</p>
+<h3 id="example-login-from-curl">10.3 Example: login from curl</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST http://localhost:8000/api/auth/login ^</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> ^</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-d</span> <span class="st">&quot;{</span><span class="dt">\&quot;</span><span class="st">email</span><span class="dt">\&quot;</span><span class="st">:</span><span class="dt">\&quot;</span><span class="st">admin@etc.com</span><span class="dt">\&quot;</span><span class="st">,</span><span class="dt">\&quot;</span><span class="st">password</span><span class="dt">\&quot;</span><span class="st">:</span><span class="dt">\&quot;</span><span class="st">admin123</span><span class="dt">\&quot;</span><span class="st">}&quot;</span></span></code></pre></div>
+<p>Use <code>data.tokens.access_token</code> in subsequent requests:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:8000/api/auth/me ^</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-H</span> <span class="st">&quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot;</span></span></code></pre></div>
+<hr />
+<h2 id="frontend-architecture">11. Frontend architecture</h2>
+<h3 id="structure">11.1 Structure</h3>
+<pre><code>Blog-App/
+├── index.html          # Home
+├── articles.html       # Article listing
+├── post.html           # Single post
+├── community.html      # Community hub
+├── events.html         # Events calendar
+├── resources.html      # Downloads &amp; learning paths
+├── contact.html        # Contact form
+├── about.html          # About page
+├── profile.html        # User profile (authenticated)
+└── assets/
+    ├── css/            # Per-page styles
+    └── js/
+        ├── api.js        # ETCApi + ETCAuth (core integration)
+        ├── main.js       # Nav, login/register modals
+        ├── app.js        # Utilities, contact form (localStorage fallback)
+        ├── index.js      # Home stats, newsletter
+        ├── profile.js    # Profile API calls
+        ├── articles.js   # Article UI (mostly local/mock data)
+        ├── community.js  # Community UI (simulated data)
+        ├── events.js     # Events UI (simulated data)
+        ├── resources.js  # Resources UI (localStorage progress)
+        └── ...</code></pre>
+<h3 id="page-load-pattern">11.2 Page load pattern</h3>
+<p>Typical script order on pages:</p>
+<ol type="1">
+<li><code>api.js</code> — defines global <code>ETCApi</code>,
+<code>ETCAuth</code></li>
+<li><code>app.js</code> — utilities</li>
+<li><code>main.js</code> — auth UI, session restore on load</li>
+<li><code>theme.js</code> — dark/light theme</li>
+<li>Page-specific script (<code>index.js</code>,
+<code>articles.js</code>, etc.)</li>
+</ol>
+<hr />
+<h2 id="frontendbackend-integration">12. Frontend–backend
+integration</h2>
+<h3 id="etcapi-http-client-assetsjsapi.js">12.1 <code>ETCApi</code> —
+HTTP client (<code>assets/js/api.js</code>)</h3>
+<p><strong><code>getBaseUrl()</code></strong> resolves API host:</p>
+<ol type="1">
+<li><code>window.APP_CONFIG.apiBaseUrl</code> if set</li>
+<li><code>http://localhost:8000</code> if page opened as
+<code>file://</code></li>
+<li>Current origin if port is already <code>8000</code></li>
+<li>Otherwise <code>hostname:8000</code></li>
+</ol>
+<p><strong><code>request(path, options)</code></strong>:</p>
+<ul>
+<li>Builds full URL: <code>baseUrl + path</code></li>
+<li>Sets <code>Accept: application/json</code></li>
+<li>JSON body for POST/PUT when <code>options.body</code> provided</li>
+<li>Parses JSON; throws <code>Error</code> with
+<code>error.payload</code> and <code>error.status</code> if
+<code>!response.ok</code> or <code>success === false</code></li>
+</ul>
+<h3 id="etcauth-session-management">12.2 <code>ETCAuth</code> — session
+management</h3>
+<p><strong>Storage key:</strong> <code>etc_auth_session</code> in
+<code>localStorage</code>.</p>
+<p><strong>Session shape (after login/register):</strong></p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;user&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;admin&quot;</span><span class="fu">,</span> <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span> <span class="er">...</span> <span class="fu">},</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;tokens&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;access_token&quot;</span><span class="fu">:</span> <span class="st">&quot;eyJ...&quot;</span><span class="fu">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;session_token&quot;</span><span class="fu">:</span> <span class="st">&quot;hex...&quot;</span><span class="fu">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;token_type&quot;</span><span class="fu">:</span> <span class="st">&quot;Bearer&quot;</span><span class="fu">,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;expires_in&quot;</span><span class="fu">:</span> <span class="dv">3600</span><span class="fu">,</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;session_expires_at&quot;</span><span class="fu">:</span> <span class="st">&quot;2026-...&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Key methods:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Backend call</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>login(credentials)</code></td>
+<td><code>POST /api/auth/login</code></td>
+<td>Save session</td>
+</tr>
+<tr>
+<td><code>register(payload)</code></td>
+<td><code>POST /api/auth/register</code></td>
+<td>Save session</td>
+</tr>
+<tr>
+<td><code>refresh()</code></td>
+<td><code>POST /api/auth/refresh</code></td>
+<td>New access token</td>
+</tr>
+<tr>
+<td><code>me()</code></td>
+<td><code>GET /api/auth/me</code></td>
+<td>Refresh user in session</td>
+</tr>
+<tr>
+<td><code>restore()</code></td>
+<td>refresh + getSession</td>
+<td>On page load</td>
+</tr>
+<tr>
+<td><code>logout()</code></td>
+<td><code>POST /api/auth/logout</code></td>
+<td>Clear session</td>
+</tr>
+<tr>
+<td><code>authHeaders()</code></td>
+<td>—</td>
+<td><code>{ Authorization: Bearer ... }</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Event:</strong> <code>auth:changed</code> dispatched on
+login/logout for UI updates.</p>
+<h3 id="auth-ui-assetsjsmain.js">12.3 Auth UI
+(<code>assets/js/main.js</code>)</h3>
+<ul>
+<li>Login/register forms call <code>ETCAuth.login()</code> /
+<code>register()</code>.</li>
+<li>On DOM ready, <code>ETCAuth.restore()</code> re-validates
+session.</li>
+<li>Navbar shows user initials via
+<code>ETCAuth.initials(user)</code>.</li>
+<li>Logout calls <code>ETCAuth.logout()</code>.</li>
+</ul>
+<h3 id="integration-sequence-diagram">12.4 Integration sequence
+diagram</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as User
+    participant M as main.js
+    participant A as ETCAuth
+    participant API as PHP API
+    participant DB as MySQL
+
+    U-&gt;&gt;M: Submit login form
+    M-&gt;&gt;A: login(email, password)
+    A-&gt;&gt;API: POST /api/auth/login
+    API-&gt;&gt;DB: verify user, insert session
+    API--&gt;&gt;A: user + tokens
+    A-&gt;&gt;A: localStorage.setItem
+    A--&gt;&gt;M: session
+    M-&gt;&gt;M: Update navbar
+
+    U-&gt;&gt;M: Visit profile.html
+    M-&gt;&gt;A: restore()
+    A-&gt;&gt;API: POST /api/auth/refresh
+    API--&gt;&gt;A: new tokens
+    A-&gt;&gt;API: GET /api/auth/me
+    API--&gt;&gt;A: user profile</code></pre>
+<hr />
+<h2 id="page-by-page-integration-map">13. Page-by-page integration
+map</h2>
+<p>This table shows <strong>current</strong> wiring between HTML pages
+and the backend.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 35%" />
+<col style="width: 27%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>Page</th>
+<th>Scripts</th>
+<th>Backend integrated?</th>
+<th>Endpoints used</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>index.html</strong></td>
+<td>api, main, index</td>
+<td><strong>Partial</strong></td>
+<td><code>/api/stats</code>, <code>/api/newsletter/subscribe</code></td>
+<td>Stats drive counters; newsletter works</td>
+</tr>
+<tr>
+<td><strong>profile.html</strong></td>
+<td>api, profile</td>
+<td><strong>Yes</strong></td>
+<td><code>/api/auth/me</code>, profile, settings</td>
+<td>Full profile flow</td>
+</tr>
+<tr>
+<td><strong>main.js</strong> (global)</td>
+<td>api, main</td>
+<td><strong>Yes</strong></td>
+<td>auth login/register/logout/refresh</td>
+<td>All pages with main.js</td>
+</tr>
+<tr>
+<td><strong>about.html</strong></td>
+<td>api, app, main</td>
+<td><strong>Ready</strong></td>
+<td><code>/api/about</code></td>
+<td>Backend serves JSON; page may still be static HTML — wire with
+<code>ETCApi.request('/api/about')</code></td>
+</tr>
+<tr>
+<td><strong>contact.html</strong></td>
+<td>api, app, main</td>
+<td><strong>Partial</strong></td>
+<td><code>/api/contact</code></td>
+<td><code>app.js</code> still uses <strong>localStorage</strong>
+fallback, not API</td>
+</tr>
+<tr>
+<td><strong>resources.html</strong></td>
+<td>api, resources</td>
+<td><strong>Partial</strong></td>
+<td><code>/api/resources</code>, learning-paths, progress</td>
+<td><code>resources.js</code> uses <strong>localStorage</strong> for
+progress; API available</td>
+</tr>
+<tr>
+<td><strong>articles.html</strong></td>
+<td>api, articles</td>
+<td><strong>Not yet</strong></td>
+<td><code>/api/articles</code>, categories, tags</td>
+<td><code>articles.js</code> uses embedded/mock data</td>
+</tr>
+<tr>
+<td><strong>post.html</strong></td>
+<td>api, post</td>
+<td><strong>Not yet</strong></td>
+<td><code>/api/articles/{id}</code>, comments</td>
+<td>Post page uses static/mock content</td>
+</tr>
+<tr>
+<td><strong>community.html</strong></td>
+<td>api, community</td>
+<td><strong>Not yet</strong></td>
+<td><code>/api/users</code>, forum, mentorship</td>
+<td><code>community.js</code> simulates live data</td>
+</tr>
+<tr>
+<td><strong>events.html</strong></td>
+<td>api, events</td>
+<td><strong>Not yet</strong></td>
+<td><code>/api/events</code>, calendar, rsvp</td>
+<td><code>events.js</code> generates UI locally</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-next-integration-steps">13.1 Recommended next
+integration steps</h3>
+<ol type="1">
+<li><p><strong>articles.js</strong> — Replace mock array with:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { data } <span class="op">=</span> <span class="cf">await</span> ETCApi<span class="op">.</span><span class="fu">request</span>(<span class="st">&quot;/api/articles?per_page=12&quot;</span>)<span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>state<span class="op">.</span><span class="at">articles</span> <span class="op">=</span> data<span class="op">.</span><span class="at">articles</span><span class="op">;</span></span></code></pre></div></li>
+<li><p><strong>contact form</strong> — In <code>app.js</code>
+<code>initContactForm()</code>, POST to <code>/api/contact</code> via
+<code>ETCApi.request</code>.</p></li>
+<li><p><strong>about.html</strong> — Fetch <code>/api/about</code> and
+render <code>data.page.content</code> sections.</p></li>
+<li><p><strong>resources.js</strong> — Load downloads from
+<code>/api/resources?scope=downloads</code>; sync progress with
+<code>/api/resources/progress</code> when logged in.</p></li>
+<li><p><strong>community.js / events.js</strong> — Swap simulated arrays
+for API list endpoints.</p></li>
+</ol>
+<h3 id="optional-global-api-base-url">13.2 Optional global API base
+URL</h3>
+<p>For production, set before loading <code>api.js</code>:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">APP_CONFIG</span> <span class="op">=</span> { <span class="dt">apiBaseUrl</span><span class="op">:</span> <span class="st">&quot;https://api.yourdomain.com&quot;</span> }<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;assets/js/api.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<hr />
+<h2 id="installation-and-operations">14. Installation and
+operations</h2>
+<h3 id="requirements">14.1 Requirements</h3>
+<ul>
+<li>PHP 8.1+ with extensions: <code>pdo_mysql</code>, <code>json</code>,
+<code>mbstring</code>, <code>openssl</code></li>
+<li>MySQL 5.7+ or MariaDB 10.3+</li>
+<li>Composer (optional; only used for script aliases)</li>
+</ul>
+<h3 id="first-time-setup">14.2 First-time setup</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Blog-App\backend</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>.\setup.cmd</span></code></pre></div>
+<p>Expected output: <code>Setup complete.</code></p>
+<h3 id="run-api-server">14.3 Run API server</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>.\serve.cmd</span></code></pre></div>
+<p>Keep terminal open. Test: <a
+href="http://localhost:8000/api/health">http://localhost:8000/api/health</a></p>
+<h3 id="run-frontend">14.4 Run frontend</h3>
+<p><strong>Option A — Same server (simplest for CORS):</strong><br />
+Serve <code>Blog-App</code> folder with any static server; ensure
+<code>api.js</code> points to port 8000.</p>
+<p><strong>Option B — VS Code Live Server:</strong><br />
+Open <code>index.html</code> on port 5500; API calls still go to
+<code>localhost:8000</code> per <code>getBaseUrl()</code>.</p>
+<p><strong>Option C — Open via backend:</strong><br />
+Place or symlink frontend under <code>backend/public</code> if you want
+one origin (requires layout change).</p>
+<h3 id="default-credentials">14.5 Default credentials</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Email</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Admin</td>
+<td>admin@etc.com</td>
+<td>admin123</td>
+</tr>
+</tbody>
+</table>
+<p>Change admin password in production immediately.</p>
+<hr />
+<h2 id="development-testing-and-troubleshooting">15. Development,
+testing, and troubleshooting</h2>
+<h3 id="composer-scripts">15.1 Composer scripts</h3>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> run setup    <span class="co"># Database migration</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> run serve    <span class="co"># Start server</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">composer</span> run test     <span class="co"># Smoke tests</span></span></code></pre></div>
+<h3 id="smoke-tests-teststest.php">15.2 Smoke tests
+(<code>tests/Test.php</code>)</h3>
+<p>Verifies without database:</p>
+<ul>
+<li>Helpers load</li>
+<li>Response shape</li>
+<li>Routes exist for search/calendar/users</li>
+<li>No controller contains placeholder text</li>
+</ul>
+<h3 id="common-issues">15.3 Common issues</h3>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 33%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>could not find driver</code></td>
+<td><code>pdo_mysql</code> not loaded</td>
+<td>Fix <code>php.ini</code> <code>extension_dir</code>, enable
+<code>pdo_mysql</code></td>
+</tr>
+<tr>
+<td><code>connection refused</code></td>
+<td>MySQL not running</td>
+<td>Start MySQL service / XAMPP</td>
+</tr>
+<tr>
+<td>CORS errors</td>
+<td>Wrong API URL</td>
+<td>Check <code>getBaseUrl()</code>, set <code>APP_CONFIG</code></td>
+</tr>
+<tr>
+<td><code>Route not found</code></td>
+<td>Wrong path or method</td>
+<td>Compare with <code>routes/api.php</code></td>
+</tr>
+<tr>
+<td>401 on protected route</td>
+<td>Missing/expired JWT</td>
+<td>Login again; call <code>refresh()</code></td>
+</tr>
+<tr>
+<td><code>/api/articles/search</code> returns wrong item</td>
+<td>Route order</td>
+<td>Static routes must precede <code>{id}</code></td>
+</tr>
+<tr>
+<td>PHP 8.4 property/method same name</td>
+<td>Duplicate identifier</td>
+<td>Use distinct names (e.g. <code>resolveUserRepository()</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="security-notes-for-production">15.4 Security notes for
+production</h3>
+<ul>
+<li>Change <code>JWT_SECRET</code> to a long random value</li>
+<li>Set <code>APP_DEBUG=false</code></li>
+<li>Use HTTPS</li>
+<li>Do not expose <code>.env</code> publicly</li>
+<li>Replace admin email check with a proper <code>role</code>
+column</li>
+<li>Configure real SMTP instead of PHP <code>mail()</code></li>
+<li>Rate-limit login and contact endpoints</li>
+</ul>
+<h3 id="logging">15.5 Logging</h3>
+<p>PHP errors log per <code>php.ini</code> (<code>log_errors=On</code>).
+<code>MailService</code> logs failures via <code>error_log()</code>.</p>
+<hr />
+<h2 id="appendix">16. Appendix</h2>
+<h3 id="file-reference-controllers">16.1 File reference —
+controllers</h3>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Public methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AuthController</code></td>
+<td>health, register, login, logout, refresh, me, updateProfile,
+settings, updateSettings, subscribeNewsletter, siteStats</td>
+</tr>
+<tr>
+<td><code>ArticleController</code></td>
+<td>index, show, showBySlug, categories, tags, store, update, destroy,
+search</td>
+</tr>
+<tr>
+<td><code>CommentController</code></td>
+<td>likeArticle, unlikeArticle, bookmarkArticle, removeBookmark,
+articleComments, storeArticleComment, updateComment, deleteComment,
+likeComment</td>
+</tr>
+<tr>
+<td><code>CommunityController</code></td>
+<td>listUsers, showUser, searchUsers, requestMentorship,
+mentorshipMatches, forumTopics, storeForumTopic, forumReplies,
+storeForumReply, updateForumReply</td>
+</tr>
+<tr>
+<td><code>EventController</code></td>
+<td>index, show, calendar, store, update, destroy, rsvp, cancelRsvp,
+attendees, setReminder</td>
+</tr>
+<tr>
+<td><code>ResourceController</code></td>
+<td>index, download, rate, learningPaths, saveProgress, contact,
+contactMessages, about</td>
+</tr>
+</tbody>
+</table>
+<h3 id="learning-path-configuration">16.2 Learning path
+configuration</h3>
+<p><code>config/learning_paths.php</code> defines slugs
+(<code>web</code>, <code>mobile</code>, <code>ai</code>) mapped to:</p>
+<ul>
+<li>Display title and estimated duration</li>
+<li>Steps array for UI</li>
+<li><code>category</code> matching a row in <code>resources</code>
+table</li>
+<li><code>default_progress</code> for anonymous visitors</li>
+</ul>
+<p>Authenticated users see real progress from
+<code>user_learning_progress</code>.</p>
+<h3 id="downloadable-files">16.3 Downloadable files</h3>
+<p>Physical files live in <code>backend/storage/downloads/</code>:</p>
+<ul>
+<li><code>ethiopian-tech-templates.html</code></li>
+<li><code>localized-cheatsheets.html</code></li>
+<li><code>offline-tutorials.html</code></li>
+</ul>
+<p><code>router.php</code> serves <code>/storage/...</code> directly.
+Download API returns URL like
+<code>http://localhost:8000/storage/downloads/...</code>.</p>
+<h3 id="glossary">16.4 Glossary</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ETC</td>
+<td>Ethiopian Tech Community</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>JSON Web Token for API auth</td>
+</tr>
+<tr>
+<td>PDO</td>
+<td>PHP Data Objects (MySQL driver)</td>
+</tr>
+<tr>
+<td>RSVP</td>
+<td>Event attendance registration</td>
+</tr>
+<tr>
+<td>Slug</td>
+<td>URL-friendly unique string (e.g. <code>my-article-title</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>End of manual</strong></p>
+<p><em>For quick commands, see <code>Blog-App/backend/README.md</code>.
+For API route source of truth, see
+<code>Blog-App/backend/routes/api.php</code>.</em></p>
+</body>
+</html>
