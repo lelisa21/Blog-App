@@ -6,233 +6,324 @@ namespace App\Controllers;
 
 require_once __DIR__ . '/../Helpers/Response.php';
 
-use App\Controllers\Concerns\AuthenticatesRequests;
 use App\Helpers\Response;
 use App\Models\Event;
+use App\Services\TokenService;
 use App\Support\Request;
-use RuntimeException;
+use DateInterval;
+use DateTimeImmutable;
+use Throwable;
 
 class EventController
 {
-    use AuthenticatesRequests;
-
     private ?Event $events = null;
+    private ?TokenService $tokens = null;
 
     public function index(array $params = [], array $query = []): array
     {
-        $viewer = $this->optionalUser();
-        $result = $this->model()->paginate([
-            'page' => $query['page'] ?? 1,
-            'per_page' => $query['per_page'] ?? 20,
-            'status' => $query['status'] ?? null,
-            'city' => $query['city'] ?? null,
-            'event_type' => $query['event_type'] ?? $query['type'] ?? null,
-            'from' => $query['from'] ?? null,
-            'to' => $query['to'] ?? null,
-        ], $viewer['id'] ?? null);
+        $viewerId = $this->optionalUserId();
 
-        return Response::success($result, 'Events loaded.');
+        return Response::success([
+            'events' => $this->events()->all($query, $viewerId),
+        ], 'Events loaded successfully.');
     }
 
     public function show(array $params = [], array $query = []): array
     {
         $id = (int) ($params['id'] ?? 0);
-        if ($id <= 0) {
-            return Response::error('Event id is required.', 422);
-        }
+        $event = $this->events()->find($id, $this->optionalUserId());
 
-        $viewer = $this->optionalUser();
-        $event = $this->model()->findById($id, $viewer['id'] ?? null);
         if ($event === null) {
             return Response::error('Event not found.', 404);
         }
 
-        return Response::success(['event' => $event], 'Event loaded.');
+        return Response::success([
+            'event' => $event,
+        ], 'Event loaded successfully.');
     }
 
     public function calendar(array $params = [], array $query = []): array
     {
-        $from = (string) ($query['from'] ?? date('Y-m-01'));
-        $to = (string) ($query['to'] ?? date('Y-m-t 23:59:59'));
+        $filters = [
+            'start' => $query['start'] ?? null,
+            'end' => $query['end'] ?? null,
+            'city' => $query['city'] ?? null,
+            'event_type' => $query['event_type'] ?? ($query['type'] ?? null),
+        ];
 
         return Response::success([
-            'events' => $this->model()->calendar($from, $to),
-            'from' => $from,
-            'to' => $to,
-        ], 'Calendar events loaded.');
+            'events' => $this->events()->all(array_filter($filters), $this->optionalUserId()),
+        ], 'Calendar events loaded successfully.');
     }
 
     public function store(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
-
         $payload = Request::body();
-        $errors = $this->validateEventPayload($payload);
-        if ($errors !== []) {
-            return Response::error('Event validation failed.', 422, $errors);
+        $data = $this->eventPayload($payload, true);
+
+        if ($data['errors'] !== []) {
+            return Response::error('Event could not be created.', 422, $data['errors']);
         }
 
-        $payload['organizer_id'] = (int) $user['id'];
-        $event = $this->model()->create($payload);
+        $event = $this->events()->create(array_merge($data['values'], [
+            'organizer_id' => $this->currentUserId(),
+        ]));
 
-        return Response::success(['event' => $event], 'Event created.', 201);
+        return Response::success([
+            'event' => $event,
+        ], 'Event created successfully.', 201);
     }
 
     public function update(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
-
         $id = (int) ($params['id'] ?? 0);
-        $existing = $this->model()->findById($id);
+        $existing = $this->events()->find($id, $this->optionalUserId());
+
         if ($existing === null) {
             return Response::error('Event not found.', 404);
         }
 
-        if ((int) $existing['organizer']['id'] !== (int) $user['id'] && !$this->isAdmin($user)) {
-            return Response::error('You cannot edit this event.', 403);
+        $payload = Request::body();
+        $data = $this->eventPayload($payload, false);
+
+        if ($data['errors'] !== []) {
+            return Response::error('Event could not be updated.', 422, $data['errors']);
         }
 
-        $event = $this->model()->update($id, Request::body());
-        if ($event === null) {
-            return Response::error('Event could not be updated.', 500);
-        }
+        $event = $this->events()->update($id, $data['values']);
 
-        return Response::success(['event' => $event], 'Event updated.');
+        return Response::success([
+            'event' => $event,
+        ], 'Event updated successfully.');
     }
 
     public function destroy(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
-
         $id = (int) ($params['id'] ?? 0);
-        $existing = $this->model()->findById($id);
-        if ($existing === null) {
-            return Response::error('Event not found.', 404);
+
+        if (!$this->events()->delete($id)) {
+            return Response::error('Event not found or already deleted.', 404);
         }
 
-        if ((int) $existing['organizer']['id'] !== (int) $user['id'] && !$this->isAdmin($user)) {
-            return Response::error('You cannot delete this event.', 403);
-        }
-
-        $this->model()->delete($id);
-
-        return Response::success([], 'Event deleted.');
+        return Response::success([], 'Event deleted successfully.');
     }
 
     public function rsvp(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
+        $id = (int) ($params['id'] ?? 0);
+        $event = $this->events()->find($id, $this->optionalUserId());
 
-        $eventId = (int) ($params['id'] ?? 0);
-        if ($this->model()->findById($eventId) === null) {
+        if ($event === null) {
             return Response::error('Event not found.', 404);
         }
 
-        $status = (string) (Request::body()['status'] ?? 'going');
-        if (!in_array($status, ['interested', 'going', 'waitlist'], true)) {
-            return Response::error('Invalid RSVP status.', 422);
+        $payload = Request::body();
+        $status = (string) ($payload['status'] ?? 'going');
+        $allowed = ['interested', 'going', 'waitlist'];
+
+        if (!in_array($status, $allowed, true)) {
+            return Response::error('Invalid RSVP status.', 422, [
+                'status' => ['Use interested, going, or waitlist.'],
+            ]);
         }
 
-        $rsvp = $this->model()->rsvp($eventId, (int) $user['id'], $status);
+        $event = $this->events()->rsvp($id, $this->currentUserId(), $status);
 
-        return Response::success(['rsvp' => $rsvp], 'RSVP saved.');
+        return Response::success([
+            'event' => $event,
+            'rsvp_status' => $status,
+        ], 'RSVP saved successfully.');
     }
 
     public function cancelRsvp(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
+        $id = (int) ($params['id'] ?? 0);
+        $this->events()->cancelRsvp($id, $this->currentUserId());
 
-        $eventId = (int) ($params['id'] ?? 0);
-        if ($this->model()->findById($eventId) === null) {
-            return Response::error('Event not found.', 404);
-        }
-
-        $this->model()->cancelRsvp($eventId, (int) $user['id']);
-
-        return Response::success([], 'RSVP cancelled.');
+        return Response::success([], 'RSVP cancelled successfully.');
     }
 
     public function attendees(array $params = [], array $query = []): array
     {
-        $eventId = (int) ($params['id'] ?? 0);
-        if ($this->model()->findById($eventId) === null) {
+        $id = (int) ($params['id'] ?? 0);
+
+        if ($this->events()->find($id) === null) {
             return Response::error('Event not found.', 404);
         }
 
         return Response::success([
-            'attendees' => $this->model()->attendees($eventId),
-        ], 'Attendees loaded.');
+            'attendees' => $this->events()->attendees($id),
+        ], 'Event attendees loaded successfully.');
     }
 
     public function setReminder(array $params = [], array $query = []): array
     {
-        try {
-            $user = $this->requireUser();
-        } catch (RuntimeException $exception) {
-            return Response::error($exception->getMessage(), 401);
-        }
+        $id = (int) ($params['id'] ?? 0);
+        $event = $this->events()->find($id, $this->optionalUserId());
 
-        $eventId = (int) ($params['id'] ?? 0);
-        if ($this->model()->findById($eventId) === null) {
+        if ($event === null) {
             return Response::error('Event not found.', 404);
         }
 
-        $reminderTime = trim((string) (Request::body()['reminder_time'] ?? ''));
-        if ($reminderTime === '') {
-            return Response::error('reminder_time is required.', 422);
+        $payload = Request::body();
+        $reminderTime = $payload['reminder_time'] ?? null;
+
+        if ($reminderTime === null || trim((string) $reminderTime) === '') {
+            $start = new DateTimeImmutable((string) $event['start_date']);
+            $reminderTime = $start->sub(new DateInterval('PT24H'))->format('Y-m-d H:i:s');
+        } else {
+            $reminderTime = $this->toMysqlDateTime((string) $reminderTime);
         }
 
-        $reminder = $this->model()->setReminder($eventId, (int) $user['id'], $reminderTime);
+        if ($reminderTime === null) {
+            return Response::error('Invalid reminder time.', 422);
+        }
 
-        return Response::success(['reminder' => $reminder], 'Reminder scheduled.', 201);
+        $reminder = $this->events()->setReminder($id, $this->currentUserId(), $reminderTime);
+
+        return Response::success([
+            'reminder' => $reminder,
+        ], 'Reminder saved successfully.');
     }
 
-    private function validateEventPayload(array $payload): array
+    private function eventPayload(array $payload, bool $creating): array
     {
         $errors = [];
+        $values = [];
 
-        if (trim((string) ($payload['title'] ?? '')) === '') {
-            $errors['title'][] = 'Title is required.';
+        if ($creating || array_key_exists('title', $payload)) {
+            $title = trim((string) ($payload['title'] ?? ''));
+
+            if ($title === '') {
+                $errors['title'][] = 'Event title is required.';
+            } else {
+                $values['title'] = $title;
+            }
         }
 
-        $types = ['meetup', 'workshop', 'hackathon', 'conference', 'virtual'];
-        if (empty($payload['event_type']) || !in_array($payload['event_type'], $types, true)) {
-            $errors['event_type'][] = 'Valid event_type is required.';
+        if (array_key_exists('description', $payload)) {
+            $values['description'] = trim((string) $payload['description']);
         }
 
-        if (empty($payload['start_date']) || empty($payload['end_date'])) {
-            $errors['dates'][] = 'start_date and end_date are required.';
+        if ($creating || array_key_exists('event_type', $payload) || array_key_exists('type', $payload)) {
+            $eventType = (string) ($payload['event_type'] ?? ($payload['type'] ?? ''));
+            $allowedTypes = ['meetup', 'workshop', 'hackathon', 'conference', 'virtual'];
+
+            if (!in_array($eventType, $allowedTypes, true)) {
+                $errors['event_type'][] = 'Choose meetup, workshop, hackathon, conference, or virtual.';
+            } else {
+                $values['event_type'] = $eventType;
+            }
         }
 
-        return $errors;
+        foreach (['venue_name', 'city', 'address', 'meeting_link', 'status'] as $field) {
+            if (array_key_exists($field, $payload)) {
+                $values[$field] = trim((string) $payload[$field]);
+            }
+        }
+
+        foreach (['latitude', 'longitude'] as $field) {
+            if (array_key_exists($field, $payload)) {
+                $values[$field] = $payload[$field] === '' || $payload[$field] === null
+                    ? null
+                    : (float) $payload[$field];
+            }
+        }
+
+        if (array_key_exists('is_virtual', $payload)) {
+            $values['is_virtual'] = (bool) $payload['is_virtual'];
+        }
+
+        foreach (['capacity', 'registration_fee'] as $field) {
+            if (array_key_exists($field, $payload)) {
+                $values[$field] = $field === 'capacity'
+                    ? max(1, (int) $payload[$field])
+                    : max(0, (float) $payload[$field]);
+            }
+        }
+
+        if ($creating || array_key_exists('start_date', $payload)) {
+            $startDate = $this->toMysqlDateTime((string) ($payload['start_date'] ?? ''));
+
+            if ($startDate === null) {
+                $errors['start_date'][] = 'Start date is required.';
+            } else {
+                $values['start_date'] = $startDate;
+            }
+        }
+
+        if ($creating || array_key_exists('end_date', $payload)) {
+            $endDate = $this->toMysqlDateTime((string) ($payload['end_date'] ?? ''));
+
+            if ($endDate === null) {
+                $errors['end_date'][] = 'End date is required.';
+            } else {
+                $values['end_date'] = $endDate;
+            }
+        }
+
+        if (isset($values['start_date'], $values['end_date']) && strtotime($values['end_date']) <= strtotime($values['start_date'])) {
+            $errors['end_date'][] = 'End date must be after start date.';
+        }
+
+        return [
+            'values' => $values,
+            'errors' => $errors,
+        ];
     }
 
-    private function model(): Event
+    private function toMysqlDateTime(string $value): ?string
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        try {
+            return (new DateTimeImmutable($value))->format('Y-m-d H:i:s');
+        } catch (Throwable) {
+            return null;
+        }
+    }
+
+    private function optionalUserId(): ?int
+    {
+        try {
+            $token = Request::bearerToken();
+
+            if ($token === null) {
+                return null;
+            }
+
+            $payload = $this->tokens()->decode($token);
+
+            return isset($payload['sub']) ? (int) $payload['sub'] : null;
+        } catch (Throwable) {
+            return null;
+        }
+    }
+
+    private function currentUserId(): int
+    {
+        return $this->optionalUserId() ?? $this->events()->firstUserId();
+    }
+
+    private function events(): Event
     {
         if (!$this->events instanceof Event) {
             $this->events = new Event();
         }
 
         return $this->events;
+    }
+
+    private function tokens(): TokenService
+    {
+        if (!$this->tokens instanceof TokenService) {
+            $this->tokens = new TokenService();
+        }
+
+        return $this->tokens;
     }
 }
